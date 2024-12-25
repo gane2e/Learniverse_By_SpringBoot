@@ -1,0 +1,61 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    position: relative;
+    height: 100%;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+}
+.sub_cont {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left_cont {
+    display: inline-block;
+    width: 1345px;
+    padding: 30px;
+    background: #70cbf1;
+}
+
+.right_cont {
+    display: inline-block;
+    width: 320px;
+    height: 100%;
+    background: #00aa4b;
+    align-items: center;
+}
+
+/*.inner_box {
+    width: 256px;
+    padding-right: 32px;
+    padding-left: 32px;
+    padding-top: 32px;
+    box-sizing: content-box;
+}
+
+.inner {
+    display: flex;
+    max-width: 100%;
+    max-height: 100%;
+    align-items: center;
+}
+.inner img {
+    max-width: 100%;
+    max-height: 100%;
+}*/
+
+
+
+.playerArea{
+   /* max-width: 980px;*/
+    margin:auto;
+    aspect-ratio: 16/9;
+}
+
