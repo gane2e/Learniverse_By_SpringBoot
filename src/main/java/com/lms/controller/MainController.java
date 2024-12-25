@@ -21,7 +21,7 @@ public class MainController {
 
     public void gitTest()
     {
-        System.out.println("gitTest");
+        System.out.println("commit");
     }
 
 
