@@ -11,20 +11,92 @@
 </head>
 
 
+     <div class="player_cont">
+         <div class="left_cont">
+             <div class="category_area">
+                 <img src="/img/mark_5251227.png" class="category_img">
+                 <span class="category_title1">[1차 카테고리]</span>
+                 <span class="category_title2">[2차 카테고리]]</span>
+             </div>
+             <div class="title_area">
+                 <div class="course_title">교육과정 제목입니다.</div>
+             </div>
 
-        <div class="left_cont">
-           <!-- 영상플레이어 영역-->
-            <div class="playerArea">
-                <div class="player" id="player"></div>
-            </div>
-        </div>
+             <!-- 영상플레이어 영역-->
+             <div class="playerArea">
+                 <div class="player" id="player"></div>
+             </div>
 
-        <div class="right_cont">
+             <!-- 이전차시보기 / 다음차시보기  -->
+             <div class="video_btn_area">
+                <button class="prev_btn">이전 차시보기</button>
+                <button class="next_btn">다음 차시보기</button>
+             </div>
+         </div>
 
-            영상목록
-                <a href="/">시험보기</a> <br>
-                <a href="/course/courses">목록</a>
-            </div>
+         <div class="right_cont">
+             <div class="r_depth1">
+                 교육 목록 (이수율 <span id="gEduVideoProgress" class="blue">0</span> %)
+             </div>
+             <div class="scroll_box">
+                 <div class="inner_box">
+                     <ul>
+                         <li>
+                             <button class="lecture_btn">
+                                <div class="title">교육영상1 제목</div>
+                                 <div class="line">
+                                     <span class="line2"></span>
+                                 </div>
+                                 <div class="data-area">
+                                     <span class="percentText">0%</span>
+                                     <span class="txt">학습하기</span>
+                                 </div>
+                             </button>
+                         </li>
+                         <li>
+                             <button class="lecture_btn">
+                                 <div class="title">교육영상2 제목</div>
+                                 <div class="line">
+                                     <span class="line2"></span>
+                                 </div>
+                                 <div class="data-area">
+                                     <span class="percentText">0%</span>
+                                     <span class="txt">학습하기</span>
+                                 </div>
+                             </button>
+                         </li>
+                         <li>
+                             <button class="lecture_btn">
+                                 <div class="title">교육영상3 제목</div>
+                                 <div class="line">
+                                     <span class="line2"></span>
+                                 </div>
+                                 <div class="data-area">
+                                     <span class="percentText">0%</span>
+                                     <span class="txt">학습하기</span>
+                                 </div>
+                             </button>
+                         </li>
+                     </ul>
+                 </div>
+
+                 <div class="cont_btn_list_area">
+                     <ul class="list">
+                         <li>
+                             <a href="/" class="btn" >시험보기</a>
+                         </li>
+                         <li>
+                             <a href="/members/dashBoard" class="btn" >학습종료</a>
+                         </li>
+                     </ul>
+                 </div>
+             </div>
+
+
+         </div>
+     </div>
+
+
      <script src="/js/demo.js"></script>
 
 </html>

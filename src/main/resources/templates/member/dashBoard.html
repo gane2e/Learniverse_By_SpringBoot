@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layouts/sub_layout}">
+<head>
+<link th:href="@{/css/member/dashBoard.css}" rel="stylesheet">
+<!-- 사용자 CSS 추가 -->
+
+</head>
+
+<div layout:fragment="sub_cont">
+    <div class="inner">
+
+        <img src="/img/mark_5251227.png" class="category_img">
+        <span class="menu_title">교육신청 현황</span>
+        <div class="name">
+            <span class="blue_txt">USER</span> 회원님,
+        </div>
+        <div class="description">
+            총 <span class="blue_txt">2</span>개 신청과정 중
+            <span class="blue_txt">0</span>개 과정을 수료하셨습니다.
+        </div>
+    </div>
+
+        <!-- 수강신청 현황 (신청:1 수료:1... ) -->
+        <ul class="list">
+            <li>
+                <div class="box_icon1">
+                    <img src="/img/dashBoard_수강신청.png">
+                    <div class="icon_txt_container">
+                        <div class="tit">수강신청</div>
+                        <div class="num">
+                            <span class="num_number">2</span>건
+                        </div>
+                    </div>
+
+                </div>
+            </li>
+            <li>
+                <div class="box_icon1">
+                    <img src="/img/dashBoard_학습중.png">
+                    <div class="icon_txt_container">
+                        <div class="tit">학습중</div>
+                        <div class="num">
+                            <span class="num_number">2</span>건
+                        </div>
+                    </div>
+
+                </div>
+            </li>
+            <li>
+                <div class="box_icon1">
+                    <img src="/img/dashBoard_학습완료.png">
+                    <div class="icon_txt_container">
+                        <div class="tit">학습완료</div>
+                        <div class="num">
+                            <span class="num_number">2</span>건
+                        </div>
+                    </div>
+
+                </div>
+            </li>
+            <li>
+                <div class="box_icon1">
+                    <img src="/img/dashBoard_미수료.png">
+                    <div class="icon_txt_container">
+                        <div class="tit">미수료</div>
+                        <div class="num">
+                            <span class="num_number">2</span>건
+                        </div>
+                    </div>
+
+                </div>
+            </li>
+            <li>
+                <div class="box_icon1">
+                    <img src="/img/dashBoard_수료.png">
+                    <div class="icon_txt_container">
+                        <div class="tit">수료</div>
+                        <div class="num">
+                            <span class="num_number">2</span>건
+                        </div>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+
+
+    <!-- 교육 학습 현황 -->
+    <div class="title_area">
+        <div class="title_before"></div>
+        <div class="title">온라인교육 학습 현황</div>
+    </div>
+
+    <!-- 검색기 -->
+    <div class="search_box">
+        <div class="search_title">강의 명</div>
+        <input type="text" class="scrh_inp" placeholder="검색어를 입력해주세요." title="검색어를 입력해주세요." id="searchKeyword" name="searchKeyword" value="">
+        <button type="button" class="search_btn">검색</button>
+    </div>
+
+    <!-- 수강리스트 -->
+    <div class="current_info_list_cont">
+        <ul class="dashBoard_list">
+            <li>
+                <div class="current_info_box">
+                    <div class="sub_tit_area">
+                        <div class="mark_list_area">
+                            <ul class="course_category_list">
+                                <li>
+                                    <div class="course_category_1">영업전</div>
+                                </li>
+                                <li>
+                                    <div class="course_category_2">수입업</div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="text_list_area">
+                            <ul class="course_category_list_2">
+                                <li>
+                                    <span class="tit">학습 시작일 : </span>
+                                    2024-12-26 09:20
+                                </li>
+                                <li>
+                                    <span class="tit">학습 수료일 : </span>
+                                    -
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="course_title">
+                        [영업전] 수입업자 교육
+                    </div>
+
+                    <div class="current_table_area">
+                        <table class="current_table">
+                            <tr>
+                                <th>학습하기</th>
+                                <th>이수율</th>
+                                <th>시험보기</th>
+                                <th>시험점수 / 회차</th>
+                                <th>수료증</th>
+                            </tr>
+                            <tr class="current_table_data">
+                                <td>
+                                    <a href="/course/video" class="play_btn"
+                                       target="_blank">
+                                        학습하기
+                                    </a>
+                                </td>
+                                <td><span class="red_txt">0</span>%</td>
+                                <td>
+                                    <a href="#" class="play_btn">
+                                        시험보기
+                                    </a>
+                                </td>
+                                <td>(불합격)<br>50점 / 1회차</td>
+                                <td>수료전</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </li>
+
+
+
+            <li>
+                <div class="current_info_box">
+                    <div class="sub_tit_area">
+                        <div class="mark_list_area">
+                            <ul class="course_category_list">
+                                <li>
+                                    <div class="course_category_1">영업전</div>
+                                </li>
+                                <li>
+                                    <div class="course_category_2">수입업</div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="text_list_area">
+                            <ul class="course_category_list_2">
+                                <li>
+                                    <span class="tit">학습 시작일 : </span>
+                                    2024-12-26 09:20
+                                </li>
+                                <li>
+                                    <span class="tit">학습 수료일 : </span>
+                                    -
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="course_title">
+                        [상시] 개물림 사고 예방 교육과 펫티켓
+                    </div>
+
+                    <div class="current_table_area">
+                        <table class="current_table">
+                            <tr>
+                                <th>학습하기</th>
+                                <th>이수율</th>
+                                <th>시험보기</th>
+                                <th>시험점수 / 회차</th>
+                                <th>수료증</th>
+                            </tr>
+                            <tr class="current_table_data">
+                                <td>
+                                    <a href="/course/video" class="play_btn"
+                                       target="_blank">
+                                        학습하기
+                                    </a>
+                                </td>
+                                <td><span class="red_txt">0</span>%</td>
+                                <td>이수율 100%시 응시가능</td>
+                                <td>응시전</td>
+                                <td>수료전</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </li>
+
+
+        </ul>
+        <!-- 수강리스트 END -->
+    </div>
+
+
+
+
+
+</div>
+
+</html>

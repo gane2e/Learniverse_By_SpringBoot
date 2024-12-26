@@ -7,9 +7,33 @@
 a {
     text-decoration: none;
 }
-/*img {
-    width: 320px;
-}*/
+
+.list {
+    width: 100%;
+    list-style: none;
+    background: #eeeeee;
+    margin-bottom: 50px;
+}
+
+.list > li {
+    display: inline-block;
+    width: 33%;
+    height: 64px;
+}
+
+.list_index {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.list_index_title {
+
+}
+
 .sub_cont {
     display: flex;
     justify-content: space-between;
@@ -19,15 +43,112 @@ a {
     display: inline-block;
     width: 1040px;
     padding-right: 30px;
-    background: #70cbf1;
 }
+
+.category_img {
+    display: inline;
+    width: 20px;
+    height: 20px;
+}
+.category_title1 {
+    color: #1f8ce9;
+}
+.category_title2 {
+    color: #828282;
+}
+
+.top_title_area {
+    margin-bottom: 30px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.course_title {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 48px;
+    color: #333333;
+    padding-bottom: 20px;
+}
+.hashtag_box {
+    margin-bottom: 25px;
+}
+
+.period_box {
+    margin-bottom: 30px;
+    color: #828282;
+}
+
+.hashTag {
+    border: 1px solid #eeeeee;
+    border-radius: 15px;
+    padding: 1px 10px;
+}
+
+/* 콘텐츠 내 타이틀 (교육소개, 목차, 수료기준) */
+
+.title_area{
+    display: flex;
+    width: 100%;
+    height: 37px;
+    margin-bottom: 17px;
+}
+
+.title_before {
+    display: inline-block;
+    width: 5px;
+    height: 100%;
+    background: #1F8CE9;
+}
+
+.title {
+    display: inline-block;
+    padding: 0 0 0 15px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    color: #2f2f2f;
+}
+
+.edu_cont_area {
+    width: 100%;
+    padding: 35px;
+    margin-bottom: 17px;
+    border: 1px solid #eeeeee;
+}
+
+.table_basics_area {
+    width: 100%;
+    border-top: 2px solid #757575;
+    text-align: center;
+    border-collapse: collapse;
+    table-layout: fixed;
+    box-sizing: border-box
+}
+
+.table_basics_area th {
+    background: #f7f7f7;
+}
+
+.table_basics_area th, td {
+    height: 52px;
+}
+
+.table_basics_area th:nth-child(1) {
+    width: 15%;
+}
+
+
 
 .right_cont {
     display: inline-block;
     width: 320px;
-    height: 100%;
-    background: #00aa4b;
+    /*height: 1000px;*/
     align-items: center;
+
+}
+
+.inner_box_container {
+    position: sticky;
+    top: 10px; /* 화면 위에서 10px 떨어진 위치에 고정 */
 }
 
 .inner_box {
@@ -36,6 +157,9 @@ a {
     padding-left: 32px;
     padding-top: 32px;
     box-sizing: content-box;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .inner {
@@ -47,4 +171,84 @@ a {
 .inner img {
     max-width: 100%;
     max-height: 100%;
+}
+
+.m_cont_title {
+    margin: 10px 0 12px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    color: #333333;
+}
+
+.m_cont_tit {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 30px;
+    color: #1F8CE9;
+}
+
+/* 수료기준 옆 체크아이콘 */
+.check_img {
+    width: 18px;
+    height: 18px;
+    margin-right: 3px;
+}
+
+/* 수강신청하기, 목록 버튼 */
+
+
+.bottom_list{
+    width: 100%;
+    list-style: none;
+}
+
+.btn {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.first_btn{
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 18px;
+
+}
+
+.second_btn {
+    color: #929292;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.bottom_list > li {
+    display: block;
+    width: 100%;
+    height: 48px;
+}
+
+.bottom_list > li:nth-child(1){
+    background: #0076c0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.bottom_list > li:nth-child(2){
+    background: #fcfcfc;
+    border-radius: 10px;
+    border: 1px solid #656565;
+}
+
+
+
+/* 상세내용  */
+.m_cont_txt {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    color: #757575;
+    padding-bottom: 20px;
 }

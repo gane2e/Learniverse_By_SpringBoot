@@ -12,16 +12,40 @@ a {
     text-decoration: none;
 }
 
-ul {
+.search_box {
+    margin: 0 auto;
+    width: 1372px;
+    height: 100px;
+    background: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px 60px;
+    margin-bottom: 30px;
+}
+
+.search_title {
+    display: inline;
+}
+
+.scrh_inp {
+    width: 700px;
+}
+
+.search_btn {
+    width: 100px;
+    background: #54575E;
+}
+
+.course_list_ul {
     display: flex;
     list-style: none;
     justify-content: space-around;
     flex-wrap: wrap;
 }
-li {
+.course_list_li {
     display: inline-block;
 }
-img {
+
+.thum {
     width: 320px;
 }
 

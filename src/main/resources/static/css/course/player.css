@@ -12,50 +12,223 @@ body {
 a {
     text-decoration: none;
 }
-.sub_cont {
+
+.blue {
+    color: #3c79d5;
+}
+
+.player_cont {
     display: flex;
     justify-content: space-between;
 }
 
 .left_cont {
     display: inline-block;
-    width: 1345px;
+    width: 1400px;
     padding: 30px;
-    background: #70cbf1;
+    background: #f5f5f5;
+}
+.category_img {
+    display: inline;
+    width: 20px;
+    height: 20px;
+}
+.category_title1 {
+    color: #1f8ce9;
+}
+.category_title2 {
+    color: #1f8ce9;
+}
+.title_area {
+    margin-bottom: 30px;
+}
+.course_title {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 48px;
+    color: #333333;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e0e0e0;;
+}
+
+/* 플레이어 */
+.playerArea{
+    margin:auto;
+    /*aspect-ratio: 16/9;*/
+}
+.player {
+    width: 1340px;
+    height: 670px;
+}
+
+/* 이전차시 / 다음차시 보기 영역 */
+.video_btn_area {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.prev_btn {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 40px;
+    color: #757575;
+    transition: color 0.3s;
+}
+.prev_btn:hover {
+    color: #1f8ce9;
+}
+
+.next_btn {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 40px;
+    color: #757575;
+    transition: color 0.3s;
+}
+.next_btn:hover {
+    color: #1f8ce9;
 }
 
 .right_cont {
     display: inline-block;
-    width: 320px;
-    height: 100%;
-    background: #00aa4b;
+    width: 460px;
+    padding: 30px;
     align-items: center;
-}
-
-/*.inner_box {
-    width: 256px;
-    padding-right: 32px;
-    padding-left: 32px;
-    padding-top: 32px;
     box-sizing: content-box;
 }
 
-.inner {
+.r_depth1 {
+    display: block;
+    font-size: 20px;
+    width: 100%;
+  /*  height: 40px;*/
+    padding: 0 20px;
+    background: #f5f5f5;
+    color: #757575;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    font-weight: 500;
+    line-height: 40px;
+    border-top: 1px solid #eeeeee;
+
+}
+.scroll_box {
+    position: relative;
+    width: 100%;
+    height: 770px;
+    background: #ffffff;
+    border-bottom-left-radius:  10px;
+    border-bottom-right-radius: 10px;
+    border-bottom: 1px solid #eeeeee;
+    border-left: 1px solid #eeeeee;
+    border-right: 1px solid #eeeeee;
+}
+
+.inner_box {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.lecture_btn {
+    width: 100%;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+}
+
+.lecture_btn:hover {
+    background: #e7f6fb;
+}
+
+.title {
+    text-align: left;
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26px;
+    color: #424242;
+}
+
+.line {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background: #eeeeee;
+    border-radius: 20px;
+    margin-bottom: 7px;
+}
+
+.line2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 30%;
+    height: 8px;
+    border-radius: 20px;
+    background: #0076c0;
+    z-index: 10;
+}
+
+.data-area {
     display: flex;
-    max-width: 100%;
-    max-height: 100%;
-    align-items: center;
-}
-.inner img {
-    max-width: 100%;
-    max-height: 100%;
-}*/
-
-
-
-.playerArea{
-   /* max-width: 980px;*/
-    margin:auto;
-    aspect-ratio: 16/9;
+    justify-content: space-between;
 }
 
+.percentText {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    color: #757575;
+}
+.txt {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    color: #757575;
+}
+
+
+/* 시험보기, 목록 */
+.cont_btn_list_area {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+.btn {
+    width: 100%;
+    height: 100%;
+}
+
+.list{
+    display: inline-flex;
+    width: 100%;
+}
+.list > li:nth-child(1) {
+    font-weight: 500;
+    font-size: 18px;
+    width: 50%;
+    height: 48px;
+    text-align: center;
+    background: #0076c0;
+    color: #ffffff;
+    padding: 10px;
+    border-bottom-left-radius: 10px;
+}
+.list > li:nth-child(2) {
+    font-weight: 500;
+    font-size: 18px;
+    width: 50%;
+    height: 48px;
+    text-align: center;
+    background: #656565;
+    color: #ffffff;
+    padding: 10px;
+    border-bottom-right-radius: 10px;
+}

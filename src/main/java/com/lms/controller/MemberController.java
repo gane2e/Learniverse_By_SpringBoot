@@ -13,14 +13,16 @@ public class MemberController {
 
 
     @GetMapping(value = "/register")
-    public String memberRegister() {
+    public String memberRegister(Model model) {
         log.info("register");
+        model.addAttribute("pageTitle", "회원가입");
         return "member/register";
     }
 
     @GetMapping(value = "/login")
-    public String memberLogin() {
+    public String memberLogin(Model model) {
         log.info("login");
+        model.addAttribute("pageTitle", "로그인");
         return "member/memberLoginForm";
     }
 
@@ -30,6 +32,14 @@ public class MemberController {
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해 주십시오.");
         log.info("로그인 실패");
         return "member/memberLoginForm";
+    }
+
+    /* 마이페이지 수강현황 대시보드 */
+    @GetMapping(value = "/dashBoard")
+    public String dashBoard(Model model) {
+        log.info("dashBoard");
+        model.addAttribute("pageTitle", "나의 강의실");
+        return "member/dashBoard";
     }
 
 
