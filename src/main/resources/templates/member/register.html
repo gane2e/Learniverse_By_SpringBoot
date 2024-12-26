@@ -43,18 +43,18 @@
         <!-- 정보입력 테이블 -->
         <table class="table_area">
             <tr>
-                <th>* 아이디</th>
+                <th><span class="red_txt">*</span>  아이디</th>
                 <td>
                     <div class="inp_txt_area">
                         <label for="inp_txt">
                             <input type="text" id="inp_txt" name="loginId" class="inp_txt" vali-text="아이디를 입력해주세요.">
                         </label>
-                        <button>중복확인</button>
+                        <button class="check_id_btn">중복확인</button>
                     </div>
                 </td>
             </tr>
             <tr>
-                <th>* 비밀번호</th>
+                <th><span class="red_txt">*</span>  비밀번호</th>
                 <td>
                     <div class="inp_txt_area">
                         <label for="inp_pwd">
@@ -65,7 +65,7 @@
             </tr>
             <!-- 비밀번호 확인 -->
             <tr>
-                <th>* 비밀번호 확인</th>
+                <th><span class="red_txt">*</span>  비밀번호 확인</th>
                 <td>
                     <div class="inp_txt_area">
                         <label for="inp_pwd">
@@ -76,7 +76,7 @@
             </tr>
             <!-- 성명 -->
             <tr>
-                <th>* 성명</th>
+                <th><span class="red_txt">*</span>  성명</th>
                 <td>
                     <div class="inp_txt_area">
                         <label for="inp_name">
@@ -87,7 +87,7 @@
             </tr>
             <!-- 생년월일 -->
             <tr>
-                <th>* 생년월일</th>
+                <th><span class="red_txt">*</span> 생년월일</th>
                 <td>
                     <div class="inp_txt_area">
                         <label for="inp_date">
@@ -98,7 +98,7 @@
             </tr>
             <!-- 성별 -->
             <tr>
-                <th>* 성별</th>
+                <th><span class="red_txt">*</span>  성별</th>
                 <td>
                     <div class="inp_txt_area">
                         <label for="inp_gender_m">
@@ -114,16 +114,46 @@
             </tr>
             <!-- 휴대폰 번호 -->
             <tr>
-                <th>* 휴대폰 번호</th>
+                <th><span class="red_txt">*</span> 휴대폰 번호</th>
                 <td>
                     <div class="inp_txt_area">
                         <label for="inp_num">
-                            <input type="radio" id="inp_num" name="gender" class="inp_num">
+                            <input type="text" id="inp_num" name="mobileNumber" class="inp_num">
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <!-- 주소 -->
+            <tr>
+                <th><span class="red_txt">*</span> 주소</th>
+                <td>
+                    <div class="inp_txt_area">
+                        <label for="inp_addr">
+                            <input type="text" id="inp_addr" name="address" class="inp_addr">
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <!-- 이메일 -->
+            <tr>
+                <th><span class="red_txt">*</span> 이메일</th>
+                <td>
+                    <div class="inp_txt_area">
+                        <label for="inp_addr">
+                            <input type="email" id="inp_email" name="email" class="inp_email">
                         </label>
                     </div>
                 </td>
             </tr>
         </table>
+        <ul class="submit_ul">
+            <li>
+                <button type="reset" class="prev_btn">취소하기</button>
+            </li>
+            <li>
+                <button type="submit" class="submit_btn">가입하기</button>
+            </li>
+        </ul>
 
     </form>
     <!--  -->

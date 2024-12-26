@@ -266,12 +266,6 @@ button:focus {
     height: 60px;
 }
 
-current_table_data {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .play_btn {
     display: inline-block;
     padding: 0 18px;

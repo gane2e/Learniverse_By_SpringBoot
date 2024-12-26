@@ -11,6 +11,9 @@ body {
 a {
     text-decoration: none;
 }
+a:hover {
+    text-decoration: none; /* hover 시에도 밑줄 없애기 */
+}
 
 .search_box {
     margin: 0 auto;
@@ -43,6 +46,23 @@ a {
 }
 .course_list_li {
     display: inline-block;
+    margin-bottom: 30px;
+}
+
+.image_container {
+    position: relative;
+}
+
+.status {
+    position: absolute;
+    top: 10px; /* 이미지 위에서 10px 떨어진 위치 */
+    left: 10px; /* 이미지 오른쪽 모서리에서 10px 떨어진 위치 */
+    background-color: rgba(255, 0, 0, 0.7); /* 반투명한 빨간색 배경 */
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
 }
 
 .thum {

@@ -7,6 +7,10 @@
 a {
     text-decoration: none;
 }
+
+.red_txt {
+    color: red;
+}
 .title_area{
     display: flex;
     width: 100%;
@@ -50,6 +54,90 @@ a {
     border-spacing: 0;
 }
 
+.table_area th, td {
+    border: 1px solid #eeeeee; /* 셀의 테두리 색상 */
+    padding: 10px;
+}
+
 .table_area th {
     background: #f7f7f7;
+    padding: 14px 5px 14px 20px;
+    width: 10%;
+}
+.table_area td {
+    padding: 8px 10px 8px 20px;
+}
+
+/* 텍스트 입력 필드에만 적용 */
+input[type="text"],
+input[type="email"] {
+    font-size: 16px;
+    border: 1px solid #dfdfdf;
+    padding: 10px;
+    border-radius: 3px;
+    outline: none;
+    width: 410px;
+    height: 40px;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+    border-color: #e0e0e0; /* 포커스 시 테두리 색상 변경 */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 시 강조 효과 */
+}
+
+/* 중복확인 버튼 */
+.check_id_btn {
+    all: unset; /* 버튼의 모든 기본 스타일 제거 */
+    display: inline-block;
+    margin: 0 0 0 6px;
+    padding: 0 30px;
+    background-color: #656565;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 40px;
+    color: #ffffff;
+    vertical-align: middle;
+    border-radius: 5px;
+}
+
+.submit_ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row-reverse;
+    padding-top: 15px;
+}
+
+.submit_btn {
+    all: unset; /* 버튼의 모든 기본 스타일 제거 */
+    display: inline-block;
+    width: 140px;
+    height: 48px;
+    margin: 0 0 0 6px;
+    padding: 0 10px;
+    background-color:#1f8ce9;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 40px;
+    color: #ffffff;
+    vertical-align: middle;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.prev_btn {
+    all: unset; /* 버튼의 모든 기본 스타일 제거 */
+    display: inline-block;
+    width: 140px;
+    height: 48px;
+    margin: 0 0 0 6px;
+    padding: 0 10px;
+    background-color:#656565;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 40px;
+    color: #ffffff;
+    vertical-align: middle;
+    border-radius: 5px;
+    text-align: center;
 }

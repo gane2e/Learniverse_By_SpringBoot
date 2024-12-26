@@ -3,16 +3,26 @@
     margin: 0;
     padding: 0;
 }
-
+html {
+    scroll-behavior: smooth;
+}
 a {
     text-decoration: none;
 }
+a:hover {
+    text-decoration: none; /* hover 시에도 밑줄 없애기 */
+}
 
-.list {
+ul.list {
+
+    position: sticky;
+    top: 0; /* 화면 위에서 10px 떨어진 위치에 고정 */
+
     width: 100%;
     list-style: none;
     background: #eeeeee;
     margin-bottom: 50px;
+    border: 1px solid #e1e1e1;
 }
 
 .list > li {
@@ -31,7 +41,7 @@ a {
 }
 
 .list_index_title {
-
+    color: #222222;
 }
 
 .sub_cont {
@@ -43,6 +53,10 @@ a {
     display: inline-block;
     width: 1040px;
     padding-right: 30px;
+}
+
+.category_area {
+    padding-bottom: 15px;
 }
 
 .category_img {
