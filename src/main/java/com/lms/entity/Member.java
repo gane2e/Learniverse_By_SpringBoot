@@ -15,7 +15,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @Column(name = "member_id")
@@ -68,7 +68,7 @@ public class Member {
         member.setMobileNumber(memberFormDto.getMobileNumber());
         member.setAddress(memberFormDto.getAddress());
         member.setEmail(memberFormDto.getEmail());
-        member.setRole(Role.USER);
+        member.setRole(Role.ADMIN);
 
         if (memberFormDto.getKakaoKey() != null ) {
             member.setKakaoKey(memberFormDto.getKakaoKey());

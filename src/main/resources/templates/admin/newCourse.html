@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+  <link
+          href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
+          rel="stylesheet" />
+  <link th:href="@{/css/admin/style.css}" rel="stylesheet">
+  <link th:href="@{/css/admin/registerProduct.css}" rel="stylesheet">
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
+          crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="sb-nav-fixed">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+  <!-- Navbar Brand-->
+  <a class="navbar-brand ps-3" href="#">관리자 페이지</a>
+  <!-- Sidebar Toggle-->
+  <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+          id="sidebarToggle" href="#!">
+    <i class="fas fa-bars"></i>
+  </button>
+  <!-- Navbar Search-->
+  <form
+          class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+    <div class="input-group">
+      <input class="form-control" type="text" placeholder="Search for..."
+             aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+      <button class="btn btn-primary" id="btnNavbarSearch" type="button">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </form>
+  <!-- Navbar-->
+  <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+    <li class="nav-item dropdown"><a
+            class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+            role="button" data-bs-toggle="dropdown" aria-expanded="false"><i
+            class="fas fa-user fa-fw"></i></a>
+      <ul class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="/admin/logout">Logout</a></li>
+      </ul></li>
+  </ul>
+</nav>
+<div id="layoutSidenav">
+  <div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark"
+         id="sidenavAccordion">
+      <div class="sb-sidenav-menu">
+        <div class="nav">
+          <div class="sb-sidenav-menu-heading">Core</div>
+          <a class="nav-link" href="/admin/Adminmain">
+            <div class="sb-nav-link-icon">
+              <i class="fas fa-tachometer-alt"></i>
+            </div> 관리자 메인 페이지
+          </a>
+          <div class="sb-sidenav-menu-heading">Interface</div>
+          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+             data-bs-target="#collapseLayouts" aria-expanded="false"
+             aria-controls="collapseLayouts">
+            <div class="sb-nav-link-icon">
+              <i class="fas fa-columns"></i>
+            </div> 상품
+            <div class="sb-sidenav-collapse-arrow">
+              <i class="fas fa-angle-down"></i>
+            </div>
+          </a>
+          <div class="collapse" id="collapseLayouts"
+               aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav">
+              <a class="nav-link" href="/admin/registerProduct">상품 등록</a> <a
+                    class="nav-link" href="/admin/ProductRegistration">상품 관리</a>
+            </nav>
+          </div>
+          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+             data-bs-target="#collapsePages" aria-expanded="false"
+             aria-controls="collapsePages">
+            <div class="sb-nav-link-icon">
+              <i class="fas fa-book-open"></i>
+            </div> 계정
+            <div class="sb-sidenav-collapse-arrow">
+              <i class="fas fa-angle-down"></i>
+            </div>
+          </a>
+          <div class="collapse" id="collapsePages"
+               aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav">
+              <a class="nav-link" href="/admin/memberList">일반 유저</a> <a
+                    class="nav-link" href="/admin/adminList">관리자 계정</a>
+            </nav>
+          </div>
+          <div class="sb-sidenav-menu-heading">Addons</div>
+          <a class="nav-link" href="/admin/PhoneApplicationdetails">
+            <div class="sb-nav-link-icon">
+              <i class="fas fa-chart-area"></i>
+            </div> 고객 핸드폰 신청내역
+          </a> <a class="nav-link" href="/admin/notice">
+          <div class="sb-nav-link-icon">
+            <i class="fas fa-table"></i>
+          </div> 공지사항
+        </a>
+        </div>
+      </div>
+      <div class="sb-sidenav-footer">
+        <div class="small">Logged in as:</div>
+        관리자 페이지
+      </div>
+    </nav>
+  </div>
+  <div id="layoutSidenav_content">
+    <main>
+      <div class="container-fluid px-4">
+        <h1 class="mt-4">교육과정 등록</h1>
+        <div class="card mb-4">
+          <div class="card-header">
+            <i class="fas fa-table me-1"></i> 교육과정 등록
+          </div>
+          <div class="card-body">
+            <!-- <header>
+                <h1>상품 등록</h1>
+            </header> -->
+
+            <div class="product-form-container">
+              <form action="product/register" method="post"
+                    enctype="multipart/form-data" onsubmit="handleSubmit(event)">
+
+                <div class="form-group">
+                  <label for="lable_1">교육과정명</label>
+                  <input type="text"
+                         id="lable_1" name="" required
+                         placeholder="교육과정명을 입력하세요.">
+                </div>
+
+                <div class="form-group">
+                  <label for="categorySelect">교육 카테고리(1차)</label>
+                  <select id="categorySelect" onchange="loadSubCategories()">
+                    <option value="">카테고리를 선택하세요.</option>
+                    <th:block th:each="category : ${categories}">
+                      <option th:value="${category.categoryId}" th:text="${category.categoryName}"></option>
+                    </th:block>
+                  </select>
+
+                </div>
+
+                <div class="form-group">
+                  <label for="subCategorySelect">교육 카테고리(2차)</label>
+                  <select id="subCategorySelect">
+                    <option value="">1차 카테고리를 선택하세요.</option>
+                  </select>
+                  </select>
+
+                </div>
+
+                <div class="form-group">
+                  <label for="recruitmentStatusSelect">모집상태</label>
+                  <select id="recruitmentStatusSelect">
+                    <option value="상시모집">상시모집</option>
+                    <option value="모집예정">모집예정</option>
+                    <option value="모집중">모집중</option>
+                    <option value="모집종료">모집종료</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="recruitment_start_date">모집기간(시작일)</label>
+                  <input type="date"
+                         id="recruitment_start_date" name="recruitment_start_date" required>
+                </div>
+                <div class="form-group">
+                  <label for="recruitment_end_date">모집기간(종료일)</label>
+                  <input type="date"
+                         id="recruitment_end_date" name="recruitment_end_date" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="course_start_date">교육기간(시작일)</label>
+                  <input type="date"
+                         id="course_start_date" name="course_start_date" required>
+                </div>
+                <div class="form-group">
+                  <label for="course_end_date">교육기간(종료일)</label>
+                  <input type="date"
+                         id="course_end_date" name="course_end_date" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="lable_2">교육소개</label>
+                  <textarea id="lable_2" name="" maxlength="500" rows="10" cols="30"></textarea>
+                </div>
+
+                <!-- 해시태그 = 추후 -->
+             <!--   <div class="form-group">
+                  <label for="price">해시태그 입력</label> <input type="text" id="price"
+                                                       name="" required placeholder=", 로 구분하여 입력해주세요.">
+                </div>-->
+
+                <div class="form-group">
+                  <label for="lable">수료기준</label>
+                  <textarea id="lable" name="" maxlength="500" rows="3" cols="30"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="VideoSelect">교육영상 선택
+                    <button class="btn" style="background:#0d6efd; color: #ffffff">영상 추가</button>
+                  </label>
+
+                  <!-- 교육영상 선택 테이블 -->
+                  <table class="table-active">
+                    <tr>
+                      <th>순서</th>
+                      <th>영상제목</th>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>
+                        <select id="VideoSelect" onchange="">
+                          <option value="">교육영상을 선택하세요.</option>
+                          <th:block th:each="category : ${categories}">
+                            <option th:value="${category.categoryId}" th:text="${category.categoryName}"></option>
+                          </th:block>
+                        </select>
+                      </td>
+                    </tr>
+
+                  </table>
+                </div>
+
+                <button type="submit" class="btn"
+                        style="background-color: #212529; color: #ffffff;">등록하기</button>
+              </form>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="py-4 bg-light mt-auto">
+      <div class="container-fluid px-4">
+        <div
+                class="d-flex align-items-center justify-content-between small">
+          <div class="text-muted">Copyright &copy; Your Website 2023</div>
+          <div>
+            <a href="#">Privacy Policy</a> &middot; <a href="#">Terms
+            &amp; Conditions</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script src="/resources/js/scripts.js"></script>
+<script
+        src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+<script src="/resources/js/datatables-simple-demo.js"></script>
+
+<!-- 카테고리 스크립트 -->
+<script>
+  function loadSubCategories() {
+    const categoryId = document.getElementById("categorySelect").value;
+    console.log("categoryId: " + categoryId);
+
+    // AJAX 요청
+    $.ajax({
+      url: '/subcategories?categoryId=' + categoryId, // 요청 URL
+      type: 'GET', // 요청 방식
+      dataType: 'json', // 기대하는 데이터 타입
+      success: function(subCategories) {
+        console.log("Number of subCategories:", subCategories.length);
+        const subCategorySelect = document.getElementById("subCategorySelect");
+        subCategorySelect.innerHTML = '<option value="">카테고리를 선택하세요.</option>'; // 초기화
+
+        // 서브 카테고리 옵션 추가
+        subCategories.forEach(subCategory => {
+          const option = document.createElement("option");
+          option.value = subCategory.subCategoryId;
+          option.text = subCategory.categoryName;
+          subCategorySelect.add(option);
+        });
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error("Error fetching subcategories:", textStatus, errorThrown); // 오류 로그
+      }
+    });
+  }
+
+
+  // 서브 카테고리에 해당하는 교육영상 찾기
+</script>
+</body>
+</html>

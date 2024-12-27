@@ -29,14 +29,14 @@ class MemberServiceTest {
 
     public Member testCreateMemberDAta() {
         MemberFormDto memberFormDto = new MemberFormDto();
-        memberFormDto.setLoginId("test001");
+        memberFormDto.setLoginId("admin001");
         memberFormDto.setPassword("1234");
-        memberFormDto.setName("유저");
-        memberFormDto.setGender("여성");
+        memberFormDto.setName("관리자");
+        memberFormDto.setGender("남성");
         memberFormDto.setBirthdate(new Date());
         memberFormDto.setMobileNumber("010-1234-1234");
-        memberFormDto.setAddress("경수대로 408");
-        memberFormDto.setEmail("test001@gmail.com");
+        memberFormDto.setAddress("서울시 어딘가");
+        memberFormDto.setEmail("email@email.com");
 
         return Member.createMember(memberFormDto, passwordEncoder);
     }
