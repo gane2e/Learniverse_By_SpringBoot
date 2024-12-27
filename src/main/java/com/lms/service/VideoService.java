@@ -23,7 +23,7 @@ public class VideoService {
     public List<VideoFormDto> findVideosBySubCategoryId(Long subCategoryId) {
 
         // 관리자 > 교육등록 > 카테고리선택 > 선택한 카테고리의 교육영상 등록일기준 내림차순 찾기
-        List<Videos> videos = videoRepository.findBySubCategoryIdOrderByRegTimeDesc(subCategoryId);
+        List<Videos> videos = videoRepository.findBySubCategory_SubCategoryId(subCategoryId);
 
 
         /* videos -> videoFormDto 로 변환함. */

@@ -25,23 +25,19 @@ class VideoServiceTest {
     @Autowired
     private VideoService videoService;
 
-    @Autowired
-    private VideoRepository videoRepository;
-
     @Test
     void VideoByCategoryTest() {
 
-        // When: 서비스 메서드 호출
-       /* List<VideoFormDto> result = videoService.findVideosBySubCategoryId(102L);*/
+       List<VideoFormDto> result = videoService.findVideosBySubCategoryId(2L);
 
         System.out.println("Test VideoByCategory");
 
-       /* result.forEach(videoFormDto -> {
+        result.forEach(videoFormDto -> {
             System.out.println("Video ID: " + videoFormDto.getVideoId());
             System.out.println("Video Title: " + videoFormDto.getTitle());
             System.out.println("SubCategory ID: " + videoFormDto.getSubCategoryId());
             System.out.println("---------------------------");
-        });*/
+        });
     }
 
 

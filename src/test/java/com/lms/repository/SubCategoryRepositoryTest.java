@@ -38,16 +38,16 @@ class SubCategoryRepositoryTest {
     void findSubCategoriesByCategoryIdTest() {
         // Given (테스트 데이터 준비)
         Category category = new Category();
-        category.setCategoryName("테스트 카테고리");
+        category.setCategoryName("테스트 카테고리2");
         entityManager.persist(category); // 영속화
 
         SubCategory subCategory1 = new SubCategory();
-        subCategory1.setCategoryName("테스트 서브 카테고리 1");
+        subCategory1.setCategoryName("테스트 서브 카테고리2-1");
         subCategory1.setCategories(category); // 연관 관계 설정
         entityManager.persist(subCategory1);
 
         SubCategory subCategory2 = new SubCategory();
-        subCategory2.setCategoryName("테스트 서브 카테고리 2");
+        subCategory2.setCategoryName("테스트 서브 카테고리2-2");
         subCategory2.setCategories(category); // 연관 관계 설정
         entityManager.persist(subCategory2);
 
