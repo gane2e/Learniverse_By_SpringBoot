@@ -1,6 +1,7 @@
 package com.lms.service;
 
 import com.lms.dto.VideoFormDto;
+import com.lms.dto.VideoListDto;
 import com.lms.entity.Videos;
 import com.lms.repository.VideoRepository;
 import jakarta.transaction.Transactional;
@@ -36,5 +37,10 @@ public class VideoService {
 
         return VideoFormDtoList; // Spring Data JPA를 사용하는 경우
 
+    }
+
+    // 관리자 > 영상목록 > 영상정보 + 소속 카테고리정보 추출
+    public List<VideoListDto> findAllVideosByCategoryInfo() {
+        return videoRepository.findVideoWithCategoryInfo();
     }
 }

@@ -1,6 +1,7 @@
 package com.lms.controller;
 
 import com.lms.dto.VideoFormDto;
+import com.lms.dto.VideoListDto;
 import com.lms.entity.Category;
 import com.lms.entity.SubCategory;
 import com.lms.service.CategoryService;
@@ -87,6 +88,38 @@ public class AdminController {
 
         return "redirect:/admin/newVideo";
     }
+
+
+    // 관리자 영상 목록
+    @GetMapping(value = "/videoList")
+    public String videoList(Model model) {
+
+        List<VideoListDto> videoList  =videoService.findAllVideosByCategoryInfo();
+        model.addAttribute("videoList", videoList);
+
+        for (VideoListDto video : videoList) {
+            System.out.println(video.getTitle());
+            System.out.println("--------------------");
+        }
+
+        return "admin/video/videoList";
+    }
+
+    /*// 관리자 영상 상세페이지
+    @GetMapping(value = "/video/${videoId}")
+    public String videoDtl(@PathVariable("videoId") Long videoId, Model model) {
+
+      *//*  // 비디오 정보 반환
+        List<VideoListDto> videoList  =videoService.findAllVideosByCategoryInfo();
+        model.addAttribute("videoList", videoList);
+
+        for (VideoListDto video : videoList) {
+            System.out.println(video.getTitle());
+            System.out.println("--------------------");
+        }*//*
+
+        return "admin/video/videoDtl";
+    }*/
 
 
     // 교육과정 등록 시 선택한 카테고리의 영상목록 반환하기

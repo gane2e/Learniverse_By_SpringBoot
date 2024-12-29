@@ -42,12 +42,12 @@ class SubCategoryRepositoryTest {
         entityManager.persist(category); // 영속화
 
         SubCategory subCategory1 = new SubCategory();
-        subCategory1.setCategoryName("테스트 서브 카테고리2-1");
+        subCategory1.setSubCategoryName("테스트 서브 카테고리2-1");
         subCategory1.setCategories(category); // 연관 관계 설정
         entityManager.persist(subCategory1);
 
         SubCategory subCategory2 = new SubCategory();
-        subCategory2.setCategoryName("테스트 서브 카테고리2-2");
+        subCategory2.setSubCategoryName("테스트 서브 카테고리2-2");
         subCategory2.setCategories(category); // 연관 관계 설정
         entityManager.persist(subCategory2);
 

@@ -228,30 +228,30 @@
   }
 </script>
 <!-- 사용자 스크립트 추가 -->
-  <script th:inline="javascript">
-    $(document).ready(function(){
+<script th:inline="javascript">
+  $(document).ready(function(){
 
-      bindDomEvent();
+    bindDomEvent();
 
+  });
+
+  function bindDomEvent(){
+    $("#custom-file-input").on("change", function() {
+      var fileName = $(this).val().split("\\").pop();  //영상 파일명
+      var fileExt = fileName.substring(fileName.lastIndexOf(".")+1); // 확장자 추출
+      fileExt = fileExt.toLowerCase(); //소문자 변환
+
+      console.log("fileName : " + fileName);
+
+      if(fileExt != "mp4" && fileExt != "avi" && fileExt != "mov" && fileExt != "wmv" && fileExt != "mkv"){
+        alert("영상 파일만 등록이 가능합니다.");
+        return;
+      }
+
+      $(this).siblings(".custom-file-label").html(fileName);
     });
+  }
 
-    function bindDomEvent(){
-      $("#custom-file-input").on("change", function() {
-        var fileName = $(this).val().split("\\").pop();  //영상 파일명
-        var fileExt = fileName.substring(fileName.lastIndexOf(".")+1); // 확장자 추출
-        fileExt = fileExt.toLowerCase(); //소문자 변환
-
-        console.log("fileName : " + fileName);
-
-        if(fileExt != "mp4" && fileExt != "avi" && fileExt != "mov" && fileExt != "wmv" && fileExt != "mkv"){
-          alert("영상 파일만 등록이 가능합니다.");
-          return;
-        }
-
-        $(this).siblings(".custom-file-label").html(fileName);
-      });
-    }
-
-  </script>
+</script>
 </body>
 </html>

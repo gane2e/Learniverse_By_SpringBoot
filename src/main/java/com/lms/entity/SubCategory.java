@@ -18,8 +18,8 @@ public class SubCategory {
     private Long subCategoryId;
 
     /* 2차 카테고리 명  */
-    @Column(nullable = false, length = 50, unique = true)
-    private String categoryName;
+    @Column(nullable = false, length = 50, unique = true, name = "sub_category_name")
+    private String subCategoryName;
 
     @ManyToOne(fetch = FetchType.LAZY) /* 1차 카테고리 테이블 조인 */
     @JoinColumn(name = "category_id")

@@ -28,6 +28,7 @@ public class CourseController {
     @GetMapping(value = "/video")
     public String videoLearning() {
         log.info("video 요청");
-        return "member/videoLearning";
+//        return "member/videoLearning";
+        return "member/testVideo";
     }
 }
