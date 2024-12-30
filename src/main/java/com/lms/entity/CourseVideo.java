@@ -1,5 +1,6 @@
 package com.lms.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,7 @@ import lombok.Setter;
 @Table(name = "course_video")
 @Getter
 @Setter
-public class CourseVideo {
+public class CourseVideo extends BaseEntity {
 
     @Id
     @Column(name = "course_video_id")
@@ -17,6 +18,7 @@ public class CourseVideo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
+    /*@JsonIgnore // 순환 참조 방지 (필요한 경우), 양방향 참조시 무한루프 발생가능*/
     private Courses courses;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -24,4 +26,8 @@ public class CourseVideo {
     private Videos videos;
 
     private Long courseVideoIndex; /* 교육 내 영상 목차 순서 */
+
+
+
+
 }

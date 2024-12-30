@@ -24,7 +24,7 @@ public class SecurityConfig { //시큐리티 설정
                 .authorizeHttpRequests(config ->
                         config
                                 .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                                .requestMatchers("/", "/members/**", "/images/**", "/course/**", "/admin/login").permitAll() //해당 경로의 요청은 누구나 허용한다.
+                                .requestMatchers("/", "/members/**", "/images/**", "/videos/**", "/course/**", "/admin/login").permitAll() //해당 경로의 요청은 누구나 허용한다.
                                 .requestMatchers("/admin/**").hasRole("ADMIN") //해당 경로의 요청은 ADMIN 만 가능
                                 .anyRequest().authenticated() //이외
                 );

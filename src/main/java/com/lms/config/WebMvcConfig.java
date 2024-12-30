@@ -17,7 +17,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
         /* 웹 브라우저에서 입력하는 url에 /images로 시작하는 경우 uploadPath에 설정한 폴더를 기준으로 파일을 읽어온다. */
-        registry.addResourceHandler("/videos/**")
+        registry.addResourceHandler("/images/**")
                 .addResourceLocations(uploadPath); /* 로컬 컴퓨터에 저장된 파일을 읽어올 root 경로설정 */
     }
 }

@@ -26,56 +26,20 @@
     </div>
     
    <ul class="course_list_ul">
-       <li class="course_list_li">
-           <a href="/course/courseDtl" >
+       <li class="course_list_li" th:each="course, status : ${courseList}">
+           <a th:href="'/course/courseDtl/' + ${course.courseId}" >
                <div class="image_container">
-                   <img class="thum" src="https://blog.kakaocdn.net/dn/buBbXt/btspOAijvT5/kK8QRvBlK8LyxId3G69ZA1/img.jpg">
-                   <div class="status">모집중</div>
+                   <img class="thum" th:src="${course.imgUrl}">
+                   <div class="status" th:text="${course.recruitment_status}"></div>
                </div>
            </a><br>
-           <span> 1차 카테고리 </span>
+           <span th:text="${course.categoryName}">  </span>
            <span> > </span>
-           <span>2차 카테고리</span>
-           <a href="/"><p>강의 명 입니다.</p></a>
+           <span th:text="${course.subCategoryName}">  </span>
+           <a th:href="'/course/courseDtl/' + ${course.courseId}" >
+               <p th:text="${course.title}"></p>
+           </a>
        </li>
-       <li class="course_list_li">
-           <a href="/course/courseDtl" >
-               <div class="image_container">
-                   <img class="thum" src="https://blog.kakaocdn.net/dn/buBbXt/btspOAijvT5/kK8QRvBlK8LyxId3G69ZA1/img.jpg">
-                   <div class="status">모집중</div>
-               </div>
-           </a><br>
-           <span> 1차 카테고리 </span>
-           <span> > </span>
-           <span>2차 카테고리</span>
-           <a href="/"><p>강의 명 입니다.</p></a>
-       </li>
-       <li class="course_list_li">
-           <a href="/course/courseDtl" >
-               <div class="image_container">
-                   <img class="thum" src="https://blog.kakaocdn.net/dn/buBbXt/btspOAijvT5/kK8QRvBlK8LyxId3G69ZA1/img.jpg">
-                   <div class="status">모집중</div>
-               </div>
-           </a><br>
-           <span> 1차 카테고리 </span>
-           <span> > </span>
-           <span>2차 카테고리</span>
-           <a href="/"><p>강의 명 입니다.</p></a>
-       </li>
-       <li class="course_list_li">
-           <a href="/course/courseDtl" >
-               <div class="image_container">
-                   <img class="thum" src="https://blog.kakaocdn.net/dn/buBbXt/btspOAijvT5/kK8QRvBlK8LyxId3G69ZA1/img.jpg">
-                   <div class="status">모집중</div>
-               </div>
-           </a><br>
-           <span> 1차 카테고리 </span>
-           <span> > </span>
-           <span>2차 카테고리</span>
-           <a href="/"><p>강의 명 입니다.</p></a>
-       </li>
-
-
    </ul>
     <br>
     <a href="/">1페이지</a>

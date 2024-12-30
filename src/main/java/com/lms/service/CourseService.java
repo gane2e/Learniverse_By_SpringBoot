@@ -1,8 +1,14 @@
 package com.lms.service;
 
 
+import com.lms.dto.CourseFormDto;
+import com.lms.dto.CourseListDto;
+import com.lms.dto.CourseVideoDto;
 import com.lms.dto.VideoFormDto;
+import com.lms.entity.CourseVideo;
+import com.lms.entity.Courses;
 import com.lms.entity.Videos;
+import com.lms.repository.CourseRepository;
 import com.lms.repository.VideoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -10,8 +16,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -21,10 +32,17 @@ public class CourseService {
 
     /* 비디오 CRUD 구현 */
     private final VideoRepository videoRepository;
+    
+    /* 교육과정 CRUD 구현 */
+    private final CourseRepository courseRepository;
 
     /* 영상 저장경로 */
     @Value("${courseVideoLocation}")
     private String courseVideoLocation;
+
+    /* 썸네일 저장경로 */
+    @Value("${courseImgLocation}")
+    private String courseImgLocation;
 
     /* 파일업로드 / 삭제처리 객체생성 */
     private final FileService fileService;
@@ -70,6 +88,30 @@ public class CourseService {
         videoRepository.save(videos);
 
     }
+    /* 영상 저장 로직 실행 END  */
+
+
+    /* 교육과정 저장 로직 실행 START */
+    public void saveCourse(CourseFormDto courseFormDto, MultipartFile imgFile) throws Exception{
+
+        /* CourseFormDto -> Courses 변환 */
+        Courses courses = courseFormDto.createCourse();
+        courseRepository.save(courses); // Courses 저장 (CascadeType.ALL에 의해 CourseVideo도 함께 저장됨)
+
+        String oriImgName = imgFile.getOriginalFilename();
+        System.out.println("---------imgFile.getOriginalFilename()----------" + imgFile.getOriginalFilename());
+        String imgName = "";
+        String imgUrl = "";
+
+        if(!StringUtils.isEmpty(oriImgName)){
+            imgName = fileService.uploadFile(courseImgLocation, oriImgName, imgFile.getBytes());
+            imgUrl = "/images/img/" + imgName;
+        }
+
+        courses.updateImg(oriImgName, imgName, imgUrl);
+        courseRepository.save(courses);
+
+    }
     /* 이미지 저장 로직 실행 END  */
 
 
@@ -103,4 +145,19 @@ public class CourseService {
     /* 상품 이미지 변경 END */
 
    /* }*/
+
+
+    // 사용자페이지 - 교육 전체 리스트 반환
+    public List<CourseListDto> getCourseList(){
+
+        List<CourseListDto> courseList = courseRepository.findAllCourseWithCategoryInfo();
+        return courseList;
+    }
+
+    // 사용자 페이지 - 특정교육 상세페이지 정보반환
+    public CourseListDto CourseByCourseId(Long courseId){
+        return courseRepository.findCourseById(courseId);
+    }
+
+
 }
