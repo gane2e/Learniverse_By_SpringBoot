@@ -2,30 +2,21 @@ package com.lms.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.lms.dto.CourseFormDto;
-import com.lms.dto.CourseVideoDto;
 import com.lms.dto.VideoFormDto;
 import com.lms.dto.VideoListDto;
 import com.lms.entity.Category;
-import com.lms.entity.SubCategory;
 import com.lms.service.CategoryService;
 import com.lms.service.CourseService;
 import com.lms.service.VideoService;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
-import org.modelmapper.internal.bytebuddy.description.method.MethodDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.google.gson.reflect.TypeToken;
-
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -166,27 +157,6 @@ public class AdminController {
                             @RequestParam(value = "videoData", required = false) String videoDataJson) {
 
         System.out.println("교육과정 등록 요청");
-
-
-        if (videoDataJson != null && !videoDataJson.isEmpty()) {
-            System.out.println("videoDataJson 널 아님");
-            try {
-                ObjectMapper objectMapper = new ObjectMapper();
-                List<Map<String, Integer>> videoData = objectMapper.readValue(videoDataJson, new TypeReference<List<Map<String, Integer>>>() {});
-                System.out.println("videoDataJson 매핑중임");
-                for (Map<String, Integer> video : videoData) {
-                    int courseVideoIndex = video.get("courseVideoIndex");
-                    int videoId = video.get("videoId");
-                    System.out.println("순서: " + courseVideoIndex + ", 비디오 ID: " + videoId);
-                    // courseVideoIndex와 videoId를 사용하여 필요한 로직 처리
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-
-                // JSON 파싱 오류 처리
-            }
-        }  else
-            System.out.println("videoDataJson 널임");
 
         if (bindingResult.hasErrors()) {
             System.out.println("bindingResult : 에러발생");

@@ -11,12 +11,12 @@
     <div class="left_cont">
         <div class="category_area">
             <img src="/img/mark_5251227.png" class="category_img">
-            <span class="category_title1">1차 카테고리</span>
+            <span class="category_title1" th:text="${course.categoryName}">1차 카테고리</span>
             <span class="category_title2"> > </span>
-            <span class="category_title2">2차 카테고리</span>
+            <span class="category_title2" th:text="${course.subCategoryName}">2차 카테고리</span>
         </div>
         <div class="top_title_area">
-            <div class="course_title">[영업전] 수입업자 교육</div>
+            <div class="course_title" th:text="${course.title}"></div>
             <div class="hashtag_box">
                 <span class="hashTag">#반려동물</span>
                 <span class="hashTag">#수입업자</span>
@@ -31,7 +31,7 @@
 
         <ul class="list">
             <li><a href="#education" class="list_index">
-                <span class="list_index_title">
+                <span class="list_index_title" >
                        교육 소개
                 </span>
              </a></li>
@@ -51,13 +51,7 @@
             <div class="title_before"></div>
             <div class="title" id="education">교육소개</div>
         </div>
-            <div class="edu_cont_area">
-                교육소개입니다.<br>
-                교육소개입니다.<br>
-                교육소개입니다.<br>
-                교육소개입니다.<br>
-                교육소개입니다.<br>
-            </div>
+            <div class="edu_cont_area" th:text="${course.description}"></div>
 
         <div class="title_area">
             <div class="title_before"></div>
@@ -85,12 +79,7 @@
             <div class="title_before"></div>
             <div class="title" id="completion-criteria">수료기준</div>
         </div>
-        <div class="edu_cont_area">
-            수료기준. <br>
-            수료기준. <br>
-            수료기준. <br>
-            수료기준. <br>
-            수료기준. <br>
+        <div class="edu_cont_area" th:text="${course.completionCriteria}">
         </div>
     </div>
 
@@ -100,21 +89,23 @@
             <div class="inner_box_container">
                 <div class="inner_box">
                     <div class="inner">
-                        <img th:src="https://blog.kakaocdn.net/dn/buBbXt/btspOAijvT5/kK8QRvBlK8LyxId3G69ZA1/img.jpg">
+                        <img th:src="${course.imgUrl}">
                     </div>
 
                     <div class="m_cont">
-                        <div class="m_cont_title">[영업전] 수입업자 교육</div>
+                        <div class="m_cont_title" th:text="${course.title}"></div>
                         <div class="m_cont_tit">
                             <img src="/img/check_15790612.png" class="check_img">수료기준</div>
 
+                        <div class="m_cont_txt" th:text="${course.completionCriteria}">
+                            강의 100% 이수 및 시험 합격시 수료<br>
+                        </div>
+
+                        <div class="m_cont_tit">
+                            <img src="/img/check_15790612.png" class="check_img">난이도</div>
+
                         <div class="m_cont_txt">
-                            강의 100% 이수 및 시험 합격시 수료<br>
-                            강의 100% 이수 및 시험 합격시 수료<br>
-                            강의 100% 이수 및 시험 합격시 수료<br>
-                            강의 100% 이수 및 시험 합격시 수료<br>
-                            강의 100% 이수 및 시험 합격시 수료<br>
-                            강의 100% 이수 및 시험 합격시 수료<br>
+                           중급
                         </div>
                     </div>
 
