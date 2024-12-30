@@ -53,6 +53,8 @@ public class AdminController {
         List<Category> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
         model.addAttribute("videoFormDto", new VideoFormDto());
+
+
         
         return "admin/newVideo";
     }
@@ -125,12 +127,22 @@ public class AdminController {
     // 교육과정 등록 시 선택한 카테고리의 영상목록 반환하기
     @GetMapping("/getVideosBySubCategory")
     @ResponseBody
-    public List<VideoFormDto> getVideosBySubCategory(@RequestParam("subCategoryId") Long subCategoryId) {
+    public List<VideoFormDto> getVideosBySubCategory(@RequestParam("subCategoryId") Long subCategoryId
+            , Model model) {
 
-        List<VideoFormDto> videoFormDtoList = new ArrayList<>();
-        videoFormDtoList = videoService.findVideosBySubCategoryId(subCategoryId);
+        // 위에서 선택한 카테고리별 교육영상 불러오기
+        List<VideoFormDto> scByVideoList = videoService.findVideosBySubCategoryId(subCategoryId);
 
-        return videoFormDtoList;
+        model.addAttribute("videoList", scByVideoList);
+
+        for (VideoFormDto video : scByVideoList) {
+            System.out.println("video ID : " + video.getVideoId());
+            System.out.println("video Title : " + video.getTitle());
+            System.out.println("video fileName : " + video.getOriVideoName());
+            System.out.println("--------------------");
+        }
+
+        return scByVideoList;
     }
 
 
