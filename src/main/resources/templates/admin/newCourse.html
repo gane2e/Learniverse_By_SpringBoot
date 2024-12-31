@@ -283,6 +283,10 @@
 
 
 <script>
+
+  // 선택된 비디오 정보를 저장할 객체
+  let selectedVideoData = {};
+
   // 카테고리 스크립트 START
   function loadSubCategories() {
     const categoryId = document.getElementById("categorySelect").value;
@@ -381,8 +385,12 @@
   // 교육 영상 불러오기 함수 START
   function loadEducationalVideos(subCategoryId, targetSelect) {
 
+
+
     /* targetSelect = [영상추가] 버튼 클릭하여 생성된 셀렉트 */
     console.log("loadEducationalVideos : " + subCategoryId)
+
+
     // AJAX 요청
     $.ajax({
       url: '/admin/getVideosBySubCategory?subCategoryId=' + subCategoryId, // 요청 URL
@@ -401,9 +409,28 @@
           targetSelect.add(option);
         });
 
-        // 영상 선택 후 서버로 순서와 함께 전송하기 위한 이벤트 추가
-        targetSelect.addEventListener("change", function() {
-          updateVideosOrderAndId(); // 영상 선택 후 서버로 전송할 데이터 갱신
+      // 사용자가 선택한 영상의 videoId 값을 가져오는 방법
+        // "change" 이벤트 리스너를 추가하여 선택이 변경될 때마다 videoId를 구하기
+        targetSelect.addEventListener('change', function() {
+
+          const selectedVideoId = targetSelect.value; // 선택된 option의 value (즉, videoId)
+          const rowCountExtracted = targetSelect.id.replace('videoSelect', ''); // targetSelect의 id 속성에서 rowCount 값 추출
+
+          // selectedVideoData에서 해당 rowCount가 없으면 초기화 (한 번만 초기화)
+          if (!selectedVideoData[rowCountExtracted]) {
+            selectedVideoData[rowCountExtracted] = {};  // 빈 객체로 초기화
+          }
+
+          // videoId와 rowCount 값을 저장 (덮어쓰지 않고 누적)
+          selectedVideoData[rowCountExtracted].videoId = selectedVideoId;
+          selectedVideoData[rowCountExtracted].rowCount = rowCountExtracted;
+
+          console.log("선택된 videoId: ", selectedVideoId);
+          console.log("추출된 rowCount:", rowCountExtracted);
+          console.log("저장된 selectedVideoData:", selectedVideoData);
+          console.log("selectedVideoData의 길이 (저장된 항목 수):",  Object.keys(selectedVideoData).length);
+          console.log("selectedVideoData 내용 (JSON 문자열):", JSON.stringify(selectedVideoData, null, 2));
+
         });
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -412,6 +439,40 @@
     });
   }
   // 교육 영상 불러오기 함수 END
+
+  document.getElementById('courseForm').addEventListener('submit', function(event) {
+    // 기본 submit 동작을 막는다.
+    event.preventDefault();
+
+    // 데이터를 담을 객체 (selectedVideoData는 이미 정의된 상태로 가정)
+    const formData = {
+      selectedVideoData: selectedVideoData // selectedVideoData를 JSON 문자열로 변환하지 않고 객체 그대로 전송
+    };
+
+    console.log(formData)
+    console.log(JSON.stringify(formData))
+
+    // AJAX 요청 보내기
+    $.ajax({
+      url: '/admin/newCourse/video', // 데이터를 보낼 서버의 URL
+      type: 'POST', // 요청 방식
+      contentType: 'application/json', // Content-Type을 JSON으로 설정
+      data: JSON.stringify(formData), // 데이터를 JSON 문자열로 변환하여 전송
+      success: function(response) {
+        console.log("서버 응답:", response);
+
+        // AJAX 요청이 성공하면 form을 실제로 제출한다
+        // 폼 데이터를 제출하려면 submit() 메서드를 호출
+        document.getElementById('courseForm').submit();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error("Error sending data:", textStatus, errorThrown); // 오류 로그
+      }
+    });
+  });
+
+
+
 
 </script>
 

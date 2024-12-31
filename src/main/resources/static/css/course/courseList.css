@@ -17,12 +17,12 @@ a:hover {
 
 .search_box {
     margin: 0 auto;
-    width: 1372px;
+    width: 1400px;
     height: 100px;
     background: #ffffff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 30px 60px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .search_title {
@@ -35,22 +35,30 @@ a:hover {
 
 .search_btn {
     width: 100px;
-    background: #54575E;
 }
 
 .course_list_ul {
     display: flex;
     list-style: none;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
+    width: 100%;
 }
 .course_list_li {
     display: inline-block;
-    margin-bottom: 30px;
+    width: 228px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 10px;
 }
 
 .image_container {
     position: relative;
+    width: 100%;
+}
+.image_container img {
+    width: 100%;
+    border-radius: 10px;
 }
 
 .status {
@@ -71,5 +79,22 @@ a:hover {
 
 img:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.category_area {
+    margin-bottom: 10px;
+}
+
+.category_title1 {
+    color: #828282;
+}
+.category_title2 {
+    color: #1f8ce9;
+}
+
+.title {
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 25px;
+    color: #212529;
 }
 

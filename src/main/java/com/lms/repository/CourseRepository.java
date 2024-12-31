@@ -2,6 +2,7 @@ package com.lms.repository;
 
 
 import com.lms.dto.CourseListDto;
+import com.lms.dto.CourseVideoDto;
 import com.lms.dto.VideoListDto;
 import com.lms.entity.Courses;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -34,5 +35,14 @@ public interface CourseRepository extends JpaRepository<Courses, Long> {
             "WHERE co.courseId = :courseId")
     public CourseListDto findCourseById(@Param("courseId") Long courseId);
 
+
+    @Query("SELECT new com.lms.dto.CourseVideoDto" +
+            "(c.courseId , v.videoId , cv.courseVideoIndex, v.title, " +
+            "v.videoName, v.oriVideoName, v.videoUrl, c.title) " +
+            "FROM CourseVideo cv " +
+            "JOIN cv.videos v " +
+            "JOIN cv.courses c " +
+            "WHERE cv.courses.courseId = :courseId")
+    List<CourseVideoDto> findVideoById(@Param("courseId") Long courseId);
 
 }

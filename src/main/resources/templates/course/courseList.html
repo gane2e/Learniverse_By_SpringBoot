@@ -33,11 +33,13 @@
                    <div class="status" th:text="${course.recruitment_status}"></div>
                </div>
            </a><br>
-           <span th:text="${course.categoryName}">  </span>
-           <span> > </span>
-           <span th:text="${course.subCategoryName}">  </span>
+           <div class="category_area">
+               <span class="category_title1" th:text="${course.categoryName}">  </span>
+               <span> > </span>
+               <span class="category_title2" th:text="${course.subCategoryName}">  </span>
+           </div>
            <a th:href="'/course/courseDtl/' + ${course.courseId}" >
-               <p th:text="${course.title}"></p>
+               <p class="title" th:text="${course.title}"></p>
            </a>
        </li>
    </ul>

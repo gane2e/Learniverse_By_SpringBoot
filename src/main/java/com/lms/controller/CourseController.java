@@ -2,15 +2,14 @@ package com.lms.controller;
 
 import com.lms.dto.CourseFormDto;
 import com.lms.dto.CourseListDto;
+import com.lms.dto.CourseVideoDto;
 import com.lms.service.CourseService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,7 +34,6 @@ public class CourseController {
     // 교육 상세페이지
     @GetMapping(value = "/courseDtl/{courseId}")
     public String courseDtl(@PathVariable("courseId") Long courseId, Model model) {
-        log.info("courseDtl 요청");
 
         CourseListDto courseDto = courseService.CourseByCourseId(courseId);
         model.addAttribute("course", courseDto);
@@ -43,11 +41,43 @@ public class CourseController {
         return "course/courseDtl";
     }
 
-    @GetMapping(value = "/video")
-    public String videoLearning() {
-        log.info("video 요청");
-//        return "member/videoLearning";
-        return "member/testVideo";
+    // CourseRequest => 신청내역 받을 DTO 생성후 변환해서 사용 (CourseDtl에서 ajax요청)
+   /* @PostMapping(value = "/courseApplication")
+    public ResponseEntity<String> handlePostRequest(@RequestBody CourseRequest courseRequest) {
+        // courseId 값을 받음
+        Long courseId = courseRequest.getCourseId();
+        System.out.println("받은 courseId: " + courseId);
+
+        // 필요한 처리 후 응답 반환
+        return ResponseEntity.ok("Request successfully processed");
+    }
+}*/
+
+
+    
+    // 영상학습 페이지
+    @GetMapping(value = "/video/{courseId}")
+    public String videoLearning(@PathVariable("courseId") Long courseId, Model model) {
+
+        //교육 상세정보 반환
+        CourseListDto courseDto = courseService.CourseByCourseId(courseId);
+        model.addAttribute("course", courseDto);
+        
+        // 교육영상 정보 반환
+        List<CourseVideoDto> courseVideo = courseService.findVideoById(courseId);
+        model.addAttribute("courseVideo", courseVideo);
+
+        if(courseVideo.isEmpty()){
+            System.out.println("비디오 목록이 없습니다.");
+        }
+        for (CourseVideoDto courseVideoDto : courseVideo) {
+            System.out.println("-----------------------------------");
+            System.out.println(courseVideoDto.getCourseVideoIndex());
+            System.out.println(courseVideoDto.getVideoTitle());
+            System.out.println(courseVideoDto.getVideoUrl());
+        }
+        
+        return "member/videoLearning";
     }
 
 }

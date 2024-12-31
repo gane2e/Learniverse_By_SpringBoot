@@ -3,20 +3,25 @@ package com.lms.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lms.dto.CourseFormDto;
+import com.lms.dto.CourseVideoDto;
 import com.lms.dto.VideoFormDto;
 import com.lms.dto.VideoListDto;
 import com.lms.entity.Category;
 import com.lms.service.CategoryService;
 import com.lms.service.CourseService;
+import com.lms.service.CourseVideoService;
 import com.lms.service.VideoService;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +38,8 @@ public class AdminController {
 
     @Autowired
     private VideoService videoService;
+    @Autowired
+    private CourseVideoService courseVideoService;
 
     /* 교육과정 등록페이지 */
     @GetMapping(value = "/newCourse")
@@ -148,16 +155,51 @@ public class AdminController {
     }
 
 
+    //교육과정 - 영상요청 테스트
+    @PostMapping(value = "/newCourse/video")
+    public ResponseEntity<String> createNewCourse(@RequestBody Map<String, Object> formData) {
+
+        Map<String, Map<String, String>> selectedVideoData = (Map<String, Map<String, String>>) formData.get("selectedVideoData");
+
+        System.out.println("selectedVideoData: " + selectedVideoData);
+
+        selectedVideoData.forEach((key, value) -> {
+
+            String videoIdString = value.get("videoId");
+            String rowCountString = value.get("rowCount");
+            Long videoId = null;
+            Long rowCount = null;
+
+            try {
+                videoId = Long.parseLong(videoIdString); // 또는 Long.valueOf(videoIdString)
+                rowCount = Long.parseLong(rowCountString); // 또는 Long.valueOf(rowCountString)
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid number format: " + e.getMessage());
+            }
+
+            // CourseVideoDto 객체 생성 및 값 설정
+            CourseVideoDto courseVideoDto = new CourseVideoDto();
+            courseVideoDto.setVideoId(videoId);
+            courseVideoDto.setCourseVideoIndex(rowCount);
+
+            System.out.println("------------------------------------------");
+            System.out.println("Key: " + key);
+            System.out.println("VideoId: " + videoId);
+            System.out.println("RowCount: " + rowCount);
+
+            courseVideoService.saveCourseVideo(courseVideoDto);
+        });
+        return ResponseEntity.ok("Course Created Successfully");
+    }
+
 
     // 교육과정 등록 요청
     @PostMapping(value = "/newCourse")
     public String newCourse(@Valid CourseFormDto courseFormDto, BindingResult bindingResult,
                             Model model,
-                            @RequestParam("imgFile") MultipartFile imgFile,
-                            @RequestParam(value = "videoData", required = false) String videoDataJson) {
+                            @RequestParam("imgFile") MultipartFile imgFile) {
 
         System.out.println("교육과정 등록 요청");
-
         if (bindingResult.hasErrors()) {
             System.out.println("bindingResult : 에러발생");
 
@@ -173,7 +215,7 @@ public class AdminController {
         }
 
         try {
-            courseService.saveCourse(courseFormDto, imgFile/*, courseVideoDtos*/);
+            courseService.saveCourse(courseFormDto, imgFile);
         } catch (Exception e) {
             model.addAttribute("errorMsg", "교육과정 등록중 에러가 발생하였습니다.");
             System.out.println("catch : 에러발생");

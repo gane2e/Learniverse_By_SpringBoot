@@ -115,8 +115,11 @@
                 <div class="cont_btn_list_area">
                     <ul class="bottom_list">
                         <li>
-                            <a href="/course/video" class="btn" >
+                            <!--th:href="'/course/video/' + ${course.courseId}"-->
+                            <a class="btn"
+                               onclick="application()">
                                 <span class="first_btn">수강신청</span>
+                                <input type="hidden" id="courseId" th:value="${course.courseId}">
                             </a>
                         </li>
                         <li>
@@ -126,13 +129,48 @@
                         </li>
                     </ul>
                 </div>
-
-
             </div>
-            </div>
+        </div>
 
+    <script>
+        // 로그인 여부에 따른 신청처리로직
+        function application(){
 
-    
+            const courseId = document.querySelector('#courseId').value;
+
+                fetch('/loginCheck', {
+                    method: 'GET',  // GET 요청
+                    headers: {
+                        'Content-Type': 'text/plain',  // 텍스트 응답을 받을 것임
+                    }
+                })
+                    .then(response => response.text())  // 응답을 텍스트 형식으로 처리
+                    .then(data => {
+                        // 응답에 따른 처리 (예: 로그인 상태에 따라 UI 변경)
+                        if (data === "로그인 상태입니다.") {
+                            // 로그인 상태일 경우, POST 요청 보내기
+                            fetch('/courseApplication', {
+                                method: 'POST',  // POST 요청
+                                headers: {
+                                    'Content-Type': 'application/json',  // JSON 형식으로 데이터 전송
+                                },
+                                body: JSON.stringify({
+                                    courseId: courseId
+                                })
+                            })
+                        } else {
+                            console.log("로그인되지 않았습니다.");
+                            alert("로그인 후 이용 가능한 서비스입니다.")
+                        }
+                    })
+                    .catch(error => {
+                        console.error("AJAX 오류:", error);
+                        // 요청 실패시 처리
+                    });
+        }
+    </script>
+
 </div>
+
 
 </html>

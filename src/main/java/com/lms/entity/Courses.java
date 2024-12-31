@@ -55,21 +55,7 @@ public class Courses extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sub_category_id")
     private SubCategory subCategory;
-
-    /* 교육과정에 해당하는 영상목록  */
-    @OneToMany(mappedBy = "courses", cascade = CascadeType.ALL)
-    private List<CourseVideo> courseVideoList = new ArrayList<CourseVideo>();
-
-    public void addCourseVideo(CourseVideo courseVideo) {
-        this.courseVideoList.add(courseVideo);
-        courseVideo.setCourses(this);
-    }
-
-    public void removeCourseVideo(CourseVideo courseVideo) {
-        this.courseVideoList.remove(courseVideo);
-        courseVideo.setCourses(null);
-    }
-
+    
 
     /* 원본명, 업데이트 이미지명, 이미지 경로를 파라미터로 입력받아 이미지 정보를 업데이트하는 메서드 */
     public void updateImg(String oriImgName, String imgName, String imgUrl){

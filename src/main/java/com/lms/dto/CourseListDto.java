@@ -47,6 +47,8 @@ public class CourseListDto {
     private Long subCategoryId; //해당 교육과정의 서브카테고리
     private String subCategoryName; //해당 교육과정의 서브카테고리
 
+    
+
 
     public CourseListDto(Long courseId, String title, String description,
                          Recruitment_status recruitment_status, LocalDate recruitment_start_date,

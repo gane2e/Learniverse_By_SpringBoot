@@ -1,6 +1,7 @@
 package com.lms.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lms.dto.CourseVideoDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +27,22 @@ public class CourseVideo extends BaseEntity {
     private Videos videos;
 
     private Long courseVideoIndex; /* 교육 내 영상 목차 순서 */
+
+
+    public static CourseVideo createCourseVideo(Long courseVideoIndex, Videos video) {
+        CourseVideo courseVideo = new CourseVideo();
+        courseVideo.setVideos(video);
+        courseVideo.setCourseVideoIndex(courseVideoIndex);
+        return courseVideo;
+    }
+
+    public void updatecourseId(Courses course){
+        this.courses = course;
+    }
+
+
+
+
 
 
 

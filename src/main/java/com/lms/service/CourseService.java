@@ -1,6 +1,5 @@
 package com.lms.service;
 
-
 import com.lms.dto.CourseFormDto;
 import com.lms.dto.CourseListDto;
 import com.lms.dto.CourseVideoDto;
@@ -9,20 +8,17 @@ import com.lms.entity.CourseVideo;
 import com.lms.entity.Courses;
 import com.lms.entity.Videos;
 import com.lms.repository.CourseRepository;
+import com.lms.repository.CourseVideoRepository;
 import com.lms.repository.VideoRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -32,9 +28,12 @@ public class CourseService {
 
     /* 비디오 CRUD 구현 */
     private final VideoRepository videoRepository;
-    
+
     /* 교육과정 CRUD 구현 */
     private final CourseRepository courseRepository;
+
+    /* 교육과정 CRUD 구현 */
+    private final CourseVideoRepository courseVideoRepository;
 
     /* 영상 저장경로 */
     @Value("${courseVideoLocation}")
@@ -74,7 +73,7 @@ public class CourseService {
             videoName = fileService.uploadFile(courseVideoLocation, oriVideoName, videoFile.getBytes());
             /* [imgName] => 62ecf0dc-9513-4b86-abf2-d1a506f70864.png*/
 
-            videoUrl = "/videos/" + videoName;
+            videoUrl = "/videos/video/" + videoName;
             /* [imgUrl] => /images/item/aa9148d3-e8c2-41a4-9e01-553a88daf5e9.png */
 
             /* 이 줄에서 save하면 첨부개수만큼만 저장됩니다. */
@@ -110,6 +109,12 @@ public class CourseService {
 
         courses.updateImg(oriImgName, imgName, imgUrl);
         courseRepository.save(courses);
+       
+        // 교육영상목록에 교육id가 null인 행에 현재 등록중인 교육객체 넣어주기
+        List<CourseVideo> courseVideoList = courseVideoRepository.findByCoursesIsNull();
+        for(CourseVideo courseVideo : courseVideoList){
+            courseVideo.updatecourseId(courses);
+        }
 
     }
     /* 이미지 저장 로직 실행 END  */
@@ -158,6 +163,14 @@ public class CourseService {
     public CourseListDto CourseByCourseId(Long courseId){
         return courseRepository.findCourseById(courseId);
     }
+
+
+    // 사용자 페이지 - 특정교육 교육영상 반환
+    public List<CourseVideoDto> findVideoById(Long courseId){
+        List<CourseVideoDto> CourseVideoList = courseRepository.findVideoById(courseId);
+        return CourseVideoList;
+    }
+
 
 
 }

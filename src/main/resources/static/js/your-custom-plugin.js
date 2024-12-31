@@ -15,6 +15,19 @@
 /* videoJS 플러그인 https://videojs.com/plugins/ */
 
 document.addEventListener('DOMContentLoaded', function () {
+
+    // 영상 목차 클릭 시 영상 변경 이벤트
+    document.querySelectorAll('.lecture_btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+
+            var videoUrl = this.getAttribute('data-video-url');
+            var localUrl = 'http://localhost:8080';
+            var playUrl = localUrl + videoUrl
+
+            player.src({ src: playUrl, type: "video/mp4" });
+        });
+    });
+
     var player = videojs('videoPlayer', {
         autoplay: 'muted', // 자동재생 여부
         controls: true,
@@ -47,6 +60,9 @@ document.addEventListener('DOMContentLoaded', function () {
         var duration = player.duration();  // 총 비디오 길이 (초)
         console.log('Current time: ' + currentTime + ' / Total duration: ' + duration);
     });
+
+
+
 
 
 })
