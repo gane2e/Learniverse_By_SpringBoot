@@ -27,7 +27,6 @@ public class MainController {
 
         // 현재 인증된 사용자 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("현재 로그인한 사용자 : " + authentication);
 
         if (authentication != null && authentication.isAuthenticated()) {
             return ResponseEntity.ok("로그인 상태입니다."); // 로그인 상태

@@ -73,9 +73,9 @@ nav ul li a:hover {
 }
 #logo > a > img {
   float: left;
-  width: 129px;
-  height: 48px;
-  margin: 20px 25px;
+  width: 150px;
+  height: 45px;
+  margin: 25px 26px;
   margin-left: 17%;
 }
 
@@ -98,9 +98,6 @@ nav ul li a:hover {
   width: 48px;
   height: 48px;
   margin: -5px -10px 0 10px;
-}
-.modal_img {
-  filter: brightness(0) invert(1);
 }
 /* 푸터 */
 footer {
@@ -160,8 +157,8 @@ footer {
   margin: 0 auto;
 }
 #footer-main-info img {
-  width: 82px;
-  height: 32px;
+  width: 150px;
+  height: 45px;
   margin: 20px 0;
 }
 #footer-main-info span {

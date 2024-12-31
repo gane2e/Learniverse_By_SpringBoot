@@ -1,15 +1,13 @@
 package com.lms.service;
 
-import com.lms.dto.CourseFormDto;
-import com.lms.dto.CourseListDto;
-import com.lms.dto.CourseVideoDto;
-import com.lms.dto.VideoFormDto;
-import com.lms.entity.CourseVideo;
-import com.lms.entity.Courses;
-import com.lms.entity.Videos;
-import com.lms.repository.CourseRepository;
-import com.lms.repository.CourseVideoRepository;
-import com.lms.repository.VideoRepository;
+import com.lms.constant.Application_status;
+import com.lms.constant.Completion_status;
+import com.lms.constant.Enrollment_status;
+import com.lms.constant.Test_status;
+import com.lms.dto.*;
+import com.lms.entity.*;
+import com.lms.repository.*;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -34,6 +32,15 @@ public class CourseService {
 
     /* 교육과정 CRUD 구현 */
     private final CourseVideoRepository courseVideoRepository;
+    
+    /* 회원 CRUD 구현 */
+    private final MemberRepository memberRepository;
+    
+    /* 교육신청내역 CRUD 구현 */
+    private final CourseApplicationRepository courseApplicationRepository;
+
+    /* 교육수강생관리 CRUD 구현 */
+    private final StudentCourseRepository studentCourseRepository;
 
     /* 영상 저장경로 */
     @Value("${courseVideoLocation}")
@@ -169,6 +176,37 @@ public class CourseService {
     public List<CourseVideoDto> findVideoById(Long courseId){
         List<CourseVideoDto> CourseVideoList = courseRepository.findVideoById(courseId);
         return CourseVideoList;
+    }
+
+    // 사용자 페이지 - 교육 신청시 신청내역 저장
+    public void saveApplication(Long courseId, String username){
+
+        Courses course = courseRepository.findById(courseId)
+                .orElseThrow( ()-> new EntityNotFoundException() );
+        Member member = memberRepository.findByLoginId(username);
+
+        CourseApplication courseApplication = new CourseApplication();
+        courseApplication.setCourse(course);
+        courseApplication.setMember(member);
+        courseApplication.setApplication_status(Application_status.신청완료);
+        courseApplicationRepository.save(courseApplication);
+
+        StudentCourseDto studentCourseDto = new StudentCourseDto();
+        studentCourseDto.setEnrollmentStatus(Enrollment_status.수강신청);
+        studentCourseDto.setTestStatus(Test_status.미응시);
+        studentCourseDto.setCompletionStatus(Completion_status.미수료);
+
+        StudentCourse student = studentCourseDto.createStudentCourse();
+        studentCourseRepository.save(student);
+
+        System.out.println("신청내역ID : " + courseApplication.getApplicationId());
+        CourseApplication application = courseApplicationRepository.findById(courseApplication.getApplicationId())
+                .orElseThrow( ()-> new EntityNotFoundException() );
+        student.setCourseApplication(application);
+
+
+
+
     }
 
 

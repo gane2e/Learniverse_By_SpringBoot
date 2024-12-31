@@ -63,8 +63,6 @@ public class AdminController {
         model.addAttribute("categories", categories);
         model.addAttribute("videoFormDto", new VideoFormDto());
 
-
-        
         return "admin/newVideo";
     }
 
@@ -80,12 +78,10 @@ public class AdminController {
             System.out.println("bindingResult : 에러발생");
             return "error/404";
         }
-
         if (videoFile.isEmpty()) {
             System.out.println("videoFile.isEmpty() : 필수");
             model.addAttribute("errorMsg", "영상은 필수 첨부입니다.");
         }
-
         try {
             courseService.saveVideo(videoFormDto, videoFile);
         } catch (Exception e) {
