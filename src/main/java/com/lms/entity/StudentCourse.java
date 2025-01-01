@@ -26,8 +26,9 @@ public class StudentCourse extends BaseEntity {
 
     private LocalDateTime completionDateTime; //학습 수료일
 
-    @Column(columnDefinition = "bigint default 0")
     private double ProgressRate; // 진도율
+
+    private Long last_watched; //마지막 시청 시점(초 단위)
 
     //수강상태(수강신청, 학습중, 학습완료)
     @Enumerated(EnumType.STRING)
@@ -44,5 +45,7 @@ public class StudentCourse extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id")
     private CourseApplication courseApplication;
+    
+    
 
 }

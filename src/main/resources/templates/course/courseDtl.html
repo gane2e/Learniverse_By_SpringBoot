@@ -150,7 +150,7 @@
                         if (data === "로그인 상태입니다.") {
                             // 로그인 상태일 경우, POST 요청 보내기
                             console.log(data)
-
+                            const courseId = document.getElementById('courseId').value;
                             if(confirm('수강 신청하시겠습니까?')) {
                                 fetch('/course/courseApplication', {
                                     method: 'POST',  // POST 요청
@@ -161,27 +161,25 @@
                                         courseId: courseId
                                     })
                                 })
-                                    .then(response => response.text())  // 응답을 텍스트 형식으로 처리
+                                    .then(response => response.json())  // 응답을 텍스트 형식으로 처리
                                     .then(postData => {
-                                        // POST 요청 성공 후 처리
                                         alert('수강 신청이 완료되었습니다.');
-
-                                        // '확인' 버튼을 클릭하면 특정 페이지로 이동
-                                        window.location.href = '/course/applicationSuccess';  // 이동할 페이지 URL
+                                        const applicationId = postData.applicationId;
+                                        window.location.href = `/course/applicationSuccess?courseId=${courseId}&applicationId=${applicationId}`;  // 이동할 페이지 URL
                                     })
                                     .catch(error => {
                                         console.error('POST 요청에 실패했습니다:', error);
                                         alert('수강 신청 중 오류가 발생했습니다.');
                                     });
                             } else {
-                                console.log("로그인되지 않았습니다.");
-                                alert("로그인 후 이용 가능한 서비스입니다.")
+                                return;
                             }
+                        }  else {
+                            alert("로그인 후 이용 가능한 서비스입니다.")
                         }
                     })
                     .catch(error => {
                         console.error("AJAX 오류:", error);
-                        // 요청 실패시 처리
                     });
         }
     </script>

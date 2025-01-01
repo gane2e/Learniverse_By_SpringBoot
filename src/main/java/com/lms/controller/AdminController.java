@@ -93,7 +93,7 @@ public class AdminController {
 
         log.info("영상등록 성공!");
 
-        return "redirect:/admin/newVideo";
+        return "redirect:/admin/videoList";
     }
 
 

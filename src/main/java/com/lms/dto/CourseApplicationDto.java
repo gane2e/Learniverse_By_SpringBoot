@@ -2,10 +2,7 @@ package com.lms.dto;
 
 import com.lms.constant.Application_status;
 import com.lms.constant.Recruitment_status;
-import com.lms.entity.BaseEntity;
-import com.lms.entity.CourseApplication;
-import com.lms.entity.CourseVideo;
-import com.lms.entity.Member;
+import com.lms.entity.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,5 +19,10 @@ public class CourseApplicationDto {
     private Application_status application_status;
 
     private static ModelMapper modelMapper = new ModelMapper();
+
+    /* Courses -> CourseFormDto 변환 */
+    public static CourseApplicationDto of(CourseApplication application) {
+        return modelMapper.map(application, CourseApplicationDto.class);
+    }
 
 }

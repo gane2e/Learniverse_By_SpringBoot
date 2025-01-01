@@ -179,7 +179,7 @@ public class CourseService {
     }
 
     // 사용자 페이지 - 교육 신청시 신청내역 저장
-    public void saveApplication(Long courseId, String username){
+    public Long saveApplication(Long courseId, String username){
 
         Courses course = courseRepository.findById(courseId)
                 .orElseThrow( ()-> new EntityNotFoundException() );
@@ -199,14 +199,12 @@ public class CourseService {
         StudentCourse student = studentCourseDto.createStudentCourse();
         studentCourseRepository.save(student);
 
-        System.out.println("신청내역ID : " + courseApplication.getApplicationId());
-        CourseApplication application = courseApplicationRepository.findById(courseApplication.getApplicationId())
+        Long applicationId =  courseApplication.getApplicationId();
+        CourseApplication application = courseApplicationRepository.findById(applicationId)
                 .orElseThrow( ()-> new EntityNotFoundException() );
         student.setCourseApplication(application);
 
-
-
-
+        return applicationId;
     }
 
 

@@ -4,7 +4,11 @@ import com.lms.dto.CourseApplicationDto;
 import com.lms.dto.CourseFormDto;
 import com.lms.dto.CourseListDto;
 import com.lms.dto.CourseVideoDto;
+import com.lms.entity.Member;
+import com.lms.repository.MemberRepository;
+import com.lms.service.ApplicationService;
 import com.lms.service.CourseService;
+import com.lms.service.MemberService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +18,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Log4j2
@@ -23,6 +29,12 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private ApplicationService applicationService;
+    @Autowired
+    private MemberRepository memberRepository;
 
     @GetMapping(value = "/courses")
     public String courses(Model model) {
@@ -46,31 +58,55 @@ public class CourseController {
 
     // CourseRequest => 신청내역 받을 DTO 생성후 변환해서 사용 (CourseDtl에서 ajax요청)
     @PostMapping(value = "/courseApplication")
-    public ResponseEntity<String> handlePostRequest(@RequestBody CourseApplicationDto courseApplicationDto) {
+    public ResponseEntity<Map<String, Long>> handlePostRequest(@RequestBody CourseApplicationDto courseApplicationDto) {
 
         Long courseId = courseApplicationDto.getCourseId();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        courseService.saveApplication(courseId, username);
+        Long applicationId = courseService.saveApplication(courseId, username);
 
-        // 필요한 처리 후 응답 반환
-        return ResponseEntity.ok("Request successfully processed");
+        // 응답으로 applicationId 반환
+        Map<String, Long> response = new HashMap<>();
+        response.put("applicationId", applicationId);
+
+        return ResponseEntity.ok(response);
     }
 
     // 수강신청 완료페이지
     @GetMapping(value = "/applicationSuccess")
-    public String applicationSuccess() {
+    public String applicationSuccess(
+            @RequestParam("courseId") Long courseId,
+            @RequestParam("applicationId") Long applicationId,
+            Model model) {
+        CourseListDto courseDto = courseService.CourseByCourseId(courseId);
+        model.addAttribute("course", courseDto);
+        model.addAttribute("pageTitle", "온라인 교육");
+        model.addAttribute("applicationId", applicationId);
         return "course/courseReg-completion";
     }
 
 
 
     // 영상학습 페이지
-    @GetMapping(value = "/video/{courseId}")
-    public String videoLearning(@PathVariable("courseId") Long courseId, Model model) {
+    @GetMapping(value = "/video/{applicationId}")
+    public String videoLearning(@PathVariable("applicationId") Long applicationId,
+                                Model model) {
 
+        // 로그인중인 사용자 고유키 찾기
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String username = authentication.getName();
+//        Member member = memberRepository.findByLoginId(username);
+//        Long memberId = member.getId();
+
+
+        // 신청내역 고유키 => 교육 신청내역 반환
+        CourseApplicationDto application = applicationService.findByApplicationId(applicationId);
+        model.addAttribute("application", application);
+
+        Long courseId = application.getCourseId();
+        
         //교육 상세정보 반환
         CourseListDto courseDto = courseService.CourseByCourseId(courseId);
         model.addAttribute("course", courseDto);
