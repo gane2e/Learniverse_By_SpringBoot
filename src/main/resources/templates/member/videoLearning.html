@@ -30,9 +30,8 @@
                          preload="auto"
                          width="1340"
                          height="670"
-                         data-setup="{}"
                  >
-                     <source id="videoSource" src="" type="video/mp4" />
+                     <!--<source id="videoSource" src="" type="video/mp4" />-->
                      <p class="vjs-no-js">
                          To view this video please enable JavaScript, and consider upgrading to a
                          web browser that
@@ -58,10 +57,13 @@
                  <div class="inner_box">
                      <ul>
                          <li th:each="courseVideo : ${courseVideo}">
-                             <button class="lecture_btn" th:data-video-url="${courseVideo.videoUrl}">
+                             <button class="lecture_btn"
+                                     th:data-video-url="${courseVideo.videoUrl}"
+                                     th:data-index="${courseVideo.courseVideoIndex}">
                                 <div class="title">[[${courseVideo.videoTitle}]]</div>
                                  <div class="line">
-                                     <span class="line2"></span>
+                                     <span class="line2"
+                                           th:id="'progress-' + ${courseVideo.courseVideoIndex}"></span>
                                  </div>
                                  <div class="data-area">
                                      <span class="percentText">0%</span>
@@ -89,9 +91,10 @@
      </div>
 
 
-     <script src="https://vjs.zencdn.net/7.6.0/video.js"></script>
+     <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
      <!-- 플러그인-->
      <script src="https://cdn.sc.gl/videojs-hotkeys/0.2/videojs.hotkeys.min.js"></script>
+<!--     <script type="text/javascript" src="/js/plugin/videojs-playlists.js"></script>-->
      <script type="text/javascript" src="/js/your-custom-plugin.js"></script>
 
 
