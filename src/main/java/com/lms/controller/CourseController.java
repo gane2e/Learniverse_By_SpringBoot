@@ -1,14 +1,12 @@
 package com.lms.controller;
 
-import com.lms.dto.CourseApplicationDto;
-import com.lms.dto.CourseFormDto;
-import com.lms.dto.CourseListDto;
-import com.lms.dto.CourseVideoDto;
+import com.lms.dto.*;
 import com.lms.entity.Member;
 import com.lms.repository.MemberRepository;
 import com.lms.service.ApplicationService;
 import com.lms.service.CourseService;
 import com.lms.service.MemberService;
+import com.lms.service.StudentCourseService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +31,8 @@ public class CourseController {
     private MemberService memberService;
     @Autowired
     private ApplicationService applicationService;
+    @Autowired
+    private StudentCourseService studentCourseService;
     @Autowired
     private MemberRepository memberRepository;
 
@@ -94,12 +94,6 @@ public class CourseController {
     public String videoLearning(@PathVariable("applicationId") Long applicationId,
                                 Model model) {
 
-        // 로그인중인 사용자 고유키 찾기
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String username = authentication.getName();
-//        Member member = memberRepository.findByLoginId(username);
-//        Long memberId = member.getId();
-
 
         // 신청내역 고유키 => 교육 신청내역 반환
         CourseApplicationDto application = applicationService.findByApplicationId(applicationId);
@@ -114,6 +108,11 @@ public class CourseController {
         // 교육영상 정보 반환
         List<CourseVideoDto> courseVideo = courseService.findVideoById(courseId);
         model.addAttribute("courseVideo", courseVideo);
+
+        //수강정보 반환
+        StudentCourseDto student = studentCourseService.findByApplicationId(applicationId);
+        model.addAttribute("student", student);
+
 
         if(courseVideo.isEmpty()){
             System.out.println("비디오 목록이 없습니다.");

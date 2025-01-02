@@ -45,7 +45,11 @@ public class StudentCourse extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id")
     private CourseApplication courseApplication;
-    
+
+    //마지막 시청시간 업데이트
+    public void updateLastWatched(Long last_watched){
+        this.last_watched = last_watched;
+    }
     
 
 }

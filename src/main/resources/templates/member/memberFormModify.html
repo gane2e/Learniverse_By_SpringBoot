@@ -22,7 +22,7 @@
           th:object="${member}">
         <div class="title_area">
             <div class="title_before"></div>
-            <div class="title">회원정보 입력</div>
+            <div class="title">회원정보 수정</div>
             <div class="description">
                 <span>*</span> 표시는 필수 입력사항입니다.
             </div>
@@ -31,17 +31,8 @@
         <!-- 정보입력 테이블 -->
         <table class="table_area">
             <tr>
-                <th><span class="red_txt">*</span>  아이디</th>
-                <td>
-                    <div class="inp_txt_area">
-                        <label for="inp_txt">
-                            <input type="text" id="inp_txt" name="loginId" class="inp_txt"
-                                   vali-text="아이디를 입력해주세요."
-                                   th:field="*{loginId}">
-                        </label>
-                        <button class="check_id_btn">중복확인</button>
-                    </div>
-                </td>
+                <th>아이디</th>
+                <td th:text="*{loginId}"></td>
             </tr>
             <tr>
                 <th><span class="red_txt">*</span>  비밀번호</th>
@@ -69,46 +60,17 @@
             <!-- 성명 -->
             <tr>
                 <th><span class="red_txt">*</span>  성명</th>
-                <td>
-                    <div class="inp_txt_area">
-                        <label for="inp_name">
-                            <input type="text" id="inp_name" name="name" class="inp_name"
-                                   vali-text="성명을 입력해주세요."
-                                   th:field="*{name}">
-                        </label>
-                    </div>
-                </td>
+                <td th:text="*{name}"></td>
             </tr>
             <!-- 생년월일 -->
             <tr>
-                <th><span class="red_txt">*</span> 생년월일</th>
-                <td>
-                    <div class="inp_txt_area">
-                        <label for="inp_date">
-                            <input type="date" id="inp_date" name="birthdate" class="inp_date"
-                                   vali-text="생년월일을 선택해주세요."
-                                   th:field="*{birthdate}">
-                        </label>
-                    </div>
-                </td>
+                <th>생년월일</th>
+                <td th:text="*{birthdate}"></td>
             </tr>
             <!-- 성별 -->
             <tr>
-                <th><span class="red_txt">*</span>  성별</th>
-                <td>
-                    <div class="inp_txt_area">
-                        <label for="inp_gender_m">
-                            <input type="radio" id="inp_gender_m" name="gender" class="inp_gender_m"
-                                    value="남성"
-                                   th:field="*{gender}"> 남성
-                        </label>
-                        <label for="inp_gender_w">
-                            <input type="radio" id="inp_gender_w" name="gender" class="inp_gender_w"
-                                   value="여성"
-                                   th:field="*{gender}"> 여성
-                        </label>
-                    </div>
-                </td>
+                <th>성별</th>
+                <td th:text="*{gender}"></td>
             </tr>
             <!-- 휴대폰 번호 -->
             <tr>
@@ -152,7 +114,10 @@
                 <button type="reset" class="prev_btn">취소하기</button>
             </li>
             <li>
-                <button type="submit" class="submit_btn">가입하기</button>
+                <button type="submit" class="submit_btn">회원정보 수정</button>
+            </li>
+            <li>
+                <button type="button" class="submit_btn">카카오 연동해지</button>
             </li>
         </ul>
 

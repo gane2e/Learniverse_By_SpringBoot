@@ -53,6 +53,8 @@ public class Member extends BaseEntity {
 
     /* 카카오연동키 */
     private String kakaoKey;
+    
+    private String accessToken; //로그인 토큰
 
     @Enumerated(EnumType.STRING) //
     private Role role; //권한
@@ -68,7 +70,7 @@ public class Member extends BaseEntity {
         member.setMobileNumber(memberFormDto.getMobileNumber());
         member.setAddress(memberFormDto.getAddress());
         member.setEmail(memberFormDto.getEmail());
-        member.setRole(Role.ADMIN);
+        member.setRole(Role.USER);
 
         if (memberFormDto.getKakaoKey() != null ) {
             member.setKakaoKey(memberFormDto.getKakaoKey());

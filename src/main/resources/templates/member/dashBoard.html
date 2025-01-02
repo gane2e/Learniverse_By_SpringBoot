@@ -102,17 +102,19 @@
 
   <!-- 수강리스트 -->
   <div class="current_info_list_cont">
+
     <ul class="dashBoard_list">
-      <li>
+
+      <li th:each="history : ${hisDtos}">
         <div class="current_info_box">
           <div class="sub_tit_area">
             <div class="mark_list_area">
               <ul class="course_category_list">
                 <li>
-                  <div class="course_category_1">영업전</div>
+                  <div class="course_category_1" th:text="${history.categoryName}">영업전</div>
                 </li>
                 <li>
-                  <div class="course_category_2">수입업</div>
+                  <div class="course_category_2" th:text="${history.subCategoryName}">수입업</div>
                 </li>
               </ul>
             </div>
@@ -131,7 +133,7 @@
             </div>
           </div>
 
-          <div class="course_title">
+          <div class="course_title" th:text="${history.courseTitle}">
             [영업전] 수입업자 교육
           </div>
 
@@ -151,14 +153,16 @@
                     학습하기
                   </a>
                 </td>
-                <td><span class="red_txt">0</span>%</td>
+                <td>
+                  <span class="red_txt" th:text="${history.progressRate}">0</span>%
+                </td>
                 <td>
                   <a href="#" class="play_btn">
                     시험보기
                   </a>
                 </td>
                 <td>(불합격)<br>50점 / 1회차</td>
-                <td>수료전</td>
+                <td th:text="">수료전</td>
               </tr>
             </table>
           </div>
@@ -218,7 +222,12 @@
                 <td><span class="red_txt">0</span>%</td>
                 <td>이수율 100%시 응시가능</td>
                 <td>응시전</td>
-                <td>수료전</td>
+                <td>
+                  <a class="play_btn" onclick="print()"
+                     target="_blank">
+                    수료증
+                  </a>
+                </td>
               </tr>
             </table>
           </div>

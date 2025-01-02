@@ -7,4 +7,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     /* Id로 회원찾기 */
     Member findByLoginId(String loginId);
+
+    Member findByKakaoKey(String kakaoKey);
 }

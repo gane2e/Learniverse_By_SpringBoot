@@ -45,4 +45,5 @@ public interface CourseRepository extends JpaRepository<Courses, Long> {
             "WHERE cv.courses.courseId = :courseId")
     List<CourseVideoDto> findVideoById(@Param("courseId") Long courseId);
 
+
 }

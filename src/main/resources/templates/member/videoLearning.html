@@ -59,15 +59,20 @@
                          <li th:each="courseVideo : ${courseVideo}">
                              <button class="lecture_btn"
                                      th:data-video-url="${courseVideo.videoUrl}"
-                                     th:data-index="${courseVideo.courseVideoIndex}">
+                                     th:data-index="${courseVideo.courseVideoIndex}"
+                                     data-duration="">
                                 <div class="title">[[${courseVideo.videoTitle}]]</div>
                                  <div class="line">
                                      <span class="line2"
                                            th:id="'progress-' + ${courseVideo.courseVideoIndex}"></span>
                                  </div>
                                  <div class="data-area">
-                                     <span class="percentText">0%</span>
-                                     <span class="txt">학습하기</span>
+                                     <span class="percentText"
+                                           th:id="'percent-' + ${courseVideo.courseVideoIndex}">
+                                         0%</span>
+                                     <span class="txt"
+                                           th:id="'status-' + ${courseVideo.courseVideoIndex}">
+                                         학습하기</span>
                                  </div>
                              </button>
                          </li>
@@ -89,6 +94,9 @@
 
          </div>
      </div>
+
+     <input id="studentCourseId" type="hidden" th:value="${student.studentCourseId}">
+     <input id="last_watched" type="hidden" th:value="${student.last_watched}">
 
 
      <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>

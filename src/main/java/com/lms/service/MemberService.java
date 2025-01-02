@@ -1,5 +1,6 @@
 package com.lms.service;
 
+import com.lms.dto.MemberFormDto;
 import com.lms.entity.Member;
 import com.lms.repository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class MemberService implements UserDetailsService {
     
     private final MemberRepository memberRepository;
-    
+
     /* 회원가입 service */
     public Member saveMember(Member member) {
         validateDuplicateMember(member);
@@ -31,6 +32,12 @@ public class MemberService implements UserDetailsService {
         if (findMember != null) {
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
+    }
+
+    public MemberFormDto modifyMember(String loginId) {
+        Member member = memberRepository.findByLoginId(loginId);
+        MemberFormDto memberFormDto = MemberFormDto.of(member);
+        return memberFormDto;
     }
 
     @Override //로그인로직
@@ -52,5 +59,11 @@ public class MemberService implements UserDetailsService {
                 .roles(member.getRole().toString()) //권한정보
                 .build();
     }
+
+    public Member kakaoUserCheck(String kakaoKey) {
+       return  memberRepository.findByKakaoKey(kakaoKey);
+    }
+
+
     
 }

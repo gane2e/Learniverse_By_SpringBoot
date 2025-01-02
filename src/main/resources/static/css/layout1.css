@@ -178,6 +178,7 @@ footer {
 
 /* 서브 공통 */
 .sub_title {
+  position: relative;
   display: block;
   width: 100%;
   /*height: 54px;*/
@@ -191,6 +192,13 @@ footer {
   /*height: 54px;*/
   color: #333333;
   font-weight: 600;
+}
+.sub_title > img{
+  position: absolute;
+  right: 270PX;
+  top: 35px;
+  width: 35px;
+  cursor: pointer;
 }
 /* 서브콘텐츠 */
 .sub_cont {

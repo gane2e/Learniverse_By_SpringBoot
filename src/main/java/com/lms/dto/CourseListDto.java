@@ -47,9 +47,46 @@ public class CourseListDto {
     private Long subCategoryId; //해당 교육과정의 서브카테고리
     private String subCategoryName; //해당 교육과정의 서브카테고리
 
+    private Long courseVideoIndex; /* 교육 내 영상 목차 순서 */
+    private String videoTitle; /* 영상 제목 */
+
     
 
 
+    // 상세페이지 표출용
+    public CourseListDto(Long courseId, String title, String description,
+                         Recruitment_status recruitment_status, LocalDate recruitment_start_date,
+                         LocalDate recruitment_end_date, Course_status course_status,
+                         LocalDate course_start_date, LocalDate course_end_date, String completionCriteria,
+                         LocalDateTime regTime, LocalDateTime updateTime, String createdBy, String modifiedBy,
+                         String imgUrl, String oriImgName, Long categoryId, String categoryName,
+                         Long subCategoryId, String subCategoryName,
+                         Long courseVideoIndex, String videoTitle) {
+        this.courseId = courseId;
+        this.title = title;
+        this.description = description;
+        this.recruitment_status = recruitment_status;
+        this.recruitment_start_date = recruitment_start_date;
+        this.recruitment_end_date = recruitment_end_date;
+        this.course_status = course_status;
+        this.course_start_date = course_start_date;
+        this.course_end_date = course_end_date;
+        this.completionCriteria = completionCriteria;
+        this.regTime = regTime;
+        this.updateTime = updateTime;
+        this.createdBy = createdBy;
+        this.modifiedBy = modifiedBy;
+        this.imgUrl = imgUrl;
+        this.oriImgName = oriImgName;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.subCategoryId = subCategoryId;
+        this.subCategoryName = subCategoryName;
+        this.courseVideoIndex = courseVideoIndex;
+        this.videoTitle = videoTitle;
+    }
+
+    //리스트 표출용
     public CourseListDto(Long courseId, String title, String description,
                          Recruitment_status recruitment_status, LocalDate recruitment_start_date,
                          LocalDate recruitment_end_date, Course_status course_status,

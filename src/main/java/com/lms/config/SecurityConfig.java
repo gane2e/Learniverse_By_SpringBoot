@@ -24,14 +24,14 @@ public class SecurityConfig { //시큐리티 설정
                 .authorizeHttpRequests(config ->
                         config
                                 .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                                .requestMatchers("/", "/members/**", "/images/**", "/videos/**", "/course/**", "/admin/login").permitAll() //해당 경로의 요청은 누구나 허용한다.
+                                .requestMatchers("/", "/members/**", "/images/**", "/videos/**", "/course/**", "/admin/login", "/kakao-login").permitAll() //해당 경로의 요청은 누구나 허용한다.
                                 .requestMatchers("/admin/**").hasRole("ADMIN") //해당 경로의 요청은 ADMIN 만 가능
                                 .anyRequest().authenticated() //이외
                 );
         http
                 .formLogin(config ->
                         config.loginPage("/members/login") //커스텀 로그인
-                                .defaultSuccessUrl("/") //로그인 성공시
+                                .defaultSuccessUrl("/", true) //로그인 성공시
                                 .usernameParameter("loginId") //로그인화면에서 name=username이면 생략가능 / name=eamil이면 필수기입
                                 .failureUrl("/login/error") //로그인실패시
                                 .failureHandler((request, response, e) -> {e.printStackTrace();})

@@ -67,6 +67,8 @@
                             <a href="/members/register">회원가입</a></li>
                         <li sec:authorize="isAuthenticated()">
                             <a href="/members/logout">로그아웃</a></li>
+                        <li sec:authorize="isAuthenticated()">
+                            <a href="/members/modify">회원정보 수정</a></li>
                     </ul>
 
                     <a href="#">
