@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layouts/sub_layout_question}">
+<head>
+    <link th:href="@{/css/member/register.css}" rel="stylesheet">
+    <title>시험보기</title>
+</head>
+
+<div layout:fragment="sub_cont">
+
+    <ul><!-- 한 문제 -->
+        <li>
+            <div class="question_area">1. 문제 답은 몇번일까요?</div>
+            <ul>
+                <li>
+                    <label for="answer1">
+                        <input id="answer1" type="radio" value="1">
+                    </label>문제 답은 몇번일까요?
+                    <label for="answer2">
+                        <input id="answer2" type="radio" value="2">
+                    </label>문제 답은 몇번일까요?
+                    <label for="answer3">
+                        <input id="answer3" type="radio" value="3">
+                    </label>문제 답은 몇번일까요?
+                    <label for="answer4">
+                        <input id="answer4" type="radio" value="4">
+                    </label>문제 답은 몇번일까요?
+                    <label for="answer5">
+                        <input id="answer5" type="radio" value="5">
+                    </label>문제 답은 몇번일까요?
+
+                </li><!-- 정답 리스트 -->
+            </ul>
+        </li>
+    </ul>
+
+</div>
+
+</html>

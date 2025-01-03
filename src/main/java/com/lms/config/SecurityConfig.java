@@ -33,8 +33,8 @@ public class SecurityConfig { //시큐리티 설정
                         config.loginPage("/members/login") //커스텀 로그인
                                 .defaultSuccessUrl("/", true) //로그인 성공시
                                 .usernameParameter("loginId") //로그인화면에서 name=username이면 생략가능 / name=eamil이면 필수기입
-                                .failureUrl("/login/error") //로그인실패시
-                                .failureHandler((request, response, e) -> {e.printStackTrace();})
+                                .failureUrl("/members/login/error") //로그인실패시
+
                 )
                 .logout(logout ->
                         logout.logoutRequestMatcher(new AntPathRequestMatcher("/members/logout")) //로그아웃 처리

@@ -14,11 +14,11 @@
     <img src="/img/mark_5251227.png" class="category_img">
     <span class="menu_title">교육신청 현황</span>
     <div class="name">
-      <span class="blue_txt">USER</span> 회원님,
+      <span class="blue_txt" th:text="${userName}">USER</span> 회원님,
     </div>
     <div class="description">
-      총 <span class="blue_txt">2</span>개 신청과정 중
-      <span class="blue_txt">0</span>개 과정을 수료하셨습니다.
+      총 <span class="blue_txt" th:text="${dashBoardCount.total_enrollment}">2</span>개 신청과정 중
+      <span class="blue_txt" th:text="${dashBoardCount.completion_completed}">0</span>개 과정을 수료하셨습니다.
     </div>
   </div>
 
@@ -28,9 +28,9 @@
       <div class="box_icon1">
         <img src="/img/dashBoard_수강신청.png">
         <div class="icon_txt_container">
-          <div class="tit">수강신청</div>
+          <div class="tit" >수강신청</div>
           <div class="num">
-            <span class="num_number">2</span>건
+            <span class="num_number" th:text="${dashBoardCount.enrollment_enrollment}">2</span>건
           </div>
         </div>
 
@@ -40,9 +40,9 @@
       <div class="box_icon1">
         <img src="/img/dashBoard_학습중.png">
         <div class="icon_txt_container">
-          <div class="tit">학습중</div>
+          <div class="tit" >학습중</div>
           <div class="num">
-            <span class="num_number">2</span>건
+            <span class="num_number" th:text="${dashBoardCount.enrollment_progress}">2</span>건
           </div>
         </div>
 
@@ -52,9 +52,9 @@
       <div class="box_icon1">
         <img src="/img/dashBoard_학습완료.png">
         <div class="icon_txt_container">
-          <div class="tit">학습완료</div>
+          <div class="tit" >학습완료</div>
           <div class="num">
-            <span class="num_number">2</span>건
+            <span class="num_number" th:text="${dashBoardCount.enrollment_completed}">2</span>건
           </div>
         </div>
 
@@ -64,9 +64,9 @@
       <div class="box_icon1">
         <img src="/img/dashBoard_미수료.png">
         <div class="icon_txt_container">
-          <div class="tit">미수료</div>
+          <div class="tit" >미수료</div>
           <div class="num">
-            <span class="num_number">2</span>건
+            <span class="num_number" th:text="${dashBoardCount.completion_notCompleted}">2</span>건
           </div>
         </div>
 
@@ -78,7 +78,7 @@
         <div class="icon_txt_container">
           <div class="tit">수료</div>
           <div class="num">
-            <span class="num_number">2</span>건
+            <span class="num_number"  th:text="${dashBoardCount.completion_completed}">2</span>건
           </div>
         </div>
 
@@ -148,21 +148,25 @@
               </tr>
               <tr class="current_table_data">
                 <td>
-                  <a href="/course/video" class="play_btn"
+                  <a th:href="'/course/video/'+${history.applicationId}" class="play_btn"
                      target="_blank">
                     학습하기
                   </a>
                 </td>
                 <td>
-                  <span class="red_txt" th:text="${history.progressRate}">0</span>%
+                  <span class="red_txt" th:text="${history.ProgressRate}">0</span>%
                 </td>
                 <td>
-                  <a href="#" class="play_btn">
+                  <a href="/course/test" class="play_btn"
+                     th:if="${history.enrollmentStatus eq enrollmentStatus}">
                     시험보기
                   </a>
+                  <span th:unless="${history.enrollmentStatus eq enrollmentStatus}">
+                      교육 100% 이수후 응시 가능
+                  </span>
                 </td>
                 <td>(불합격)<br>50점 / 1회차</td>
-                <td th:text="">수료전</td>
+                <td>수료전</td>
               </tr>
             </table>
           </div>

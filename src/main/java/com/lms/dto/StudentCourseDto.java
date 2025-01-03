@@ -23,8 +23,8 @@ public class StudentCourseDto {
 
     private LocalDateTime completionDateTime; //학습 수료일
 
+    @JsonProperty("ProgressRate")
     private double ProgressRate; // 진도율
-
 
     @JsonProperty("last_watched")
     private Long last_watched; //마지막 시청시간

@@ -1,7 +1,6 @@
 package com.lms.controller;
 
 import com.lms.dto.*;
-import com.lms.entity.Member;
 import com.lms.repository.MemberRepository;
 import com.lms.service.ApplicationService;
 import com.lms.service.CourseService;
@@ -125,6 +124,12 @@ public class CourseController {
         }
 
         return "member/videoLearning";
+    }
+
+
+    @GetMapping(value = "/question")
+    public String courseQuestion(Model model) {
+        return "course/question";
     }
 
 }

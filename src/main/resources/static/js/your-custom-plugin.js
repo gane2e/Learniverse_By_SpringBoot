@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const studentCourseId = document.getElementById('studentCourseId').value;
     let last_watched = document.getElementById('last_watched').value;
 
-
     document.querySelectorAll('.lecture_btn').forEach(function(button) {
 
         const videoUrl = button.getAttribute('data-video-url'); // 각 버튼에서 비디오 URL 가져오기
@@ -48,76 +47,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         };
-
         // 영상 목차 클릭 시 영상 변경 이벤트
         button.addEventListener('click', function() {
-
             var videoUrl = this.getAttribute('data-video-url');
             var localUrl = 'http://localhost:8080';
-            var playUrl = localUrl + videoUrl
+            var playUrl = localUrl + videoUrl;
             const index = button.getAttribute('data-index');  // 각 비디오의 고유 인덱스
-            checkVideoIndex(index); //이전영상 수강여부체크
-            let lastWatchedTime = 0;  //  서버에서 해당 비디오의 시청한 시간을 가져옵니다.
+            checkVideoIndex(index); // 이전 영상 수강 여부 체크
 
+            // 영상 소스 설정
             player.src({ src: playUrl, type: "video/mp4" });
+        }); //button click event END
+    }); //BUTTON for-each END
 
-            player.on('timeupdate', function () {
-                var currentTime = player.currentTime();  // 플레이중인 시간 (초)
-                var duration = player.duration();  // 플레이중인 영상 길이 (초)
-
-                let progress = (currentTime / duration) * 100;
-
-                // 총 시청 시간 업데이트 (현재 재생 시간 + 이전 시청 시간)
-                last_watched = lastWatchedTime + currentTime;
-
-                //재생중인 영상의 프로그레스바 width값, 영상 진도율 % 업데이트하기
-                const percent = document.getElementById('percent-' + index);
-                percent.innerText = progress.toFixed(0) + '%';
-
-                document.querySelectorAll('.line2').forEach(function(bar) {
-                    bar.style.width = '0%';  // 모든 progress bar 초기화
-                });
-                const progressBar = document.getElementById('progress-' + index);
-                progressBar.style.width = progress.toFixed(1) + '%';
-                if(progress === 100) {
-                    const status = document.getElementById('status-' + index);
-                    status.innerText = '학습완료';
-                    status.style.color = '#0076c0';
-                    let prevVideo = Number(index) + 1;
-                    const targetButton = document.querySelector(`button[data-index="${prevVideo}"]`);
-                    console.log("prevVideo ==> " + prevVideo)
-                    if (targetButton) {
-                        targetButton.click();
-                    } else
-                        alert("모든 학습이 완료되었습니다.")
-
-                }
-            });
-
-            // 비디오가 정지되었을 때 서버로 마지막 시청시간 전송
-            player.on('pause', function() {
-                console.log("현재까지 총 시청한 시간 (초): " + last_watched.toFixed(0));
-                console.log("Video.js 플레이어가 정지되었습니다.");
-                fetch('/student/lastWatchedSave', {
-                    method: 'POST',  // POST 요청
-                    headers: {
-                        'Content-Type': 'application/json',  // JSON 형식으로 데이터 전송
-                    },
-                    body: JSON.stringify({
-                        last_watched: last_watched, //Long
-                        studentCourseId: studentCourseId //Long
-                    })
-                })
-                    .then(response => response.text())
-                    .then(data => {
-                        console.log('Server data : ' + data);
-                    })
-                    .catch(error => {
-                        console.error("AJAX 오류", error)
-                    })
-            });
-        });
-    });
 
     //플레이어 객체
     var player = videojs('videoPlayer', {
@@ -135,16 +77,62 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
-    
-    
-    // 비디오가 로드된 후 비디오의 총 길이 구하기
+
+    let totalWatchedTime = 0;  // 서버로 전송할 토탈 시청시간
+    let lastWatchedTime = 0;   // 영상별 전체 시청시간
+
+    /* 플레이어 로드이벤트 START */
     player.on('loadeddata', function() {
+
         player.currentTime(last_watched);
-        console.log('Total video duration:', player.duration(), 'seconds');
-        console.log('Total video currentTime:', player.currentTime(), 'seconds');
-    });
 
+        /* 타임업데이트 시작 */
+        player.on('timeupdate', function () {
+            var currentTime = player.currentTime();  // 현재 영상의 시청 시간 (초)
+            totalWatchedTime = Number(currentTime) + Number(lastWatchedTime)
+        });
+        /*타임업데이트 END*/
 
+        /* 비디오 종료이벤트 시작 */
+        player.on('ended', function (){
+
+            var enrollmentStatus = '';
+            if(totalDuration === totalWatchedTime) {
+                enrollmentStatus = '학습완료';
+            } else
+                enrollmentStatus = '학습중';
+
+            lastWatchedTime = totalWatchedTime
+            let ProgressRate = calculateProgress(totalDuration, totalWatchedTime);
+            console.log("시청자의 마지막 시청길이 : " + totalWatchedTime)
+            console.log("비디오 총길이 : " + totalDuration)
+            console.log("진도율 : " + ProgressRate)
+            console.log("학습상태 : " + enrollmentStatus);
+            console.log("비디오 학습이 완료되었습니다.")
+
+            fetch('/student/lastWatchedSave', {
+                method: 'POST',  // POST 요청
+                headers: {
+                    'Content-Type': 'application/json',  // JSON 형식으로 데이터 전송
+                },
+                body: JSON.stringify({
+                    last_watched: totalWatchedTime, // 마지막 시청 시간
+                    studentCourseId: studentCourseId, //학생 강좌 ID
+                    enrollmentStatus : enrollmentStatus, //학습상태
+                    ProgressRate : ProgressRate //진도율
+                })
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log('Server data: ' + data);
+                })
+                .catch(error => {
+                    console.error("AJAX 오류", error)
+                });
+        })
+        /* 비디오 종료이벤트 END */
+
+    }); /* 플레이어 로드이벤트 END */
 
     function checkVideoIndex(index){
         console.log("클릭한 영상 index ===> " + index);
@@ -155,6 +143,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const button = document.querySelector(`[data-index="${indexCheck}"]`);
         // button.get
     }
+
+    // 진도율 계산
+    function calculateProgress(totalDuration, totalWatchedTime) {
+        const progress = (totalWatchedTime / totalDuration) * 100;
+        return progress.toFixed(1); // 소수점 둘째 자리까지 반올림
+    }
+
 })
 
 
@@ -187,4 +182,3 @@ var disableForwardScrubbing = function(player){
     }
 };
 */
-

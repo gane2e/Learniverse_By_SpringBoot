@@ -31,9 +31,10 @@ public class StudentCourseService {
     }
 
     // 수강생 마지막 시청시간(초) 실시간저장
-    public void saveLastWatched(Long studentCourseId, Long last_watched) {
-        StudentCourse studentCourse = studentCourseRepository.findById(studentCourseId).orElseThrow(EntityNotFoundException::new);
-        studentCourse.updateLastWatched(last_watched);
+    public void saveLastWatched(Long studentCourseId, Long last_watched, Enrollment_status enrollment_status,  double ProgressRate) {
+        StudentCourse studentCourse = studentCourseRepository.findById(studentCourseId)
+                .orElseThrow(EntityNotFoundException::new);
+        studentCourse.updateLastWatched(last_watched, enrollment_status, ProgressRate);
         studentCourseRepository.save(studentCourse);
     }
 

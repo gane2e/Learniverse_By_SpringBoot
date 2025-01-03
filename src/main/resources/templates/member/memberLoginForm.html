@@ -4,28 +4,18 @@
       layout:decorate="~{layouts/sub_layout}">
 <head>
 <link th:href="@{/css/login.css}" rel="stylesheet">
-<!-- 사용자 CSS 추가 -->
-<th:block layout:fragment="css">
-    <style>
-        .fieldError {
-            color: #bd2130;
-        }
-    </style>
-</th:block>
 
-<!-- 사용자 스크립트 추가 -->
-<th:block layout:fragment="script">
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+            $(document).ready(function() {
+                var errorMessage = [[${loginErrorMsg}]];
+                if (errorMessage) { // 빈 문자열이 아닐 때 알림 표시
+                    alert(errorMessage);
+                }
+            });
+        </script>
+    </th:block>
 
-    <script th:inline="javascript">
-        $(document).ready(function(){
-            var errorMessage = [[${loginErrorMsg}]];
-            if(errorMessage != null){
-                alert(errorMessage);
-            }
-        });
-    </script>
-
-</th:block>
 </head>
 
 <div layout:fragment="sub_cont">
@@ -35,7 +25,7 @@
             <div class="login_cont_area">
                 <div class="title_area">
                     <div class="title">
-                        <span class="ft_c">이름 미정</span> 홈페이지에 <br /> 방문하신것을 환영합니다.
+                        <span class="ft_c">Learniverse</span> 홈페이지에 <br /> 방문하신것을 환영합니다.
                     </div>
                 </div>
                 <div class="login_inp_area">

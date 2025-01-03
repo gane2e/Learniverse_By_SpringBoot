@@ -1,5 +1,6 @@
 package com.lms.controller;
 
+import com.lms.constant.Enrollment_status;
 import com.lms.dto.StudentCourseDto;
 import com.lms.repository.StudentCourseRepository;
 import com.lms.service.StudentCourseService;
@@ -25,10 +26,13 @@ public class StudentCourseController {
     @PostMapping(value = "/lastWatchedSave")
     public ResponseEntity<String> lastWatchedSave(@RequestBody StudentCourseDto studentCourseDto){
 
-        Long studentCourseId = studentCourseDto.getStudentCourseId();
-        Long last_watched = studentCourseDto.getLast_watched();
+        Long studentCourseId = studentCourseDto.getStudentCourseId(); //수강생ID
+        Long last_watched = studentCourseDto.getLast_watched(); // 마지막시청초
+        Enrollment_status enrollment_status = studentCourseDto.getEnrollmentStatus(); //학습상태
+        double ProgressRate = studentCourseDto.getProgressRate(); //진도율
 
-        studentCourseService.saveLastWatched(studentCourseId, last_watched);
+        studentCourseService.saveLastWatched
+                (studentCourseId, last_watched, enrollment_status, ProgressRate);
 
         return ResponseEntity.ok("마지막 시청시간 저장완료");
     }

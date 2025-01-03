@@ -46,9 +46,11 @@ public class StudentCourse extends BaseEntity {
     @JoinColumn(name = "application_id")
     private CourseApplication courseApplication;
 
-    //마지막 시청시간 업데이트
-    public void updateLastWatched(Long last_watched){
+    //마지막 시청시간, 학습상태 업데이트
+    public void updateLastWatched(Long last_watched, Enrollment_status enrollment_status,  double ProgressRate){
         this.last_watched = last_watched;
+        this.enrollmentStatus = enrollment_status;
+        this.ProgressRate = ProgressRate;
     }
     
 
