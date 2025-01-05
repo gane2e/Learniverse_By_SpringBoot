@@ -1,6 +1,7 @@
 package com.lms.dto;
 
 import com.lms.entity.Questions;
+import com.lms.entity.StudentCourse;
 import com.lms.entity.SubCategory;
 import com.lms.entity.Videos;
 import jakarta.persistence.FetchType;
@@ -29,5 +30,10 @@ public class QuestionDto {
     private static ModelMapper modelMapper = new ModelMapper();
     public Questions createQuestion() {
         return modelMapper.map(this, Questions.class);
+    }
+
+    // Questions => QuestionDto 변환
+    public static QuestionDto of(Questions questions) {
+        return modelMapper.map(questions, QuestionDto.class);
     }
 }

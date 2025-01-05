@@ -21,8 +21,11 @@ public interface CourseRepository extends JpaRepository<Courses, Long> {
             "co.imgUrl, co.oriImgName, ct.categoryId , ct.categoryName , sct.subCategoryId, sct.subCategoryName) " +
             "FROM Courses co " +
             "JOIN co.subCategory sct " +
-            "JOIN sct.categories ct")
-    public List<CourseListDto> findAllCourseWithCategoryInfo();
+            "JOIN sct.categories ct " +
+            "WHERE (:keyword IS NULL OR LOWER(co.title) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "OR LOWER(co.description) LIKE LOWER(CONCAT('%', :keyword, '%')))")
+    public List<CourseListDto> findAllCourseWithCategoryInfo(@Param("keyword") String keyword);
+
 
     // 사용자 페이지 교육 상세정보 표출용
     @Query("SELECT new com.lms.dto.CourseListDto(co.courseId, co.title, co.description, co.recruitment_status, " +

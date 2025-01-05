@@ -3,37 +3,61 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
       layout:decorate="~{layouts/sub_layout_question}">
 <head>
-    <link th:href="@{/css/member/register.css}" rel="stylesheet">
+    <link th:href="@{/css/member/question.css}" rel="stylesheet">
     <title>시험보기</title>
 </head>
 
 <div layout:fragment="sub_cont">
 
-    <ul><!-- 한 문제 -->
-        <li>
-            <div class="question_area">1. 문제 답은 몇번일까요?</div>
-            <ul>
-                <li>
-                    <label for="answer1">
-                        <input id="answer1" type="radio" value="1">
-                    </label>문제 답은 몇번일까요?
-                    <label for="answer2">
-                        <input id="answer2" type="radio" value="2">
-                    </label>문제 답은 몇번일까요?
-                    <label for="answer3">
-                        <input id="answer3" type="radio" value="3">
-                    </label>문제 답은 몇번일까요?
-                    <label for="answer4">
-                        <input id="answer4" type="radio" value="4">
-                    </label>문제 답은 몇번일까요?
-                    <label for="answer5">
-                        <input id="answer5" type="radio" value="5">
-                    </label>문제 답은 몇번일까요?
+    <form action="/question/grading" method="post">
+        <ul><!-- 한 문제 -->
+            <li th:each="question, iterStat : ${questions}">
+                <div class="question_area" th:text="${question.questionTitle}"></div>
+                <ul>
+                    <li>
+                        <label th:for="'question_' + ${iterStat.index} + '_option1'">
+                            <input
+                                    type="radio"
+                                    th:name="${question.questionId}"
+                                    th:id="'question_' + ${iterStat.index} + '_option1'"
+                                    value="1">
+                            [[${question.option1}]]
+                        </label>
 
-                </li><!-- 정답 리스트 -->
-            </ul>
-        </li>
-    </ul>
+                        <label th:for="'question_' + ${iterStat.index} + '_option2'">
+                            <input
+                                    type="radio"
+                                    th:name="${question.questionId}"
+                                    th:id="'question_' + ${iterStat.index} + '_option2'"
+                                    value="2">
+                            [[${question.option2}]]
+                        </label>
+
+                        <label th:for="'question_' + ${iterStat.index} + '_option3'">
+                            <input
+                                    type="radio"
+                                    th:name="${question.questionId}"
+                                    th:id="'question_' + ${iterStat.index} + '_option3'"
+                                    value="3">
+                            [[${question.option3}]]
+                        </label>
+
+                        <label th:for="'question_' + ${iterStat.index} + '_option4'">
+                            <input
+                                    type="radio"
+                                    th:name="${question.questionId}"
+                                    th:id="'question_' + ${iterStat.index} + '_option4'"
+                                    value="4">
+                            [[${question.option4}]]
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <button>나가기</button>
+        <button type="submit">제출하기</button>
+    </form>
+
 
 </div>
 

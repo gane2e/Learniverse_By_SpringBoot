@@ -2,10 +2,7 @@ package com.lms.controller;
 
 import com.lms.dto.*;
 import com.lms.repository.MemberRepository;
-import com.lms.service.ApplicationService;
-import com.lms.service.CourseService;
-import com.lms.service.MemberService;
-import com.lms.service.StudentCourseService;
+import com.lms.service.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,23 +24,21 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
     @Autowired
-    private MemberService memberService;
-    @Autowired
     private ApplicationService applicationService;
     @Autowired
     private StudentCourseService studentCourseService;
     @Autowired
-    private MemberRepository memberRepository;
+    private QuestionService questionService;
 
-    @GetMapping(value = "/courses")
-    public String courses(Model model) {
-        log.info("courses 요청");
-        List<CourseListDto> courseList = courseService.getCourseList();
+    @GetMapping({"/courses", "/courses/search"})
+    public String courses(@RequestParam(value = "keyword", required = false) String keyword,
+                          Model model) {
+        log.info("keyword : " + keyword);
+        List<CourseListDto> courseList = courseService.getCourseList(keyword);
         model.addAttribute("pageTitle", "온라인 교육");
         model.addAttribute("courseList", courseList);
         return "course/courseList";
     }
-
 
     // 교육 상세페이지
     @GetMapping(value = "/courseDtl/{courseId}")
@@ -127,9 +122,15 @@ public class CourseController {
     }
 
 
+    //시험보기 페이지로 이동
     @GetMapping(value = "/question")
-    public String courseQuestion(Model model) {
+    public String courseQuestion(Model model,Long subcategoryId) {
+        List<QuestionDto> questionDtos =
+                questionService.getQuestionDtoList(16L);
+        model.addAttribute("questions", questionDtos);
+        questionDtos.forEach(questionDto -> log.info(questionDto.toString()));
         return "course/question";
     }
+    
 
 }

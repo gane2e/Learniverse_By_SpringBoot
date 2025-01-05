@@ -8,22 +8,27 @@
 
 <div layout:fragment="sub_cont">
 
-    <div class="search_box">
-        <div class="search_title">교육 카테고리</div>
-        <select>
-            <option>-</option>
-            <option>1차카테고리명</option>
-            <option>1차카테고리명</option>
-        </select>
-        <select>
-            <option>-</option>
-            <option>2차카테고리명</option>
-            <option>2차카테고리명</option>
-        </select>
-        <div class="search_title">강의 명</div>
-        <input type="text" class="scrh_inp" placeholder="검색어를 입력해주세요." title="검색어를 입력해주세요." id="searchKeyword" name="searchKeyword" value="">
-        <button type="button" class="search_btn"><span class="text">검색</span></button>
-    </div>
+    <form action="/course/courses/search" method="get">
+        <div class="search_box">
+
+            <div class="search_title">교육 카테고리</div>
+            <select>
+                <option>-</option>
+                <option>1차카테고리명</option>
+                <option>1차카테고리명</option>
+            </select>
+            <select>
+                <option>-</option>
+                <option>2차카테고리명</option>
+                <option>2차카테고리명</option>
+            </select>
+            <div class="search_title">강의 명</div>
+            <input type="text" class="scrh_inp" placeholder="검색어를 입력해주세요." title="검색어를 입력해주세요." id="searchKeyword"
+                   name="keyword">
+            <button type="submit" class="search_btn"><span class="text">검색</span></button>
+        </div>
+    </form>
+
     
    <ul class="course_list_ul">
        <li class="course_list_li" th:each="course, status : ${courseList}">
