@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let videoCount = 0; // 비디오의 개수를 셀 변수
     const studentCourseId = document.getElementById('studentCourseId').value;
     let last_watched = document.getElementById('last_watched').value;
+    let remainingTime; //last_watched - (영상길이) 뺀 나머지 시청초
 
     document.querySelectorAll('.lecture_btn').forEach(function(button) {
 
@@ -39,13 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (videoCount === document.querySelectorAll('.lecture_btn').length) {
                 console.log("모든 비디오의 총 길이 (초):", totalDuration);
             }
-            // 페이지 로드시 첫번째 영상을 클릭처리(테스트완료)
-            if (videoIndex == 1) {
-                const targetButton = document.querySelector(`button[data-index="1"]`);
-                if (targetButton) {
-                    targetButton.click();
-                }
-            }
         };
         // 영상 목차 클릭 시 영상 변경 이벤트
         button.addEventListener('click', function() {
@@ -70,6 +64,14 @@ document.addEventListener('DOMContentLoaded', function () {
         /* fluid: true, //크기제어?
          aspectRatio: '4:3', //비율*/
         playbackRates: [0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4], //재생속도
+        controlBar: {                      // 컨트롤 바 설정
+            playToggle: true,                // 재생/일시정지 토글 버튼 활성화
+            remainingTimeDisplay: true,      // 남은 시간 표시 활성화
+            progressControl: true,           // 진행률 컨트롤 활성화
+            pictureInPictureToggle: true,    // 화면 내 화면(PiP) 토글 버튼 활성화
+            currentTimeDisplay: true,        // 현재 재생 시간 표시 활성화
+            qualitySelector: true,           // 화질 선택 컨트롤 활성화
+        },
         plugins: {
             hotkeys: {
                 enableModifiersForNumber: false, /* 특정행위시 초이동하는것 방지 */
@@ -78,61 +80,98 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // 비디오객체 로드후(0.02초)  //250106
+    setTimeout(function() {
+        const buttons = document.querySelectorAll('.lecture_btn');
+        const durations = {}; //영상1: 10초,,영상2:15초.. 저장할 배열
+        buttons.forEach(button => {
+            const duration = button.dataset.duration;
+            const index = button.dataset.index;
+            durations[`duration${index}`] = parseInt(duration);
+        });
+            // last_watched 값에 따라서 어느 구간에 해당하는지 체크
+            let testTotalDuration = 0;  // 누적된 총 시간
+            remainingTime = last_watched; // 남은 시간
+
+            for (let i = 1; i <= Object.keys(durations).length; i++) {
+                testTotalDuration += durations[`duration${i}`]; //각 영상 시간 누적
+
+                // last_watched가 이 구간 내에 있는지 체크
+                if (remainingTime < testTotalDuration) {
+                    targetIndex = i;  // 해당 영상 인덱스를 찾음
+                    remainingTime = remainingTime - (testTotalDuration - durations[`duration${i}`]); // 해당 영상에서 남은 시간
+                    break;
+                }
+            }
+        // 결과 확인
+        console.log('재생해야 할 영상 인덱스:', targetIndex);
+        console.log('이 영상에서 재생해야 할 시간:', remainingTime);
+
+        // targetIndex 영상 재생
+        const targetButton = document.querySelector(`button[data-index="${targetIndex}"]`)
+        if (targetButton) {
+            targetButton.click();
+        } else
+            console.log("버튼이 없습니다.")
+    }, 100); // 3초 후에 실행 //250106 END
+
     let totalWatchedTime = 0;  // 서버로 전송할 토탈 시청시간
     let lastWatchedTime = 0;   // 영상별 전체 시청시간
+    let targetIndex = 0;    // 마지막 시청한 영상 인덱스
 
-    /* 플레이어 로드이벤트 START */
-    player.on('loadeddata', function() {
+        /* 플레이어 로드이벤트 START */
+        player.on('loadeddata', function() {
 
-        player.currentTime(last_watched);
+            //250106
+            player.currentTime(remainingTime);
+            //250106 END
 
-        /* 타임업데이트 시작 */
-        player.on('timeupdate', function () {
-            var currentTime = player.currentTime();  // 현재 영상의 시청 시간 (초)
-            totalWatchedTime = Number(currentTime) + Number(lastWatchedTime)
-        });
-        /*타임업데이트 END*/
+            /* 타임업데이트 시작 */
+            player.on('timeupdate', function () {
+                var currentTime = player.currentTime();  // 현재 영상의 시청 시간 (초)
+                totalWatchedTime = Number(currentTime) + Number(lastWatchedTime)
+            });
+            /*타임업데이트 END*/
 
-        /* 비디오 종료이벤트 시작 */
-        player.on('ended', function (){
+            /* 비디오 종료이벤트 시작 */
+            player.on('ended', function (){
 
-            var enrollmentStatus = '';
-            if(totalDuration === totalWatchedTime) {
-                enrollmentStatus = '학습완료';
-            } else
-                enrollmentStatus = '학습중';
+                var enrollmentStatus = '';
+                if(totalDuration === totalWatchedTime) {
+                    enrollmentStatus = '학습완료';
+                } else
+                    enrollmentStatus = '학습중';
+                lastWatchedTime = totalWatchedTime //이전시청시간할당
+                let ProgressRate = calculateProgress(totalDuration, totalWatchedTime);
 
-            lastWatchedTime = totalWatchedTime
-            let ProgressRate = calculateProgress(totalDuration, totalWatchedTime);
-            console.log("시청자의 마지막 시청길이 : " + totalWatchedTime)
-            console.log("비디오 총길이 : " + totalDuration)
-            console.log("진도율 : " + ProgressRate)
-            console.log("학습상태 : " + enrollmentStatus);
-            console.log("비디오 학습이 완료되었습니다.")
+                console.log("시청자의 마지막 시청길이 : " + totalWatchedTime)
+                console.log("비디오 총길이 : " + totalDuration)
+                console.log("진도율 : " + ProgressRate)
+                console.log("학습상태 : " + enrollmentStatus);
+                console.log("비디오 학습이 완료되었습니다.")
 
-            fetch('/student/lastWatchedSave', {
-                method: 'POST',  // POST 요청
-                headers: {
-                    'Content-Type': 'application/json',  // JSON 형식으로 데이터 전송
-                },
-                body: JSON.stringify({
-                    last_watched: totalWatchedTime, // 마지막 시청 시간
-                    studentCourseId: studentCourseId, //학생 강좌 ID
-                    enrollmentStatus : enrollmentStatus, //학습상태
-                    ProgressRate : ProgressRate //진도율
+                fetch('/student/lastWatchedSave', {
+                    method: 'POST',  // POST 요청
+                    headers: {
+                        'Content-Type': 'application/json',  // JSON 형식으로 데이터 전송
+                    },
+                    body: JSON.stringify({
+                        last_watched: totalWatchedTime, // 마지막 시청 시간
+                        studentCourseId: studentCourseId, //학생 강좌 ID
+                        enrollmentStatus : enrollmentStatus, //학습상태
+                        ProgressRate : ProgressRate //진도율
+                    })
                 })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log('Server data: ' + data);
+                    })
+                    .catch(error => {
+                        console.error("AJAX 오류", error)
+                    });
             })
-                .then(response => response.text())
-                .then(data => {
-                    console.log('Server data: ' + data);
-                })
-                .catch(error => {
-                    console.error("AJAX 오류", error)
-                });
-        })
-        /* 비디오 종료이벤트 END */
-
-    }); /* 플레이어 로드이벤트 END */
+            /* 비디오 종료이벤트 END */
+        }); /* 플레이어 로드이벤트 END */
 
     function checkVideoIndex(index){
         console.log("클릭한 영상 index ===> " + index);
@@ -151,34 +190,3 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 })
-
-
-
-/*  VideoJS에서 플레이 시간까지만 이동 되도록 */
-/*   출처 : https://gogorchg.tistory.com/entry/JavaScript-VideoJS%EC%97%90%EC%84%9C-%ED%94%8C%EB%A0%88%EC%9D%B4-%EC%8B%9C%EA%B0%84%EA%B9%8C%EC%A7%80%EB%A7%8C-%EC%9D%B4%EB%8F%99-%EB%90%98%EB%8F%84%EB%A1%9D */
-/*
-var percentAllowForward=0;
-var videoPlayer;
-var disableForwardScrubbing = function(player){
-    player.on("timeupdate",function(){
-        var percentPlayed= player.currentTime()/player.duration()*100;
-        if (percentPlayed>percentAllowForward){
-            percentAllowForward=percentPlayed;
-        }
-    });
-    return{
-        setSource: function setSource(srcObj, next){
-            next(null, srcObj);
-        },
-        setCurrentTime: function setCurrentTime(ct) {
-            var percentPlayed= ct/player.duration()*100;
-            if(ct<player.currentTime()||percentPlayed<=percentAllowForward){
-                return ct;
-            }else if(percentPlayed>percentAllowForward){
-                return player.duration()*percentAllowForward/100;
-            }
-            return player.currentTime();
-        }
-    }
-};
-*/
