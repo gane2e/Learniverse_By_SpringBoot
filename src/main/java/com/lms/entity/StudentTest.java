@@ -1,6 +1,6 @@
 package com.lms.entity;
 
-import com.lms.constant.Completion_status;
+import com.lms.constant.Test_status;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Table(name = "student_test")
 @Getter
 @Setter
-public class TestEntity extends BaseTimeEntity{
+public class StudentTest extends BaseTimeEntity{
 
     @Id
     @Column(name = "student_test_id")
@@ -18,19 +18,26 @@ public class TestEntity extends BaseTimeEntity{
 
     @Column(name = "first_score")
     private int firstScore; //1차점수
-    private Completion_status firstAttemptStatus; //1차 응시 상태
+
+    @Enumerated(EnumType.STRING)
+    private Test_status firstAttemptStatus; //1차 응시 상태
 
     @Column(name = "second_score")
     private int secondScore; //2차점수
-    private Completion_status secondAttemptStatus; //2차 응시 상태
+
+    @Enumerated(EnumType.STRING)
+    private Test_status secondAttemptStatus; //2차 응시 상태
 
     @Column(name = "third_score")
     private int thirdScore; //3차점수
-    private Completion_status thirdAttemptStatus; //3차 응시 상태
+
+    @Enumerated(EnumType.STRING)
+    private Test_status thirdAttemptStatus; //3차 응시 상태
 
     private boolean isReset; // 리셋여부
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_course_id")
     private StudentCourse studentCourse;
+
 }

@@ -28,7 +28,9 @@ public class CourseController {
     @Autowired
     private StudentCourseService studentCourseService;
     @Autowired
-    private QuestionService questionService;
+    private QuestionService questionService; //시험문제관리
+    @Autowired
+    private StudentTestService studentTestService; //사용자 시험응시내역
 
     @GetMapping({"/courses", "/courses/search"})
     public String courses(@RequestParam(value = "keyword", required = false) String keyword,
@@ -51,6 +53,7 @@ public class CourseController {
     }
 
     // CourseRequest => 신청내역 받을 DTO 생성후 변환해서 사용 (CourseDtl에서 ajax요청)
+    // 교육 신청내역 저장(신청내역+수강내역+시험내역)
     @PostMapping(value = "/courseApplication")
     public ResponseEntity<Map<String, Long>> handlePostRequest(@RequestBody CourseApplicationDto courseApplicationDto) {
 
@@ -124,11 +127,23 @@ public class CourseController {
 
     //시험보기 페이지로 이동
     @GetMapping(value = "/question")
-    public String courseQuestion(Model model,Long subcategoryId) {
+    public String courseQuestion(Model model,
+                                 @RequestParam("subCategoryId") Long subCategoryId,
+                                 @RequestParam("studentCourseId") Long studentCourseId,
+                                 @RequestParam("courseTitle") String courseTitle) {
+
+        //문제목록
         List<QuestionDto> questionDtos =
-                questionService.getQuestionDtoList(16L);
+                questionService.getQuestionDtoList(subCategoryId);
+
+        //시험응시ID찾아 보내기
+        StudentTestDto studentTestDto =
+                studentTestService.findByStudentCourseId(studentCourseId);
+        Long studentTestId = studentTestDto.getStudentTestId();
+
         model.addAttribute("questions", questionDtos);
-        questionDtos.forEach(questionDto -> log.info(questionDto.toString()));
+        model.addAttribute("studentTestId", studentTestId);
+        model.addAttribute("courseTitle", courseTitle);
         return "course/question";
     }
     

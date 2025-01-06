@@ -19,8 +19,6 @@ public class StudentCourseController {
 
     @Autowired
     StudentCourseService studentCourseService;
-    @Autowired
-    StudentCourseRepository studentCourseRepository;
 
     // 사용자 마지막 시청시간 실시간저장
     @PostMapping(value = "/lastWatchedSave")

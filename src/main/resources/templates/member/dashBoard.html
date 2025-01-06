@@ -4,6 +4,7 @@
       layout:decorate="~{layouts/sub_layout}">
 <head>
   <link th:href="@{/css/member/dashBoard.css}" rel="stylesheet">
+  <link th:href="@{/css/member/modal.css}" rel="stylesheet">
   <!-- 사용자 CSS 추가 -->
 
 </head>
@@ -157,20 +158,70 @@
                   <span class="red_txt" th:text="${history.ProgressRate}">0</span>%
                 </td>
                 <td>
-                  <a href="/course/question" class="play_btn"
+                  <!-- '학습완료' 상태면 [응시하기] 버튼 노출-->
+                  <a
+                     class="play_btn" id="openModalBtn"
                      th:if="${history.enrollmentStatus eq enrollmentStatus}">
-                    시험보기
+                    응시하기
                   </a>
-                  <span th:unless="${history.enrollmentStatus eq enrollmentStatus}">
+                  <span th:unless="${history.enrollmentStatus eq enrollmentStatus}"> <!-- '학습완료' 상태가 아니면 -->
                       교육 100% 이수후 응시 가능
                   </span>
                 </td>
-                <td>(불합격)<br>50점 / 1회차</td>
-                <td>수료전</td>
+                <td th:if="${history.enrollmentStatus eq enrollmentStatus}"> <!-- '학습완료' 상태면 -->
+                  ( [[${history.lastStatus}]] )<br>
+                  [[${history.lastScore}]]점 / [[${history.testCount}]]회차</td>
+                <td th:unless="${history.enrollmentStatus eq enrollmentStatus}">
+                  - <!-- '학습완료' 상태가 아니면 -->
+                </td>
+
+                <td th:text="${history.completionStatus}"></td>
               </tr>
             </table>
           </div>
         </div>
+
+
+        <!-- 모달 창 -->
+        <div id="modal" class="modal">
+          <div class="modal-content">
+            <span id="closeBtn" class="close">&times;</span>
+
+            <div class="title">시험은 최대 3번 까지 응시하실 수 있으며,<br>
+              합격 점수는 <span class="blue_txt">60</span>점 입니다.
+            </div>
+            <div class="text">3차시험까지 불합격 시
+              <span class="red_txt">교육을 다시 이수</span>하셔야 합니다.</div>
+            <!-- 테이블 -->
+            <table class="custom-table">
+              <tbody>
+              <tr>
+                <th>시험(1차)</th>
+                <td th:text="${history.firstAttemptStatus}"></td>
+              </tr>
+              <tr>
+                <th>시험(2차)</th>
+                <td th:text="${history.secondAttemptStatus}"></td>
+              </tr>
+              <tr>
+                <th>시험(3차)</th>
+                <td th:text="${history.thirdAttemptStatus}"></td>
+              </tr>
+              </tbody>
+            </table>
+            <ul class="modal_btn_list">
+              <li>
+                <a th:href="'/course/question?subCategoryId='+${history.subCategoryId}+
+                  '&studentCourseId='+${history.studentCourseId}+
+                  '&courseTitle='+${history.courseTitle}"
+                        class="modal_play_btn">시험보기</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
       </li>
 
 
@@ -237,11 +288,12 @@
           </div>
         </div>
       </li>
-
-
     </ul>
-    <!-- 수강리스트 END -->
   </div>
+  <!-- 수강리스트 END -->
+
+
+  <script src="/js/testModal.js"></script>
 
 
 

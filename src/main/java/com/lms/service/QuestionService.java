@@ -1,7 +1,6 @@
 package com.lms.service;
 
 import com.lms.dto.QuestionDto;
-import com.lms.entity.Member;
 import com.lms.entity.Questions;
 import com.lms.repository.QuestionsRepository;
 import jakarta.transaction.Transactional;
@@ -9,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +32,7 @@ public class QuestionService {
         return questionDtoList.subList(0, Math.min(10, questionDtoList.size()));
     }
 
+    // 사용자 정답제출시 문제별 정답 DB에서 가져와 사용자정답과 비교하기
     public boolean checkAnswer(Long questionId, int userAnswer) {
         Questions questions = questionsRepository.findById(questionId)
                 .orElseThrow();
@@ -49,7 +48,7 @@ public class QuestionService {
         log.info("정답을 맞추지 못했습니다.");
         return false;
     }
-    
+
     
 }
 

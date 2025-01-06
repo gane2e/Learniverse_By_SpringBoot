@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layouts/sub_layout}">
+<head>
+    <link th:href="@{/css/results.css}" rel="stylesheet">
+    <!-- 사용자 CSS 추가 -->
+
+    <div layout:fragment="sub_cont" >
+
+        <div class="success_container">
+
+            <div class="title">
+
+                <img th:if="${testStatus eq completion}"
+                     src="/img/pass.png" class="icon"><br>
+
+                <img th:unless="${testStatus eq completion}"
+                        src="/img/fail.png" class="icon"><br>
+                <br>
+                [[${name}]]님의 시험([[${testCount}]]차)점수는 [[${totalScore}]]점으로, [[${testStatus}]] 처리되었습니다.
+            </div>
+
+            <div class="text">
+                시험은 최대 3번까지 응시하실 수 있으며, 합격 점수는 60점입니다. <br>
+                <span class="bold">3차시험까지 불합격 시 교육을 다시 이수하셔야 합니다.</span>
+            </div>
+            <ul class="btn_list">
+
+                <li>
+                    <a href="/members/dashBoard" class="btn2">재시험 보기</a>
+                </li>
+
+                <li>
+                    <a href="/members/dashBoard" class="btn2">확인</a>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+
+</html>

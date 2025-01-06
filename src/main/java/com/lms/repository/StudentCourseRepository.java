@@ -18,7 +18,8 @@ public interface StudentCourseRepository extends JpaRepository<StudentCourse, Lo
             "s.enrollmentStatus, s.testStatus, s.regTime, " +
             "m.id, m.name, " +
             "c.courseId , c.title ," +
-            "sct.subCategoryName, ct.categoryName) " +
+            "sct.subCategoryName, sct.subCategoryId," +
+            "ct.categoryName) " +
             "FROM StudentCourse s " +
             "JOIN s.courseApplication a " +
             "JOIN a.member m " +
@@ -28,4 +29,5 @@ public interface StudentCourseRepository extends JpaRepository<StudentCourse, Lo
             "WHERE a.member.id = :memberId " +
             "order by s.regTime desc")
     List<StudentCourseHisDto> getDashBoard(@RequestParam("memberId") Long memberId);
+
 }

@@ -82,7 +82,11 @@
                  <div class="cont_btn_list_area">
                      <ul class="list">
                          <li>
-                             <a href="/" class="btn" >시험보기</a>
+                             <a th:href="'/course/question?subCategoryId='+${course.subCategoryId}+
+                             '&studentCourseId='+${student.studentCourseId}+
+                             '&courseTitle='+${course.title}"
+                                class="btn"
+                                id="openModalBtn">시험보기</a>
                          </li>
                          <li>
                              <a href="/members/dashBoard" class="btn" >학습종료</a>

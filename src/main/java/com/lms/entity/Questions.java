@@ -31,16 +31,4 @@ public class Questions {
     @JoinColumn(name = "sub_category_id")
     private SubCategory subCategory;
 
-    // QuestionsDto => Questions 변환(Dto로 받은 객체 매핑)
-    public static Questions createQuestions(QuestionDto questionDto) {
-        Questions questions = new Questions();
-        questions.setQuestionId(questionDto.getQuestionId());
-        questions.setQuestionTitle(questionDto.getQuestionTitle());
-        questions.setOption1(questionDto.getOption1());
-        questions.setOption2(questionDto.getOption2());
-        questions.setOption3(questionDto.getOption3());
-        questions.setOption4(questionDto.getOption4());
-        questions.setCorrectAnswer(questionDto.getCorrectAnswer());
-        return questions;
-    }
 }

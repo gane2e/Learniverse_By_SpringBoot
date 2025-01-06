@@ -42,6 +42,9 @@ public class CourseService {
     /* 교육수강생관리 CRUD 구현 */
     private final StudentCourseRepository studentCourseRepository;
 
+    /* 시험내역 CRUD 구현 */
+    private final StudentTestRepository testEntityRepository;
+
     /* 영상 저장경로 */
     @Value("${courseVideoLocation}")
     private String courseVideoLocation;
@@ -181,23 +184,44 @@ public class CourseService {
     // 사용자 페이지 - 교육 신청시 신청내역 저장
     public Long saveApplication(Long courseId, String username){
 
+        //username으로 멤버 객체 얻기
         Courses course = courseRepository.findById(courseId)
                 .orElseThrow( ()-> new EntityNotFoundException() );
         Member member = memberRepository.findByLoginId(username);
 
+        //신청내역 테이블 생성
         CourseApplication courseApplication = new CourseApplication();
         courseApplication.setCourse(course);
         courseApplication.setMember(member);
         courseApplication.setApplication_status(Application_status.신청완료);
-        courseApplicationRepository.save(courseApplication);
+        courseApplicationRepository.save(courseApplication); //DB에저장
 
+        // 수강내역 테이블 생성
         StudentCourseDto studentCourseDto = new StudentCourseDto();
         studentCourseDto.setEnrollmentStatus(Enrollment_status.수강신청);
         studentCourseDto.setTestStatus(Test_status.미응시);
         studentCourseDto.setCompletionStatus(Completion_status.미수료);
 
         StudentCourse student = studentCourseDto.createStudentCourse();
-        studentCourseRepository.save(student);
+        studentCourseRepository.save(student); //DB에저장
+
+        //시험내역 테이블 생성
+        StudentTestDto testEntityDto = new StudentTestDto();
+        testEntityDto.setFirstAttemptStatus(Test_status.미응시);
+        testEntityDto.setSecondAttemptStatus(Test_status.미응시);
+        testEntityDto.setThirdAttemptStatus(Test_status.미응시);
+        testEntityDto.setReset(false);
+        //위에서 생성한 수강내역 테이블을 외래키로 지정
+        StudentTest testEntity = testEntityDto.createTestEntity(testEntityDto);
+        
+        //디버깅용
+        log.info("DB에 저장될 첫번째 시험 상태 => " + testEntity.getFirstAttemptStatus().toString());
+        log.info("DB에 저장될 두번째 시험 상태 => " + testEntity.getSecondAttemptStatus().toString());
+        log.info("DB에 저장될 세번째 시험 상태 => " + testEntity.getThirdAttemptStatus().toString());
+        
+        testEntity.setStudentCourse(student);
+        testEntityRepository.save(testEntity); //DB에저장
+
 
         Long applicationId =  courseApplication.getApplicationId();
         CourseApplication application = courseApplicationRepository.findById(applicationId)

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class StudentCourse extends BaseEntity {
+
     // 수강생 관리 테이블
     // 신청내역 '신청완료' 인 회원은 해당 엔티티에서 수강내역 관리
 
@@ -38,11 +39,6 @@ public class StudentCourse extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Test_status testStatus;
 
-    //시험 응시횟수
-
-
-    //마지막
-
     //수료상태(수료, 미수료)
     @Enumerated(EnumType.STRING)
     private Completion_status completionStatus;
@@ -50,6 +46,7 @@ public class StudentCourse extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id")
     private CourseApplication courseApplication;
+
 
     //마지막 시청시간, 학습상태, 진도율 업데이트
     public void updateLastWatched(Long last_watched, Enrollment_status enrollment_status,  double ProgressRate){

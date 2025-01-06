@@ -4,6 +4,9 @@ import com.lms.constant.Application_status;
 import com.lms.constant.Completion_status;
 import com.lms.constant.Enrollment_status;
 import com.lms.constant.Test_status;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,13 +40,28 @@ public class StudentCourseHisDto {
 
     //카테고리 정보
     private String subCategoryName;
+    private Long subCategoryId;
     private String categoryName;
+
+    //시험내역 정보
+    private Long studentTestId;
+    private int firstScore; //1차점수
+    private Test_status firstAttemptStatus; //1차 응시 상태
+    private int secondScore; //2차점수
+    private Test_status secondAttemptStatus; //2차 응시 상태
+    private int thirdScore; //3차점수
+    private Test_status thirdAttemptStatus; //3차 응시 상태
+
+    //대시보드에 보여질 마지막 시험응시결과
+    private Test_status lastStatus;
+    private int lastScore;
+    private int testCount;
 
     public StudentCourseHisDto(Long applicationId, Application_status application_status,
                                Long studentCourseId, double ProgressRate, LocalDateTime completionDateTime,  Completion_status completionStatus,  LocalDateTime courseStarDateTime,
                                Enrollment_status enrollmentStatus, Test_status testStatus, LocalDateTime regTime,
                                Long memberId, String memberName, Long courseId, String courseTitle, String subCategoryName,
-                               String categoryName) {
+                               Long subCategoryId, String categoryName) {
 
         // 신청내역
         this.applicationId = applicationId;
@@ -69,7 +87,9 @@ public class StudentCourseHisDto {
 
         // 카테고리 정보
         this.subCategoryName = subCategoryName;
+        this.subCategoryId = subCategoryId;
         this.categoryName = categoryName;
+
     }
 
 

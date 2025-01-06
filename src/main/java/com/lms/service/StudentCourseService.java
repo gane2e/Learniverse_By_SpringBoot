@@ -6,7 +6,9 @@ import com.lms.constant.Test_status;
 import com.lms.dto.StudentCourseDto;
 import com.lms.dto.StudentCourseHisDto;
 import com.lms.entity.StudentCourse;
+import com.lms.entity.StudentTest;
 import com.lms.repository.StudentCourseRepository;
+import com.lms.repository.StudentTestRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import java.util.List;
 public class StudentCourseService {
 
     private final StudentCourseRepository studentCourseRepository;
+    private final StudentTestRepository studentTestRepository;
 
     // 영상학습페이지 - 수강정보 반환
     public StudentCourseDto findByApplicationId(Long applicationId) {
@@ -44,4 +47,44 @@ public class StudentCourseService {
                 = studentCourseRepository.getDashBoard(studentCourseId);
         return hisDtos;
     }
+    
+    // 대시보드dto에 시험응시내역 추가해서 반환하기
+    public List<StudentCourseHisDto> updateTestHistory(List<StudentCourseHisDto> dtos) {
+        for (StudentCourseHisDto hisDtos : dtos) {
+
+            //특정 회원의 수강내역ID 순회하여 얻기
+            Long studentCourseId = hisDtos.getStudentCourseId();
+            
+            //해당 수강내역 ID에 해당하는 TEST(시험응시내역)엔티티 얻어오기
+            StudentTest studentTest =  studentTestRepository.findByStudentCourse_StudentCourseId(studentCourseId);
+
+            //시험내역ID / 차시별 응시상태 및 점수 저장(1차시, 2차시, 3차시)
+            hisDtos.setStudentTestId(studentTest.getStudentTestId());
+            hisDtos.setFirstScore(studentTest.getFirstScore());
+            hisDtos.setFirstAttemptStatus(studentTest.getFirstAttemptStatus());
+            hisDtos.setSecondScore(studentTest.getSecondScore());
+            hisDtos.setSecondAttemptStatus(studentTest.getSecondAttemptStatus());
+            hisDtos.setThirdScore(studentTest.getThirdScore());
+            hisDtos.setThirdAttemptStatus(studentTest.getThirdAttemptStatus());
+
+            if(studentTest.getFirstAttemptStatus() == Test_status.미응시) {
+                hisDtos.setLastStatus(studentTest.getFirstAttemptStatus());
+
+            } else if (studentTest.getSecondAttemptStatus() == Test_status.미응시 ) {
+                hisDtos.setLastScore(studentTest.getFirstScore());
+                hisDtos.setLastStatus(studentTest.getFirstAttemptStatus());
+                hisDtos.setTestCount(1);
+            } else if (studentTest.getThirdAttemptStatus() == Test_status.미응시){
+                hisDtos.setLastScore(studentTest.getSecondScore());
+                hisDtos.setLastStatus(studentTest.getSecondAttemptStatus());
+                hisDtos.setTestCount(2);
+            } else {
+                hisDtos.setLastScore(studentTest.getThirdScore());
+                hisDtos.setLastStatus(studentTest.getThirdAttemptStatus());
+                hisDtos.setTestCount(3);
+            }
+        }
+        return dtos;
+    }
+
 }

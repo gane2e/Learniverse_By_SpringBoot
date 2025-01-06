@@ -86,15 +86,18 @@ public class MemberController {
     @GetMapping(value = "/dashBoard")
     public String dashBoard(Model model) {
 
-        log.info("==================dashBoard==================");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Member member = memberRepository.findByLoginId(username);
         Long memberId = member.getId();
         String userName = member.getName();
 
-        List<StudentCourseHisDto> hisDtos =
+        List<StudentCourseHisDto> dtos =
                 studentCourseService.findStudentCourseHis(memberId);
+
+        List<StudentCourseHisDto> hisDtos
+                = studentCourseService.updateTestHistory(dtos);
+
 
         DashBoardCountDto dashBoardCountDto = new DashBoardCountDto();
         int enrollment_enrollment = 0; //수강신청 상태 수
