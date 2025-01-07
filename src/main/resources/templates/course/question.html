@@ -19,7 +19,8 @@
 
     <div class="question_container">
 
-        <form th:action="'/question/grading/' + ${studentTestId}" method="post" onsubmit="confirmSubmit(event)">
+        <form th:action="@{'/question/grading/' + ${studentTestId} + '/' + ${studentCourseId} + '/' + ${courseTitle} + '/' + ${subCategoryId}}"
+              method="post" onsubmit="confirmSubmit(event)">
 
             <ul class="list">
 

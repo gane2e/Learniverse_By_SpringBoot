@@ -42,13 +42,49 @@ input:focus {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 시 강조 효과 */
 }
 
+.custom-select {
+    width: 125px; /* 가로 크기 */
+    height: 40px; /* 세로 크기 */
+    padding: 5px 10px; /* 여백 */
+    font-size: 14px; /* 글자 크기 */
+    border: 1px solid #ccc; /* 테두리 */
+    border-radius: 5px; /* 둥근 모서리 */
+    background-color: #f9f9f9; /* 배경색 */
+    color: #333; /* 글자 색 */
+    appearance: none; /* 기본 셀렉트 박스 기본 스타일 제거 */
+    -webkit-appearance: none; /* Safari 및 Chrome */
+    -moz-appearance: none; /* Firefox */
+    overflow: hidden; /* 텍스트 넘칠 경우 잘라내기 */
+}
+
+/* 셀렉트 박스에 포커스가 갔을 때 스타일 */
+.custom-select:focus {
+    border-color: #007bff; /* 포커스 시 테두리 색상 */
+    outline: none; /* 기본 포커스 outline 제거 */
+}
+
+/* 셀렉트 박스 화살표 아이콘 커스터마이징 */
+.custom-select::-ms-expand {
+    display: none; /* IE에서 화살표 숨기기 */
+}
+
+/* 옵션 스타일 */
+.custom-select option {
+    padding: 5px; /* 옵션 여백 */
+    font-size: 14px; /* 옵션 글자 크기 */
+    white-space: nowrap; /* 텍스트를 한 줄로 표시 */
+    overflow: hidden; /* 텍스트가 넘칠 경우 잘라내기 */
+    text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 처리 */
+}
+
 .search_title {
     display: inline;
-    margin-right: 20px;
+    margin: 0 15px;
 }
 
 .scrh_inp {
-    width: 700px;
+    width: 630px;
+    height: 40px;
 }
 
 .search_btn {
@@ -127,5 +163,13 @@ img:hover {
     font-size: 1rem;
     line-height: 25px;
     color: #212529;
+}
+
+.paging_box {
+    padding: 0 500px;
+}
+.pagination {
+    display: flex;
+    justify-content: flex-start;
 }
 

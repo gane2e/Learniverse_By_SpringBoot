@@ -3,300 +3,256 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
       layout:decorate="~{layouts/sub_layout}">
 <head>
-  <link th:href="@{/css/member/dashBoard.css}" rel="stylesheet">
-  <link th:href="@{/css/member/modal.css}" rel="stylesheet">
-  <!-- 사용자 CSS 추가 -->
+    <link th:href="@{/css/member/dashBoard.css}" rel="stylesheet">
+    <link th:href="@{/css/member/modal.css}" rel="stylesheet">
+    <!-- 사용자 CSS 추가 -->
 
 </head>
 
 <div layout:fragment="sub_cont">
-  <div class="inner">
+    <div class="inner">
 
-    <img src="/img/mark_5251227.png" class="category_img">
-    <span class="menu_title">교육신청 현황</span>
-    <div class="name">
-      <span class="blue_txt" th:text="${userName}">USER</span> 회원님,
+        <img src="/img/mark_5251227.png" class="category_img">
+        <span class="menu_title">교육신청 현황</span>
+        <div class="name">
+            <span class="blue_txt" th:text="${userName}">USER</span> 회원님,
+        </div>
+        <div class="description">
+            총 <span class="blue_txt" th:text="${dashBoardCount.total_enrollment}">2</span>개 신청과정 중
+            <span class="blue_txt" th:text="${dashBoardCount.completion_completed}">0</span>개 과정을 수료하셨습니다.
+        </div>
     </div>
-    <div class="description">
-      총 <span class="blue_txt" th:text="${dashBoardCount.total_enrollment}">2</span>개 신청과정 중
-      <span class="blue_txt" th:text="${dashBoardCount.completion_completed}">0</span>개 과정을 수료하셨습니다.
+
+    <!-- 수강신청 현황 (신청:1 수료:1... ) -->
+    <ul class="list">
+        <li>
+            <div class="box_icon1">
+                <img src="/img/dashBoard_수강신청.png">
+                <div class="icon_txt_container">
+                    <div class="tit">수강신청</div>
+                    <div class="num">
+                        <span class="num_number" th:text="${dashBoardCount.enrollment_enrollment}">2</span>건
+                    </div>
+                </div>
+
+            </div>
+        </li>
+        <li>
+            <div class="box_icon1">
+                <img src="/img/dashBoard_학습중.png">
+                <div class="icon_txt_container">
+                    <div class="tit">학습중</div>
+                    <div class="num">
+                        <span class="num_number" th:text="${dashBoardCount.enrollment_progress}">2</span>건
+                    </div>
+                </div>
+
+            </div>
+        </li>
+        <li>
+            <div class="box_icon1">
+                <img src="/img/dashBoard_학습완료.png">
+                <div class="icon_txt_container">
+                    <div class="tit">학습완료</div>
+                    <div class="num">
+                        <span class="num_number" th:text="${dashBoardCount.enrollment_completed}">2</span>건
+                    </div>
+                </div>
+
+            </div>
+        </li>
+        <li>
+            <div class="box_icon1">
+                <img src="/img/dashBoard_미수료.png">
+                <div class="icon_txt_container">
+                    <div class="tit">미수료</div>
+                    <div class="num">
+                        <span class="num_number" th:text="${dashBoardCount.completion_notCompleted}">2</span>건
+                    </div>
+                </div>
+
+            </div>
+        </li>
+        <li>
+            <div class="box_icon1">
+                <img src="/img/dashBoard_수료.png">
+                <div class="icon_txt_container">
+                    <div class="tit">수료</div>
+                    <div class="num">
+                        <span class="num_number" th:text="${dashBoardCount.completion_completed}">2</span>건
+                    </div>
+                </div>
+
+            </div>
+        </li>
+    </ul>
+
+
+    <!-- 교육 학습 현황 -->
+    <div class="title_area">
+        <div class="title_before"></div>
+        <div class="title">온라인교육 학습 현황</div>
     </div>
-  </div>
 
-  <!-- 수강신청 현황 (신청:1 수료:1... ) -->
-  <ul class="list">
-    <li>
-      <div class="box_icon1">
-        <img src="/img/dashBoard_수강신청.png">
-        <div class="icon_txt_container">
-          <div class="tit" >수강신청</div>
-          <div class="num">
-            <span class="num_number" th:text="${dashBoardCount.enrollment_enrollment}">2</span>건
-          </div>
-        </div>
+    <!-- 검색기 -->
+    <div class="search_box">
+        <div class="search_title">강의 명</div>
+        <input type="text" class="scrh_inp" placeholder="검색어를 입력해주세요." title="검색어를 입력해주세요." id="searchKeyword"
+               name="searchKeyword" value="">
+        <button type="button" class="search_btn">검색</button>
+    </div>
 
-      </div>
-    </li>
-    <li>
-      <div class="box_icon1">
-        <img src="/img/dashBoard_학습중.png">
-        <div class="icon_txt_container">
-          <div class="tit" >학습중</div>
-          <div class="num">
-            <span class="num_number" th:text="${dashBoardCount.enrollment_progress}">2</span>건
-          </div>
-        </div>
+    <!-- 수강리스트 -->
+    <div class="current_info_list_cont">
 
-      </div>
-    </li>
-    <li>
-      <div class="box_icon1">
-        <img src="/img/dashBoard_학습완료.png">
-        <div class="icon_txt_container">
-          <div class="tit" >학습완료</div>
-          <div class="num">
-            <span class="num_number" th:text="${dashBoardCount.enrollment_completed}">2</span>건
-          </div>
-        </div>
+        <ul class="dashBoard_list">
 
-      </div>
-    </li>
-    <li>
-      <div class="box_icon1">
-        <img src="/img/dashBoard_미수료.png">
-        <div class="icon_txt_container">
-          <div class="tit" >미수료</div>
-          <div class="num">
-            <span class="num_number" th:text="${dashBoardCount.completion_notCompleted}">2</span>건
-          </div>
-        </div>
+            <li th:each="history : ${hisDtos}">
+                <div class="current_info_box">
+                    <div class="sub_tit_area">
+                        <div class="mark_list_area">
+                            <ul class="course_category_list">
+                                <li>
+                                    <div class="course_category_1" th:text="${history.categoryName}">영업전</div>
+                                </li>
+                                <li>
+                                    <div class="course_category_2" th:text="${history.subCategoryName}">수입업</div>
+                                </li>
+                            </ul>
+                        </div>
 
-      </div>
-    </li>
-    <li>
-      <div class="box_icon1">
-        <img src="/img/dashBoard_수료.png">
-        <div class="icon_txt_container">
-          <div class="tit">수료</div>
-          <div class="num">
-            <span class="num_number"  th:text="${dashBoardCount.completion_completed}">2</span>건
-          </div>
-        </div>
+                        <div class="text_list_area">
+                            <ul class="course_category_list_2">
+                                <li>
+                                    <span class="tit">학습 시작일 : </span>
+                                    2024-12-26 09:20
+                                </li>
+                                <li>
+                                    <span class="tit">학습 수료일 : </span>
+                                    -
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
 
-      </div>
-    </li>
-  </ul>
+                    <div class="course_title" th:text="${history.courseTitle}">
+                        [영업전] 수입업자 교육
+                    </div>
 
-
-  <!-- 교육 학습 현황 -->
-  <div class="title_area">
-    <div class="title_before"></div>
-    <div class="title">온라인교육 학습 현황</div>
-  </div>
-
-  <!-- 검색기 -->
-  <div class="search_box">
-    <div class="search_title">강의 명</div>
-    <input type="text" class="scrh_inp" placeholder="검색어를 입력해주세요." title="검색어를 입력해주세요." id="searchKeyword" name="searchKeyword" value="">
-    <button type="button" class="search_btn">검색</button>
-  </div>
-
-  <!-- 수강리스트 -->
-  <div class="current_info_list_cont">
-
-    <ul class="dashBoard_list">
-
-      <li th:each="history : ${hisDtos}">
-        <div class="current_info_box">
-          <div class="sub_tit_area">
-            <div class="mark_list_area">
-              <ul class="course_category_list">
-                <li>
-                  <div class="course_category_1" th:text="${history.categoryName}">영업전</div>
-                </li>
-                <li>
-                  <div class="course_category_2" th:text="${history.subCategoryName}">수입업</div>
-                </li>
-              </ul>
-            </div>
-
-            <div class="text_list_area">
-              <ul class="course_category_list_2">
-                <li>
-                  <span class="tit">학습 시작일 : </span>
-                  2024-12-26 09:20
-                </li>
-                <li>
-                  <span class="tit">학습 수료일 : </span>
-                  -
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="course_title" th:text="${history.courseTitle}">
-            [영업전] 수입업자 교육
-          </div>
-
-          <div class="current_table_area">
-            <table class="current_table">
-              <tr>
-                <th>학습하기</th>
-                <th>이수율</th>
-                <th>시험보기</th>
-                <th>시험점수 / 회차</th>
-                <th>수료증</th>
-              </tr>
-              <tr class="current_table_data">
-                <td>
-                  <a th:href="'/course/video/'+${history.applicationId}" class="play_btn"
-                     target="_blank">
-                    학습하기
-                  </a>
-                </td>
-                <td>
-                  <span class="red_txt" th:text="${history.ProgressRate}">0</span>%
-                </td>
-                <td>
-                  <!-- '학습완료' 상태면 [응시하기] 버튼 노출-->
-                  <a
-                     class="play_btn" id="openModalBtn"
-                     th:if="${history.enrollmentStatus eq enrollmentStatus}">
-                    응시하기
-                  </a>
-                  <span th:unless="${history.enrollmentStatus eq enrollmentStatus}"> <!-- '학습완료' 상태가 아니면 -->
+                    <div class="current_table_area">
+                        <table class="current_table">
+                            <tr>
+                                <th>학습하기</th>
+                                <th>이수율</th>
+                                <th>시험보기</th>
+                                <th>시험점수 / 회차</th>
+                                <th>수료증</th>
+                            </tr>
+                            <tr class="current_table_data">
+                                <td>
+                                    <a th:href="'/course/video/'+${history.applicationId}" class="play_btn"
+                                       target="_blank">
+                                        학습하기
+                                    </a>
+                                </td>
+                                <td>
+                                    <span class="red_txt" th:text="${history.ProgressRate}">0</span>%
+                                </td>
+                                <td>
+                                    <!-- '학습완료' 상태면 [응시하기] 버튼 노출-->
+                                    <a
+                                            class="play_btn" id="openModalBtn"
+                                            th:if="${history.enrollmentStatus eq enrollmentStatus}">
+                                        응시하기
+                                    </a>
+                                    <span th:unless="${history.enrollmentStatus eq enrollmentStatus}"> <!-- '학습완료' 상태가 아니면 -->
                       교육 100% 이수후 응시 가능
                   </span>
-                </td>
-                <td th:if="${history.enrollmentStatus eq enrollmentStatus}"> <!-- '학습완료' 상태면 -->
-                  ( [[${history.lastStatus}]] )<br>
-                  [[${history.lastScore}]]점 / [[${history.testCount}]]회차</td>
-                <td th:unless="${history.enrollmentStatus eq enrollmentStatus}">
-                  - <!-- '학습완료' 상태가 아니면 -->
-                </td>
+                                </td>
+                                <td th:if="${history.enrollmentStatus eq enrollmentStatus}"> <!-- '학습완료' 상태면 -->
+                                    ( [[${history.lastStatus}]] )<br>
+                                    [[${history.lastScore}]]점 / [[${history.testCount}]]회차
+                                </td>
+                                <td th:unless="${history.enrollmentStatus eq enrollmentStatus}">
+                                    - <!-- '학습완료' 상태가 아니면 -->
+                                </td>
 
-                <td th:text="${history.completionStatus}"></td>
-              </tr>
-            </table>
-          </div>
-        </div>
+                                <td th:unless="${history.completionStatus eq completionStatus}"
+                                      th:text="${history.completionStatus}"></td>
+                                <td th:if="${history.completionStatus eq completionStatus}"
+                                     >
+                                    <a class="play_btn" onclick="generateCertificate()"
+                                       target="_blank">
+                                        수료증
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
 
 
-        <!-- 모달 창 -->
-        <div id="modal" class="modal">
-          <div class="modal-content">
-            <span id="closeBtn" class="close">&times;</span>
+                <!-- 모달 창 -->
+                <div id="modal" class="modal">
+                    <div class="modal-content">
+                        <span id="closeBtn" class="close">&times;</span>
 
-            <div class="title">시험은 최대 3번 까지 응시하실 수 있으며,<br>
-              합격 점수는 <span class="blue_txt">60</span>점 입니다.
-            </div>
-            <div class="text">3차시험까지 불합격 시
-              <span class="red_txt">교육을 다시 이수</span>하셔야 합니다.</div>
-            <!-- 테이블 -->
-            <table class="custom-table">
-              <tbody>
-              <tr>
-                <th>시험(1차)</th>
-                <td th:text="${history.firstAttemptStatus}"></td>
-              </tr>
-              <tr>
-                <th>시험(2차)</th>
-                <td th:text="${history.secondAttemptStatus}"></td>
-              </tr>
-              <tr>
-                <th>시험(3차)</th>
-                <td th:text="${history.thirdAttemptStatus}"></td>
-              </tr>
-              </tbody>
-            </table>
-            <ul class="modal_btn_list">
-              <li>
-                <a th:href="'/course/question?subCategoryId='+${history.subCategoryId}+
+                        <div class="modal-title">시험은 최대 3번 까지 응시하실 수 있으며,<br>
+                            합격 점수는 <span class="blue_txt">60</span>점 입니다.
+                        </div>
+                        <div class="text">3차시험까지 불합격 시
+                            <span class="red_txt">교육을 다시 이수</span>하셔야 합니다.
+                        </div>
+                        <!-- 테이블 -->
+                        <table class="custom-table">
+                            <tbody>
+                            <tr>
+                                <th>시험(1차)</th>
+                                <td th:text="${history.firstAttemptStatus}"></td>
+                            </tr>
+                            <tr>
+                                <th>시험(2차)</th>
+                                <td th:text="${history.secondAttemptStatus}"></td>
+                            </tr>
+                            <tr>
+                                <th>시험(3차)</th>
+                                <td th:text="${history.thirdAttemptStatus}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <ul class="modal_btn_list">
+                            <li>
+                                <a th:href="'/course/question?subCategoryId='+${history.subCategoryId}+
                   '&studentCourseId='+${history.studentCourseId}+
                   '&courseTitle='+${history.courseTitle}"
-                        class="modal_play_btn">시험보기</a>
-              </li>
-            </ul>
-          </div>
-        </div>
+                                   class="modal_play_btn">시험보기</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
 
 
+    <script src="/js/testModal.js"></script>
+    <script>
+        function generateCertificate() {
+            // 서버에서 HTML 템플릿을 동적으로 가져옵니다.
+            fetch('/student/certificate')
+                .then(response => response.text())  // HTML을 텍스트로 받음
+                .then(htmlContent => {
+                    // 새 창 열기
+                    let printWindow = window.open("", "", "width=1050,height=800");
 
-      </li>
+                    // HTML 콘텐츠를 새 창에 삽입
+                    printWindow.document.write(htmlContent);  // 서버에서 받은 HTML 삽입
+                    printWindow.document.close();  // 문서 닫기
 
-
-
-      <li>
-        <div class="current_info_box">
-          <div class="sub_tit_area">
-            <div class="mark_list_area">
-              <ul class="course_category_list">
-                <li>
-                  <div class="course_category_1">영업전</div>
-                </li>
-                <li>
-                  <div class="course_category_2">수입업</div>
-                </li>
-              </ul>
-            </div>
-
-            <div class="text_list_area">
-              <ul class="course_category_list_2">
-                <li>
-                  <span class="tit">학습 시작일 : </span>
-                  2024-12-26 09:20
-                </li>
-                <li>
-                  <span class="tit">학습 수료일 : </span>
-                  -
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="course_title">
-            [상시] 개물림 사고 예방 교육과 펫티켓
-          </div>
-
-          <div class="current_table_area">
-            <table class="current_table">
-              <tr>
-                <th>학습하기</th>
-                <th>이수율</th>
-                <th>시험보기</th>
-                <th>시험점수 / 회차</th>
-                <th>수료증</th>
-              </tr>
-              <tr class="current_table_data">
-                <td>
-                  <a href="/course/video" class="play_btn"
-                     target="_blank">
-                    학습하기
-                  </a>
-                </td>
-                <td><span class="red_txt">0</span>%</td>
-                <td>이수율 100%시 응시가능</td>
-                <td>응시전</td>
-                <td>
-                  <a class="play_btn" onclick="print()"
-                     target="_blank">
-                    수료증
-                  </a>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <!-- 수강리스트 END -->
-
-
-  <script src="/js/testModal.js"></script>
-
-
-
+                    // 인쇄 대화상자 띄우기
+                    printWindow.print();
+                })
+                .catch(error => console.error("수료증 로드 실패:", error));
+        }
+    </script>
 
 
 </div>

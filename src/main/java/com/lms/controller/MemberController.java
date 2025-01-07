@@ -134,6 +134,7 @@ public class MemberController {
         model.addAttribute("dashBoardCount", dashBoardCountDto);
         model.addAttribute("userName", userName);
         model.addAttribute("enrollmentStatus", Enrollment_status.학습완료);
+        model.addAttribute("completionStatus", Completion_status.수료);
         return "member/dashBoard";
     }
 

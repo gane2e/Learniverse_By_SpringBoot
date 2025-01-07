@@ -14,17 +14,21 @@ import java.util.List;
 public interface CourseRepository extends JpaRepository<Courses, Long> {
 
 
-    // 사용자 교육리스트 표출용
     @Query("SELECT new com.lms.dto.CourseListDto(co.courseId, co.title, co.description, co.recruitment_status, " +
             "co.recruitment_start_date, co.recruitment_end_date, co.course_status, co.course_start_date, co.course_end_date, " +
             "co.completionCriteria, co.regTime, co.updateTime, co.createdBy, co.modifiedBy, " +
-            "co.imgUrl, co.oriImgName, ct.categoryId , ct.categoryName , sct.subCategoryId, sct.subCategoryName) " +
+            "co.imgUrl, co.oriImgName, ct.categoryId, ct.categoryName, sct.subCategoryId, sct.subCategoryName) " +
             "FROM Courses co " +
             "JOIN co.subCategory sct " +
             "JOIN sct.categories ct " +
             "WHERE (:keyword IS NULL OR LOWER(co.title) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-            "OR LOWER(co.description) LIKE LOWER(CONCAT('%', :keyword, '%')))")
-    public List<CourseListDto> findAllCourseWithCategoryInfo(@Param("keyword") String keyword);
+            "OR LOWER(co.description) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
+            "AND (:categoryId IS NULL OR ct.categoryId = :categoryId) " +
+            "AND (:subCategoryId IS NULL OR sct.subCategoryId = :subCategoryId)")
+    public List<CourseListDto> findAllCourseWithCategoryInfo(@Param("keyword") String keyword,
+                                                             @Param("categoryId") Long categoryId,
+                                                             @Param("subCategoryId") Long subCategoryId);
+
 
 
     // 사용자 페이지 교육 상세정보 표출용

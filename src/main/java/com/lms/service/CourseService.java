@@ -163,8 +163,8 @@ public class CourseService {
 
 
     // 사용자페이지 - 교육 전체 리스트 반환
-    public List<CourseListDto> getCourseList(String keyword){
-        List<CourseListDto> courseList = courseRepository.findAllCourseWithCategoryInfo(keyword);
+    public List<CourseListDto> getCourseList(String keyword, Long categoryId, Long subCategoryId){
+        List<CourseListDto> courseList = courseRepository.findAllCourseWithCategoryInfo(keyword, categoryId, subCategoryId);
         return courseList;
     }
 

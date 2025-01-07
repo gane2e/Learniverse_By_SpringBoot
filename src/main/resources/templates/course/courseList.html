@@ -3,29 +3,43 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
       layout:decorate="~{layouts/sub_layout}">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:href="@{/css/course/courseList.css}" rel="stylesheet">
     <!-- 사용자 CSS 추가 -->
+</head>
+    <div layout:fragment="sub_cont">
 
-<div layout:fragment="sub_cont">
-
-    <form action="/course/courses/search" method="get">
+    <form action="/course/courses/search" method="get" id="searchForm">
         <div class="search_box">
 
+            <!--1차 카테고리 검색-->
             <div class="search_title">교육 카테고리</div>
-            <select>
-                <option>-</option>
-                <option>1차카테고리명</option>
-                <option>1차카테고리명</option>
+            <select id="categorySelect" onchange="loadSubCategories()"
+                class="custom-select" name="categoryId">
+                <option value="">전체</option>
+                <th:block th:each="category : ${categories}">
+                    <option th:value="${category.categoryId}"
+                            th:text="${category.categoryName}"
+                            th:selected="${category.categoryId == categoryId}">></option>
+                </th:block>
             </select>
-            <select>
-                <option>-</option>
-                <option>2차카테고리명</option>
-                <option>2차카테고리명</option>
+
+            <!--2차 카테고리 검색-->
+            <select id="subCategorySelect"
+                    class="custom-select">
+                <option value="">전체</option>
+                <input type="hidden" id="subCategoryId" name="subCategoryId" />
             </select>
+
+            <!--강의명 검색-->
             <div class="search_title">강의 명</div>
             <input type="text" class="scrh_inp" placeholder="검색어를 입력해주세요." title="검색어를 입력해주세요." id="searchKeyword"
-                   name="keyword">
+                   name="keyword" th:value="${keyword}" >
+
+            <!--검색 버튼-->
             <button type="submit" class="search_btn"><span class="text">검색</span></button>
+            <!--검색 초기화 버튼-->
+            <button type="button" class="search_btn" onclick="resetSearchForm()"><span class="text">초기화</span></button>
         </div>
     </form>
 
@@ -46,14 +60,83 @@
            <a th:href="'/course/courseDtl/' + ${course.courseId}" >
                <p class="title" th:text="${course.title}"></p>
            </a>
+
        </li>
    </ul>
-    <br>
-    <a href="/">1페이지</a>
-    <a href="/">2페이지</a>
+    <input type="hidden" id="selectSubCategory" th:value="${subCategoryId}">
+
+    <div class="paging_box">
+        <!-- 페이징 -->
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 
 
-    
+    <!-- 카테고리 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:inline="javascript">
+        function loadSubCategories() {
+            const categoryId = document.getElementById("categorySelect").value;
+            // AJAX 요청
+            $.ajax({
+                url: '/subcategories?categoryId=' + categoryId, // 요청 URL
+                type: 'GET', // 요청 방식
+                dataType: 'json', // 기대하는 데이터 타입
+                success: function (subCategories) {
+                    const subCategorySelect = document.getElementById("subCategorySelect");
+                    subCategorySelect.innerHTML = '<option value="">전체</option>'; // 초기화
+
+                    // 서브 카테고리 옵션 추가
+                    subCategories.forEach(subCategory => {
+                        const option = document.createElement("option");
+                        option.value = subCategory.subCategoryId;
+                        option.text = subCategory.subCategoryName;
+
+                        subCategorySelect.add(option);
+                    });
+
+                    //hidden input에 값 설정
+                    subCategorySelect.addEventListener('change', function () {
+                        document.getElementById('subCategoryId').value = this.value;
+                    });
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("Error fetching subcategories:", textStatus, errorThrown); // 오류 로그
+                }
+            });
+        }
+
+        function resetSearchForm() {
+            document.getElementById("searchForm").reset();
+
+            // 서브카테고리 셀렉트 박스를 초기화 (전체로 설정)
+            var subCategorySelect = document.getElementById("subCategorySelect");
+            subCategorySelect.innerHTML = '<option value="">전체</option>';
+
+            // URL에서 쿼리 파라미터를 제거하여 새로고침 (초기화된 상태로 돌아감)
+            // URL의 쿼리 파라미터만 제거
+            var currentUrl = window.location.pathname;
+            window.history.pushState(null, "", currentUrl); // 쿼리 파라미터를 지우고 리로드
+            window.location.reload(); // 페이지 새로고침
+        }
+
+    </script>
+
 </div>
+
 
 </html>

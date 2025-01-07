@@ -63,13 +63,9 @@
                     <th>No</th>
                     <th>제목</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>영상제목1</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>영상제목2</td>
+                <tr th:each="videos, status : ${video}">
+                    <td th:text="${status.index + 1}"></td>
+                    <td th:text="${videos.videoTitle}"></td>
                 </tr>
             </table>
         </div>
@@ -115,7 +111,6 @@
                 <div class="cont_btn_list_area">
                     <ul class="bottom_list">
                         <li>
-                            <!--th:href="'/course/video/' + ${course.courseId}"-->
                             <a class="btn"
                                onclick="application()">
                                 <span class="first_btn">수강신청</span>
@@ -135,8 +130,6 @@
     <script>
         // 로그인 여부에 따른 신청처리로직
         function application(){
-
-            const courseId = document.querySelector('#courseId').value;
 
                 fetch('/loginCheck', {
                     method: 'GET',  // GET 요청

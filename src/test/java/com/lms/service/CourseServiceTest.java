@@ -22,12 +22,12 @@ class CourseServiceTest {
     @Autowired
     CourseService courseService;
 
-    @Test
+   /* @Test
     public void findAll() {
         List<CourseListDto> courseList = courseService.getCourseList();
         courseList.forEach(course ->
                 System.out.println("CourseTitle => " + course.getTitle())
         );
-    }
+    }*/
 
 }

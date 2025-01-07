@@ -5,6 +5,7 @@
      <!-- layout:decorate="~{layouts/sub_layout}"-->
 <head>
     <link th:href="@{/css/course/player.css}" rel="stylesheet">
+    <link th:href="@{/css/member/modal.css}" rel="stylesheet">
     <!-- 사용자 CSS 추가 -->
     <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
 </head>
@@ -82,11 +83,8 @@
                  <div class="cont_btn_list_area">
                      <ul class="list">
                          <li>
-                             <a th:href="'/course/question?subCategoryId='+${course.subCategoryId}+
-                             '&studentCourseId='+${student.studentCourseId}+
-                             '&courseTitle='+${course.title}"
-                                class="btn"
-                                id="openModalBtn">시험보기</a>
+                             <a  class="btn"
+                                 onclick="checkCourseStatus()">시험보기</a>
                          </li>
                          <li>
                              <a href="/members/dashBoard" class="btn" >학습종료</a>
@@ -94,20 +92,99 @@
                      </ul>
                  </div>
              </div>
+         </div>
+     </div>
 
+     <!-- 모달 창 -->
+     <div id="modal" class="modal">
+         <div class="modal-content">
+             <span id="closeBtn" class="close">&times;</span>
 
+             <div class="modal-title">시험은 최대 3번 까지 응시하실 수 있으며,<br>
+                 합격 점수는 <span class="blue_txt">60</span>점 입니다.
+             </div>
+             <div class="text">3차시험까지 불합격 시
+                 <span class="red_txt">교육을 다시 이수</span>하셔야 합니다.
+             </div>
+             <!-- 테이블 -->
+             <table class="custom-table">
+                 <tbody>
+                 <tr>
+                     <th>시험(1차)</th>
+                     <td th:text="${studentTest.firstAttemptStatus}"></td>
+                 </tr>
+                 <tr>
+                     <th>시험(2차)</th>
+                     <td th:text="${studentTest.secondAttemptStatus}"></td>
+                 </tr>
+                 <tr>
+                     <th>시험(3차)</th>
+                     <td th:text="${studentTest.thirdAttemptStatus}"></td>
+                 </tr>
+                 </tbody>
+             </table>
+             <ul class="modal_btn_list">
+                 <li>
+                     <a th:href="'/course/question?subCategoryId='+${course.subCategoryId}+
+                  '&studentCourseId='+${student.studentCourseId}+
+                  '&courseTitle='+${course.title}"
+                        class="modal_play_btn">시험보기</a>
+                 </li>
+             </ul>
          </div>
      </div>
 
      <input id="studentCourseId" type="hidden" th:value="${student.studentCourseId}">
      <input id="last_watched" type="hidden" th:value="${student.last_watched}">
 
+     <script>
+
+         function checkCourseStatus() {
+
+             const studentCourseId = document.getElementById('studentCourseId').value;
+             const modal = document.getElementById('modal');
+
+             fetch('/student/checkCourseStatus', {
+                 method: 'POST',  // POST 요청
+                 headers: {
+                     'Content-Type': 'application/json',  // JSON 형식으로 데이터 전송
+                 },
+                 body: JSON.stringify({
+                     studentCourseId: studentCourseId
+                 })
+             })
+                 .then(response => response.text())  // 응답을 텍스트 형식으로 처리
+                 .then(data => {
+                     if (data === "학습완료") {
+                         modal.style.display = "block";
+                     } else {
+                         alert("교육 100% 이수 후 시험에 응시하실 수 있습니다.")
+                     }
+                 })
+         }
+
+         const closeBtn = document.getElementById('closeBtn');
+         // 모달 닫기
+         closeBtn.onclick = function() {
+             modal.style.display = "none";
+         }
+         // 모달 외부 클릭 시 닫기
+         window.onclick = function(event) {
+             if (event.target === modal) {
+                 modal.style.display = "none";
+             }
+         }
+
+
+     </script>
 
      <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
      <!-- 플러그인-->
      <script src="https://cdn.sc.gl/videojs-hotkeys/0.2/videojs.hotkeys.min.js"></script>
 <!--     <script type="text/javascript" src="/js/plugin/videojs-playlists.js"></script>-->
      <script type="text/javascript" src="/js/your-custom-plugin.js"></script>
+     <script src="/js/testModal.js"></script>
+
 
 
 

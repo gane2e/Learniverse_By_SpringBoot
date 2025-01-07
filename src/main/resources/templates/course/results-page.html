@@ -28,7 +28,10 @@
             <ul class="btn_list">
 
                 <li>
-                    <a href="/members/dashBoard" class="btn2">재시험 보기</a>
+                    <a th:href="'/course/question?subCategoryId='+${subCategoryId}+
+                  '&studentCourseId='+${studentCourseId}+
+                  '&courseTitle='+${courseTitle}"
+                       class="btn2">시험보기</a>
                 </li>
 
                 <li>

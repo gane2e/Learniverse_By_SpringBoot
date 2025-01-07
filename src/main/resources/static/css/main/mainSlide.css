@@ -1,0 +1,54 @@
+
+.slider-container {
+    width: 100%;
+    overflow: hidden; /* 슬라이드가 밖으로 넘어가지 않도록 함 */
+}
+
+.slider {
+    display: flex; /* 슬라이드 요소를 가로로 배치 */
+    transition: transform 0.5s ease; /* 슬라이드 전환 효과 */
+}
+
+.slide {
+    min-width: 100%; /* 각 슬라이드가 한 화면을 차지하도록 설정 */
+    box-sizing: border-box;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.slide h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.slide p {
+    font-size: 16px;
+    color: #555;
+}
+
+.controls {
+   /* position: absolute;*/
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.control-btn {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.control-btn:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}

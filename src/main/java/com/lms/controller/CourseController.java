@@ -1,6 +1,7 @@
 package com.lms.controller;
 
 import com.lms.dto.*;
+import com.lms.entity.Category;
 import com.lms.repository.MemberRepository;
 import com.lms.service.*;
 import lombok.extern.log4j.Log4j2;
@@ -22,6 +23,8 @@ import java.util.Map;
 public class CourseController {
 
     @Autowired
+    private CategoryService categoryService;
+    @Autowired
     private CourseService courseService;
     @Autowired
     private ApplicationService applicationService;
@@ -34,11 +37,20 @@ public class CourseController {
 
     @GetMapping({"/courses", "/courses/search"})
     public String courses(@RequestParam(value = "keyword", required = false) String keyword,
+                          @RequestParam(value = "categoryId", required = false) Long categoryId,
+                          @RequestParam(value = "subCategoryId", required = false) Long subCategoryId,
                           Model model) {
-        log.info("keyword : " + keyword);
-        List<CourseListDto> courseList = courseService.getCourseList(keyword);
+
+        // 1차카테고리 얻어서 모델로 보내기
+        List<Category> categories = categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
+
+        List<CourseListDto> courseList = courseService.getCourseList(keyword, categoryId, subCategoryId );
         model.addAttribute("pageTitle", "온라인 교육");
         model.addAttribute("courseList", courseList);
+        model.addAttribute("keyword", keyword); // 키워드 추가
+        model.addAttribute("categoryId", categoryId); // 카테고리 ID 추가
+        model.addAttribute("subCategoryId", subCategoryId); // 서브카테고리 ID 추가
         return "course/courseList";
     }
 
@@ -47,7 +59,9 @@ public class CourseController {
     public String courseDtl(@PathVariable("courseId") Long courseId, Model model) {
 
         CourseListDto courseDto = courseService.CourseByCourseId(courseId);
+        List<CourseVideoDto> video = courseService.findVideoById(courseId);
         model.addAttribute("course", courseDto);
+        model.addAttribute("video", video);
         model.addAttribute("pageTitle", "온라인 교육");
         return "course/courseDtl";
     }
@@ -110,6 +124,11 @@ public class CourseController {
         StudentCourseDto student = studentCourseService.findByApplicationId(applicationId);
         model.addAttribute("student", student);
 
+        //시험정보 반환
+        Long studentCourseId = student.getStudentCourseId();
+        StudentTestDto studentTestDto = studentTestService.findByStudentCourseId(studentCourseId);
+        model.addAttribute("studentTest", studentTestDto);
+
 
         if(courseVideo.isEmpty()){
             System.out.println("비디오 목록이 없습니다.");
@@ -144,6 +163,9 @@ public class CourseController {
         model.addAttribute("questions", questionDtos);
         model.addAttribute("studentTestId", studentTestId);
         model.addAttribute("courseTitle", courseTitle);
+        model.addAttribute("studentCourseId", studentCourseId);
+        model.addAttribute("subCategoryId", subCategoryId);
+        model.addAttribute("pageTitle", "온라인 교육");
         return "course/question";
     }
     

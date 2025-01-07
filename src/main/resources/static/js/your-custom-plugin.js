@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const studentCourseId = document.getElementById('studentCourseId').value;
     let last_watched = document.getElementById('last_watched').value;
     let remainingTime; //last_watched - (영상길이) 뺀 나머지 시청초
+    let ProgressRate; // 영상 총 진도율
 
     document.querySelectorAll('.lecture_btn').forEach(function(button) {
 
@@ -94,6 +95,10 @@ document.addEventListener('DOMContentLoaded', function () {
             remainingTime = last_watched; // 남은 시간
 
             for (let i = 1; i <= Object.keys(durations).length; i++) {
+                const progressBar = document.getElementById('progress-' + i);  // 해당 프로그레스바
+                const percentText = document.getElementById('percent-' + i);  //
+                const status = document.getElementById('status-' + i);  //
+
                 testTotalDuration += durations[`duration${i}`]; //각 영상 시간 누적
 
                 // last_watched가 이 구간 내에 있는지 체크
@@ -101,6 +106,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     targetIndex = i;  // 해당 영상 인덱스를 찾음
                     remainingTime = remainingTime - (testTotalDuration - durations[`duration${i}`]); // 해당 영상에서 남은 시간
                     break;
+                } else {
+                    progressBar.style.width = '100%';
+                    percentText.textContent = '100%';
+                    status.textContent = '학습완료';
+                    status.style.color = '#0076c0';
                 }
             }
         // 결과 확인
@@ -112,7 +122,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (targetButton) {
             targetButton.click();
         } else
-            console.log("버튼이 없습니다.")
+            console.log("버튼이 없습니다.") //영상 재생위치 찾아 클릭
+
+
     }, 100); // 3초 후에 실행 //250106 END
 
     let totalWatchedTime = 0;  // 서버로 전송할 토탈 시청시간
@@ -129,12 +141,36 @@ document.addEventListener('DOMContentLoaded', function () {
             /* 타임업데이트 시작 */
             player.on('timeupdate', function () {
                 var currentTime = player.currentTime();  // 현재 영상의 시청 시간 (초)
+                var duration = player.duration();
                 totalWatchedTime = Number(currentTime) + Number(lastWatchedTime)
+
+                /*교육 (총)이수율 계산*/
+                ProgressRate = calculateProgress(totalDuration, totalWatchedTime);
+                document.getElementById("gEduVideoProgress").textContent = ProgressRate;
+
+                const progressPercentage = (currentTime / duration) * 100;
+                const progressBar = document.getElementById('progress-' + targetIndex);  // 해당 프로그레스바
+                const percentText = document.getElementById('percent-' + targetIndex);  //
+                const status = document.getElementById('status-' + targetIndex);  //
+
+                progressBar.style.width = progressPercentage.toFixed(0) + '%';
+                percentText.textContent = progressPercentage.toFixed(0) + '%';
+                status.textContent = '학습중';
+
             });
             /*타임업데이트 END*/
 
+            player.on('pause', function (){
+                console.log("비디오 재생이 정지되었습니다.")
+                console.log("시청자의 마지막 시청길이 : " + totalWatchedTime)
+            })
+
             /* 비디오 종료이벤트 시작 */
             player.on('ended', function (){
+
+
+
+                alert("학습이 완료되었습니다.")
 
                 var enrollmentStatus = '';
                 if(totalDuration === totalWatchedTime) {
@@ -142,7 +178,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else
                     enrollmentStatus = '학습중';
                 lastWatchedTime = totalWatchedTime //이전시청시간할당
-                let ProgressRate = calculateProgress(totalDuration, totalWatchedTime);
+               
+                //prograserate있던자리
 
                 console.log("시청자의 마지막 시청길이 : " + totalWatchedTime)
                 console.log("비디오 총길이 : " + totalDuration)
@@ -176,11 +213,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function checkVideoIndex(index){
         console.log("클릭한 영상 index ===> " + index);
 
-        // 클릭한 영상의 이전영상 index
-        let indexCheck = index - 1
-
-        const button = document.querySelector(`[data-index="${indexCheck}"]`);
-        // button.get
     }
 
     // 진도율 계산
@@ -188,5 +220,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const progress = (totalWatchedTime / totalDuration) * 100;
         return progress.toFixed(1); // 소수점 둘째 자리까지 반올림
     }
+
 
 })

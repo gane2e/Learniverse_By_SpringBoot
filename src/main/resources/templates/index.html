@@ -7,58 +7,67 @@
     <title>Title</title>
     <!-- Swiper css -->
     <link rel="stylesheet" th:href="@{/css/main/main.css}">
-    <link rel="stylesheet" th:href="@{/css/main/slide.css}">
+    <link rel="stylesheet" th:href="@{/css/main/mainSlide.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 </head>
 
 <div layout:fragment="sub_cont">
 
-    <section class="first_section">
-        <div class="slide_container">
-            <!-- 메인비주얼 슬라이드 영역 -->
-            <div class="swiper mySwiper" id="slide_1">
-                <div class="swiper-wrapper">
-                    <!-- 슬라이드 시작 -->
-                    <div class="swiper-slide">
-                        <a><img src="/img/banner2.png"></a>
-                    </div>
-                    <div class="swiper-slide"></div>
-                    <div class="swiper-slide"></div>
-                    <div class="swiper-slide"></div>
-                    <!-- 슬라이드 종료 -->
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-        <div class="login_container">
-            <div class="title">로그인</div>
-            <div class="input_area">
-                <form>
-                    <div class="input_box">
-                        <input type="text" name="loginId"
-                            placeholder="&nbsp;&nbsp;&nbsp;아이디를 입력하세요.">
-                        <input type="password" name="password"
-                            placeholder="&nbsp;&nbsp;&nbsp;비밀번호를 입력하세요.">
-                    </div>
-                    <button class="btn btn-primary"
-                            style="background: #000000; border: none">로그인</button>
-                    <a class="kakao_login"
-                            href="https://kauth.kakao.com/oauth/authorize?client_id=70c4d976b0b45b6e04372cf2a3ebf3aa&redirect_uri=http://localhost:8080/kakao-login&response_type=code">
-                      <img src="/img/kakao_login_medium_wide.png">
-                    </a>
-                </form>
 
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide">
+                <h2>데이터제목1</h2>
+                <p>데이터설명1</p>
             </div>
+            <div class="slide">
+                <h2>데이터제목2</h2>
+                <p>데이터설명2</p>
+            </div>
+            <!-- 추가 데이터가 있을 경우 여기에 더 추가 -->
         </div>
-    </section>
 
-    <!-- Swiper JS (dom로딩후 실행하기 위해 바디하단작성)-->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <!-- Initialize Swiper -->
-    <script src="/js/swiper.js"></script>
+        <div class="controls">
+            <button class="control-btn" id="prevBtn">&#10094;</button>
+            <button class="control-btn" id="nextBtn">&#10095;</button>
+        </div>
+    </div>
+
+    <script>
+        const slider = document.querySelector('.slider');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        let currentIndex = 0;
+        const totalSlides = document.querySelectorAll('.slide').length;
+
+        // 슬라이드 이동 함수
+        function moveSlide(index) {
+            if (index < 0) {
+                currentIndex = totalSlides - 1; // 마지막 슬라이드로 이동
+            } else if (index >= totalSlides) {
+                currentIndex = 0; // 첫 번째 슬라이드로 이동
+            }
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`; // 슬라이드 이동
+        }
+
+        // 이전 버튼 클릭
+        prevBtn.addEventListener('click', () => {
+            currentIndex--;
+            moveSlide(currentIndex);
+        });
+
+        // 다음 버튼 클릭
+        nextBtn.addEventListener('click', () => {
+            currentIndex++;
+            moveSlide(currentIndex);
+        });
+
+        // 첫 번째 슬라이드로 초기화
+        moveSlide(currentIndex);
+    </script>
+
 </div>
 
 </html>

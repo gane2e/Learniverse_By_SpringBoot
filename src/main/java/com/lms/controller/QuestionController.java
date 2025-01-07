@@ -1,7 +1,9 @@
 package com.lms.controller;
 
+import com.lms.constant.Completion_status;
 import com.lms.constant.Test_status;
 import com.lms.entity.Member;
+import com.lms.entity.StudentCourse;
 import com.lms.entity.StudentTest;
 import com.lms.repository.MemberRepository;
 import com.lms.repository.StudentCourseRepository;
@@ -31,11 +33,16 @@ public class QuestionController {
     private MemberRepository memberRepository;
     @Autowired
     private StudentCourseRepository studentCourseRepository;
+    @Autowired
+    private StudentTestRepository studentTestRepository;
 
-    @PostMapping(value = "/question/grading/{studentTestId}")
+    @PostMapping(value = "/question/grading/{studentTestId}/{studentCourseId}/{courseTitle}/{subCategoryId}")
     public String gradingQuestion(@RequestParam Map<String, String> answers,
                                   Model model,
-                                  @PathVariable("studentTestId") Long studentTestId) {
+                                  @PathVariable("studentTestId") Long studentTestId,
+                                  @PathVariable("studentCourseId") Long studentCourseId,
+                                  @PathVariable("courseTitle") String courseTitle,
+                                  @PathVariable("subCategoryId") Long subCategoryId) {
 
         int totalScore = 0;
         int passingScore = 60;
@@ -59,13 +66,18 @@ public class QuestionController {
         if(totalScore < passingScore) {
             log.info("점수 : " + totalScore + " / " + "결과 : 불합격");
             testCount = studentTestService.saveTest(studentTestId, Test_status.불합격, totalScore);
+            if(testCount == 3) {
+                //reset로직
+            }
             model.addAttribute("testStatus", Test_status.불합격);
         } else {
             log.info("점수 : " + totalScore + " / " + "결과 : 합격");
             testCount = studentTestService.saveTest(studentTestId, Test_status.합격, totalScore);
             model.addAttribute("testStatus", Test_status.합격);
-            /*studentCourseRepository.find*/
-            // studentTestID로 수강내역 찾아서 수료처리하기
+            StudentCourse studentCourse = studentCourseRepository.findById(studentCourseId)
+                    .orElseThrow();
+            studentCourse.setCompletionStatus(Completion_status.수료); //수료처리
+            studentCourseRepository.save(studentCourse);
         }
 
         //로그인중인 사용자 ID로 성명 구하기
@@ -74,11 +86,17 @@ public class QuestionController {
         Member member = memberRepository.findByLoginId(username);
         String name = member.getName();
 
-        
+
+
+
         model.addAttribute("totalScore", totalScore); //점수
         model.addAttribute("testCount", testCount); //차시
         model.addAttribute("name", name); //사용자 성명
         model.addAttribute("completion", Test_status.합격); //합격여부에따른 이미지 표출용(비교대상)
+
+        model.addAttribute("studentCourseId", studentCourseId);;
+        model.addAttribute("subCategoryId", subCategoryId);
+        model.addAttribute("courseTitle", courseTitle);
         return "course/results-page";
     }
 
