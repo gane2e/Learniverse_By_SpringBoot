@@ -27,7 +27,6 @@ public class StudentCourseHisDto {
     private LocalDateTime courseStarDateTime; //수강 시작일
     private Completion_status completionStatus; //수료상태(수료, 미수료)
     private Enrollment_status enrollmentStatus; //수강상태(수강신청, 학습중, 학습완료)
-    private Test_status testStatus; //시험응시상태(미응시, 합격, 불합격)
     private LocalDateTime regTime;
     
     //회원정보
@@ -59,7 +58,7 @@ public class StudentCourseHisDto {
 
     public StudentCourseHisDto(Long applicationId, Application_status application_status,
                                Long studentCourseId, double ProgressRate, LocalDateTime completionDateTime,  Completion_status completionStatus,  LocalDateTime courseStarDateTime,
-                               Enrollment_status enrollmentStatus, Test_status testStatus, LocalDateTime regTime,
+                               Enrollment_status enrollmentStatus, LocalDateTime regTime,
                                Long memberId, String memberName, Long courseId, String courseTitle, String subCategoryName,
                                Long subCategoryId, String categoryName) {
 
@@ -74,7 +73,6 @@ public class StudentCourseHisDto {
         this.completionStatus = completionStatus;
         this.courseStarDateTime = courseStarDateTime;
         this.enrollmentStatus = enrollmentStatus;
-        this.testStatus = testStatus;
         this.regTime = regTime;
 
         // 회원정보

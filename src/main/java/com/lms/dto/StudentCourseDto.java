@@ -32,9 +32,6 @@ public class StudentCourseDto {
     //수강상태(수강신청, 학습중, 학습완료)
     private Enrollment_status enrollmentStatus;
 
-    //시험응시상태(미응시, 합격, 불합격)
-    private Test_status testStatus;
-
     //수료상태(수료, 미수료)
     private Completion_status completionStatus;
 

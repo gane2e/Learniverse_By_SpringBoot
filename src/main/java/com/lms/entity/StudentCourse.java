@@ -35,9 +35,9 @@ public class StudentCourse extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Enrollment_status enrollmentStatus;
 
-    //시험응시상태(미응시, 합격, 불합격)
+   /* //시험응시상태(미응시, 합격, 불합격)
     @Enumerated(EnumType.STRING)
-    private Test_status testStatus;
+    private Test_status testStatus;*/
 
     //수료상태(수료, 미수료)
     @Enumerated(EnumType.STRING)
@@ -53,6 +53,14 @@ public class StudentCourse extends BaseEntity {
         this.last_watched = last_watched;
         this.enrollmentStatus = enrollment_status;
         this.ProgressRate = ProgressRate;
+    }
+
+    //마지막 시청시간, 학습상태, 진도율, 학습시작일 초기화(3회불합격자)
+    public void resetLastWatched(){
+        this.last_watched = 0L;
+        this.enrollmentStatus = Enrollment_status.수강신청;
+        this.ProgressRate = 0.0;
+        this.courseStarDateTime = null;
     }
     
 

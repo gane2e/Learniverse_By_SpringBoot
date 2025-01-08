@@ -15,7 +15,7 @@ public interface StudentCourseRepository extends JpaRepository<StudentCourse, Lo
     // 사용자 대시보드
     @Query("SELECT new com.lms.dto.StudentCourseHisDto(a.applicationId, a.application_status, " +
             "s.studentCourseId, s.ProgressRate, s.completionDateTime, s.completionStatus, s.courseStarDateTime, " +
-            "s.enrollmentStatus, s.testStatus, s.regTime, " +
+            "s.enrollmentStatus, s.regTime, " +
             "m.id, m.name, " +
             "c.courseId , c.title ," +
             "sct.subCategoryName, sct.subCategoryId," +

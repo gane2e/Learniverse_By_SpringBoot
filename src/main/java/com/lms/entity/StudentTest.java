@@ -40,4 +40,13 @@ public class StudentTest extends BaseTimeEntity{
     @JoinColumn(name = "student_course_id")
     private StudentCourse studentCourse;
 
+    public void resetTest(){
+        this.firstAttemptStatus = Test_status.미응시;
+        this.secondAttemptStatus = Test_status.미응시;
+        this.thirdAttemptStatus = Test_status.미응시;
+        this.firstScore = 0;
+        this.secondScore = 0;
+        this.thirdScore = 0;
+    }
+
 }

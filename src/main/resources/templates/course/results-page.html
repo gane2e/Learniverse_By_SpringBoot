@@ -27,13 +27,21 @@
             </div>
             <ul class="btn_list">
 
-                <li>
+                <!-- 1,2회차면서 불합격일시 표출 -->
+                <li th:if="${testStatus ne completion and testCount != 3}"> <!-- 불합격일 때 [재시험보기] 버튼 표출 -->
                     <a th:href="'/course/question?subCategoryId='+${subCategoryId}+
                   '&studentCourseId='+${studentCourseId}+
                   '&courseTitle='+${courseTitle}"
-                       class="btn2">시험보기</a>
+                       class="btn1">재시험보기</a>
                 </li>
 
+                <!-- 3회차면서 불합격일 시 표출 -->
+                <li th:if="${testStatus ne completion and testCount == 3}"> <!-- 불합격일 때 [재시험보기] 버튼 표출 -->
+                    <a th:href="'/course/video/'+${applicationId}"
+                       class="btn1">다시 학습하기</a>
+                </li>
+
+                <!-- 대시보드로 이동 -->
                 <li>
                     <a href="/members/dashBoard" class="btn2">확인</a>
                 </li>

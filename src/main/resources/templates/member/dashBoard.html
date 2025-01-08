@@ -128,9 +128,8 @@
                                     2024-12-26 09:20
                                 </li>
                                 <li>
-                                    <span class="tit">학습 수료일 : </span>
-                                    -
                                 </li>
+                                <span class="tit">학습 수료일 : [[${#temporals.format(history.completionDateTime, 'yyyy-MM-dd')}]]</span>
                             </ul>
                         </div>
                     </div>
@@ -158,23 +157,28 @@
                                 <td>
                                     <span class="red_txt" th:text="${history.ProgressRate}">0</span>%
                                 </td>
+
+                                <!-- 응시하기 버튼 -->
                                 <td>
-                                    <!-- '학습완료' 상태면 [응시하기] 버튼 노출-->
-                                    <a
-                                            class="play_btn" id="openModalBtn"
-                                            th:if="${history.enrollmentStatus eq enrollmentStatus}">
+                                    <!-- '학습완료' 상태이면서 '수료'가 아닐시 [응시하기] 버튼 노출-->
+                                    <a class="play_btn" id="openModalBtn"
+                                       th:if="${history.enrollmentStatus eq enrollmentStatus and history.completionStatus ne completionStatus}">
                                         응시하기
                                     </a>
+                                    <!-- '학습완료' 상태가 아니면 텍스트 노출 -->
                                     <span th:unless="${history.enrollmentStatus eq enrollmentStatus}"> <!-- '학습완료' 상태가 아니면 -->
-                      교육 100% 이수후 응시 가능
-                  </span>
+                                        교육 100% 이수후 응시 가능</span>
+                                    <!-- '수료' 상태일 시 하이픈 처리 -->
+                                    <span th:if="${history.completionStatus eq completionStatus}">
+                                        <div class="nonClick_btn">응시완료</div>
+                                    </span>
                                 </td>
                                 <td th:if="${history.enrollmentStatus eq enrollmentStatus}"> <!-- '학습완료' 상태면 -->
                                     ( [[${history.lastStatus}]] )<br>
                                     [[${history.lastScore}]]점 / [[${history.testCount}]]회차
                                 </td>
                                 <td th:unless="${history.enrollmentStatus eq enrollmentStatus}">
-                                    - <!-- '학습완료' 상태가 아니면 -->
+                                    - <!-- '학습완료' 상태가 아니면서 '수료' 상태일 시 하이픈 -->
                                 </td>
 
                                 <td th:unless="${history.completionStatus eq completionStatus}"

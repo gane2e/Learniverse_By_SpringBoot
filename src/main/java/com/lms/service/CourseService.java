@@ -199,7 +199,6 @@ public class CourseService {
         // 수강내역 테이블 생성
         StudentCourseDto studentCourseDto = new StudentCourseDto();
         studentCourseDto.setEnrollmentStatus(Enrollment_status.수강신청);
-        studentCourseDto.setTestStatus(Test_status.미응시);
         studentCourseDto.setCompletionStatus(Completion_status.미수료);
 
         StudentCourse student = studentCourseDto.createStudentCourse();

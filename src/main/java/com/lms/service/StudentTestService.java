@@ -2,7 +2,9 @@ package com.lms.service;
 
 import com.lms.constant.Test_status;
 import com.lms.dto.StudentTestDto;
+import com.lms.entity.StudentCourse;
 import com.lms.entity.StudentTest;
+import com.lms.repository.StudentCourseRepository;
 import com.lms.repository.StudentTestRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class StudentTestService {
 
     private final StudentTestRepository studentTestRepository;
+    private final StudentCourseRepository studentCourseRepository;
 
     // 수강내역ID 해당하는 시험응시내역 찾기
     public StudentTestDto findByStudentCourseId(Long studentCourseId) {
@@ -63,6 +66,21 @@ public class StudentTestService {
         // 조건에 따른 결과 및 점수 저장후 DB에저장
         studentTestRepository.save(studentTest);
         return testCount;
+    }
+    
+    
+    // 3회차 불합격인 수강생의 시험정보 리셋하기
+    public void resetTest(Long studentTestId, Long studentCourseId) {
+        StudentTest studentTest = studentTestRepository.findById(studentTestId)
+                .orElseThrow();
+        //1회차 / 2회차 / 3회차 시험응시내역 초기화(불합격 => 미응시)
+        studentTest.resetTest();
+        studentTestRepository.save(studentTest); //리셋한 시험내역 저장
+
+        StudentCourse studentCourse = studentCourseRepository.findById(studentCourseId)
+                .orElseThrow();
+        studentCourse.resetLastWatched();
+        studentCourseRepository.save(studentCourse); //리셋한 수강내역 저장
     }
 
 }

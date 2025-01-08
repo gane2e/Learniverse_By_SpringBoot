@@ -5,6 +5,7 @@ import com.lms.constant.Test_status;
 import com.lms.entity.Member;
 import com.lms.entity.StudentCourse;
 import com.lms.entity.StudentTest;
+import com.lms.repository.CourseApplicationRepository;
 import com.lms.repository.MemberRepository;
 import com.lms.repository.StudentCourseRepository;
 import com.lms.repository.StudentTestRepository;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,8 +35,6 @@ public class QuestionController {
     private MemberRepository memberRepository;
     @Autowired
     private StudentCourseRepository studentCourseRepository;
-    @Autowired
-    private StudentTestRepository studentTestRepository;
 
     @PostMapping(value = "/question/grading/{studentTestId}/{studentCourseId}/{courseTitle}/{subCategoryId}")
     public String gradingQuestion(@RequestParam Map<String, String> answers,
@@ -67,7 +67,8 @@ public class QuestionController {
             log.info("점수 : " + totalScore + " / " + "결과 : 불합격");
             testCount = studentTestService.saveTest(studentTestId, Test_status.불합격, totalScore);
             if(testCount == 3) {
-                //reset로직
+                //불합격이면서 3회차시험인 회원의 시험응시내역 초기화하기(3회차불합격일 시 1,2회차도 불합격이란 말임)
+                studentTestService.resetTest(studentTestId, studentCourseId);
             }
             model.addAttribute("testStatus", Test_status.불합격);
         } else {
@@ -77,6 +78,7 @@ public class QuestionController {
             StudentCourse studentCourse = studentCourseRepository.findById(studentCourseId)
                     .orElseThrow();
             studentCourse.setCompletionStatus(Completion_status.수료); //수료처리
+            studentCourse.setCompletionDateTime(LocalDateTime.now());
             studentCourseRepository.save(studentCourse);
         }
 
@@ -86,17 +88,23 @@ public class QuestionController {
         Member member = memberRepository.findByLoginId(username);
         String name = member.getName();
 
+        StudentCourse studentCourse = studentCourseRepository.findById(studentCourseId)
+                .orElseThrow();
+        Long applicationId = studentCourse.getCourseApplication().getApplicationId();
 
-
-
+        //결과페이지 표출용 점수, 차시, 성명, 합격여부
         model.addAttribute("totalScore", totalScore); //점수
         model.addAttribute("testCount", testCount); //차시
         model.addAttribute("name", name); //사용자 성명
         model.addAttribute("completion", Test_status.합격); //합격여부에따른 이미지 표출용(비교대상)
 
+        //[재시험보기] 표출시 필요한 쿼리파라미터
         model.addAttribute("studentCourseId", studentCourseId);;
         model.addAttribute("subCategoryId", subCategoryId);
         model.addAttribute("courseTitle", courseTitle);
+
+        //3회 불합격으로 [다시 학습하기] 표출 시 필요한 쿼리파라미터
+        model.addAttribute("applicationId", applicationId);
         return "course/results-page";
     }
 
