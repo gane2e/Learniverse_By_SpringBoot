@@ -64,6 +64,13 @@ public class MemberService implements UserDetailsService {
        return  memberRepository.findByKakaoKey(kakaoKey);
     }
 
+    public Member create(String loginId, String password, String email) {
+        Member member = new Member();
+        member.setLoginId(loginId);
+        member.setPassword(password);
+        member.setEmail(email);
+        return null;
+    }
 
     
 }

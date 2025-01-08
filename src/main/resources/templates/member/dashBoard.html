@@ -185,7 +185,7 @@
                                       th:text="${history.completionStatus}"></td>
                                 <td th:if="${history.completionStatus eq completionStatus}"
                                      >
-                                    <a class="play_btn" onclick="generateCertificate()"
+                                    <a class="play_btn" onclick="printCertificate()"
                                        target="_blank">
                                         수료증
                                     </a>
@@ -238,25 +238,8 @@
 
 
     <script src="/js/testModal.js"></script>
-    <script>
-        function generateCertificate() {
-            // 서버에서 HTML 템플릿을 동적으로 가져옵니다.
-            fetch('/student/certificate')
-                .then(response => response.text())  // HTML을 텍스트로 받음
-                .then(htmlContent => {
-                    // 새 창 열기
-                    let printWindow = window.open("", "", "width=1050,height=800");
+            <script src="/js/dashBoard.js"></script>
 
-                    // HTML 콘텐츠를 새 창에 삽입
-                    printWindow.document.write(htmlContent);  // 서버에서 받은 HTML 삽입
-                    printWindow.document.close();  // 문서 닫기
-
-                    // 인쇄 대화상자 띄우기
-                    printWindow.print();
-                })
-                .catch(error => console.error("수료증 로드 실패:", error));
-        }
-    </script>
 
 
 </div>

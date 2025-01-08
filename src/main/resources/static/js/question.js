@@ -7,3 +7,11 @@ function confirmSubmit(event) {
         event.preventDefault();
     }
 }
+
+function confirmAlert(){
+    const isConfirmed = confirm("시험을 종료하시겠습니까?");
+
+    if (isConfirmed) {
+        window.location.href = "/members/dashBoard";
+    }
+}

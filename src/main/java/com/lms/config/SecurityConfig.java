@@ -2,8 +2,6 @@ package com.lms.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,11 +13,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig { //시큐리티 설정
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         // http.csrf().disable(); -> 람다식 변환필요(버전상향으로인해)
         // csrf 공격방지
+        http.csrf(config -> config.disable());
         http
                 .authorizeHttpRequests(config ->
                         config
@@ -40,10 +40,6 @@ public class SecurityConfig { //시큐리티 설정
                         logout.logoutRequestMatcher(new AntPathRequestMatcher("/members/logout")) //로그아웃 처리
                                 .logoutSuccessUrl("/") //로그아웃 성공시
                 );
-
-
-
-        http.csrf(config -> config.disable());
         return http.build();
     }
 

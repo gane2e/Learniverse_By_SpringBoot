@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 
     @GetMapping(value = "/")
-    public String index(Model model) {
-        model.addAttribute("message", "로그인에 성공하였습니다.");
+    public String index() {
         return "index";
     }
 

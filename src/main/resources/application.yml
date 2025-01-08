@@ -31,6 +31,28 @@ spring:
        max-request-size: 200MB #요청당 최대 파일 사이즈
   thymeleaf:
     cache: false
+
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: 70c4d976b0b45b6e04372cf2a3ebf3aa
+            redirect-uri: http://localhost:8080/kakao-login
+            authorization-grant-type: authorization_code
+            client-authentication-method: POST
+            client-name: Kakao
+            scope:
+              - profile_nickname
+              - account_email
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize # "인가 코드 받기" 항목
+            token-uri: https://kauth.kakao.com/oauth/token # "토큰 받기" 항목token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me # "사용자 정보 가져오기" 항목
+            user-name-attribute: id
+
 courseVideoLocation : c:/lms/video #영상 업로드 경로
 courseImgLocation: c:/lms/img # 썸네일 업로드 경로
 uploadPath: file:///C:/lms/ #리소스 업로드 경로

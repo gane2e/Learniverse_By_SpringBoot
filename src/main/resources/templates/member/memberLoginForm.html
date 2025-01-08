@@ -9,9 +9,9 @@
         <script th:inline="javascript">
             $(document).ready(function() {
                 var errorMessage = [[${loginErrorMsg}]];
-                if (errorMessage) { // 빈 문자열이 아닐 때 알림 표시
-                    alert(errorMessage);
-                }
+                    if (errorMessage) { // 빈 문자열이 아닐 때 알림 표시
+                        alert(errorMessage);
+                    }
             });
         </script>
     </th:block>
@@ -22,6 +22,7 @@
 
         <!-- 로그인 -->
     <form role="form" method="post" action="/members/login">
+
             <div class="login_cont_area">
                 <div class="title_area">
                     <div class="title">
@@ -41,6 +42,7 @@
                 <div class="link_btn_area">
                     <button class="btn btn-primary" style="background: #000000; border: none">로그인</button>
                 </div>
+
     </form>
 
         <!-- 회원가입 / 아이디 비밀번호 찾기 -->
@@ -63,8 +65,7 @@
         <div class="sns_area">
             <ul class="list">
                 <!-- 카카오톡 -->
-                <li><a
-                        href="https://kauth.kakao.com/oauth/authorize?client_id=70c4d976b0b45b6e04372cf2a3ebf3aa&redirect_uri=http://localhost:8080/kakao-login&response_type=code">
+                <li><a href="/oauth2/authorization/kakao">
                     <div class="text">카카오톡으로 간편 로그인하기</div>
                 </a></li>
                 <!-- 네이버 -->
@@ -75,5 +76,7 @@
         </div>
         <!--  -->
     </div>
+</div>
+
 
 </html>

@@ -26,20 +26,6 @@ public class KakaoController {
     private final KakaoApi kakaoApi;
     private final MemberService memberService;
 
-   /* @GetMapping("/members/login")
-    public String loginForm(Model model) {
-        model.addAttribute("kakaoApiKey", kakaoApi.getKakaoApiKey());
-        model.addAttribute("redirectUri", kakaoApi.getKakaoRedirectUri());
-
-        log.info(kakaoApi.getKakaoApiKey());
-        log.info(kakaoApi.getKakaoRedirectUri());
-
-        log.info("---testLogin 진입---");
-        log.info("model => " + model);
-
-        return "/user/loginTest";
-    }*/
-
     @RequestMapping("/kakao-login")
     public String kakaoLogin(@RequestParam String code, Model model, HttpSession session) {
 
@@ -76,15 +62,15 @@ public class KakaoController {
             kakaoDto.setEmail(email);
             kakaoDto.setNickname(nickname);
 
+            model.addAttribute("member", new MemberFormDto());
             model.addAttribute("kakao", kakaoDto);
-            log.info("model ==> " + model);
-            return "/members/login";
+            return "member/register";
         } else {
             System.out.println("카카오연동 로그인 구현중입니다.");
             member.setAccessToken(accessToken);
             session.setAttribute("member", member);
+            return "redirect:/";
         }
-        return "redirect:/";
     }
 
     @PostMapping("doJoin/kakao")
@@ -102,10 +88,11 @@ public class KakaoController {
     public String kakaoLogout(@RequestParam("kakaoId") String kakaoId,
                               @RequestParam("accessToken") String accessToken) {
 
-        /* 카카오 연동해지 처리 */
+        // 카카오 연동해지 처리
         kakaoApi.kakaoLogout(accessToken);
-        /* 테이블에서 카카오키 삭제 */
-//        userService.deleteKakao(kakaoId);
+        // 테이블에서 카카오키 삭제
+
+        // userService.deleteKakao(kakaoId);
 
         return "redirect:/";
     }
