@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -43,7 +44,7 @@ public class CourseFormDto {
     private String imgName; /* 영상 파일명 */
     private String oriImgName; /* 썸네일 원본 이름 */
     private String imgUrl; /* 썸네일 조회 경로 */
-
+    
     @NotNull(message = "서브 카테고리 값이 비어있습니다.")
     private Long subCategoryId; //해당 교육과정의 카테고리id
 

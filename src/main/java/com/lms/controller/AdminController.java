@@ -2,15 +2,9 @@ package com.lms.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lms.dto.CourseFormDto;
-import com.lms.dto.CourseVideoDto;
-import com.lms.dto.VideoFormDto;
-import com.lms.dto.VideoListDto;
+import com.lms.dto.*;
 import com.lms.entity.Category;
-import com.lms.service.CategoryService;
-import com.lms.service.CourseService;
-import com.lms.service.CourseVideoService;
-import com.lms.service.VideoService;
+import com.lms.service.*;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +26,20 @@ public class AdminController {
 
     @Autowired
     private CategoryService categoryService;
-
     @Autowired
     private CourseService courseService;
-
     @Autowired
     private VideoService videoService;
     @Autowired
     private CourseVideoService courseVideoService;
+    @Autowired
+    private CourseHashTagService courseHashTagService;
+
+    // 대시보드
+    @GetMapping(value = "/dashBoard")
+    public String dashBoard(Model model) {
+        return "admin/dashBoard";
+    }
 
     /* 교육과정 등록페이지 */
     @GetMapping(value = "/newCourse")
@@ -152,12 +152,30 @@ public class AdminController {
 
 
     //교육과정 - 영상요청 테스트
-    @PostMapping(value = "/newCourse/video")
+    @PostMapping(value = "/newCourse/addData")
     public ResponseEntity<String> createNewCourse(@RequestBody Map<String, Object> formData) {
 
         Map<String, Map<String, String>> selectedVideoData = (Map<String, Map<String, String>>) formData.get("selectedVideoData");
+        List<String> hashTagFormDtoList = (List<String>) formData.get("hashTagFormDtoList");
 
         System.out.println("selectedVideoData: " + selectedVideoData);
+        System.out.println("hashTagFormDtoList: " + hashTagFormDtoList);
+
+        // HashTagFormDto 객체 리스트 생성
+        List<HashTagFormDto> hashTags = new ArrayList<>();
+
+        // 해시태그 리스트를 순회하여 HashTagFormDto 객체에 setHashTagName을 사용해 저장
+        if (hashTagFormDtoList != null) {
+            for (String hashTagName : hashTagFormDtoList) {
+                HashTagFormDto hashTagFormDto = new HashTagFormDto();
+                hashTagFormDto.setHashTagName(hashTagName);  // 해시태그 값을 set
+                hashTags.add(hashTagFormDto);  // 리스트에 추가
+            }
+        } else
+            System.out.println("hashTagFormDtoList is null");
+        
+        //해시태그 먼저 저장
+        courseHashTagService.saveHashTag(hashTags);
 
         selectedVideoData.forEach((key, value) -> {
 

@@ -145,96 +145,88 @@ document.addEventListener('DOMContentLoaded', function () {
             const statusText = courseStatus.innerText;  // 또는 courseStatus.innerText
 
             //로드한 플레이어의 학습상태가 '학습완료'면 타임업데이트 하지않음
-            if(statusText != '학습완료'){
+            if(statusText !== '학습완료'){
                 /* 타임업데이트 시작 */
-                player.on('timeupdate', function () {
+                    player.on('timeupdate', function () {
 
-                    var currentTime = player.currentTime();  // 현재 영상의 시청 시간 (초)
-                    var duration = player.duration();
+                        var currentTime = player.currentTime();  // 현재 영상의 시청 시간 (초)
+                        var duration = player.duration();
 
-                    totalWatchedTime = Number(currentTime) + Number(lastWatchedTime)
+                        totalWatchedTime = Number(currentTime) + Number(lastWatchedTime);
 
-                    const progressPercentage = (currentTime / duration) * 100;
-                    progressBar = document.getElementById('progress-' + index);  // 해당 프로그레스바
-                    const percentText = document.getElementById('percent-' + index);  //
-                    const status = document.getElementById('status-' + index);  //
+                        const progressPercentage = (currentTime / duration) * 100;
+                        const progressBar = document.getElementById('progress-' + index);  // 해당 프로그레스바
+                        const percentText = document.getElementById('percent-' + index);  //
+                        const status = document.getElementById('status-' + index);  // 해당 상태 텍스트
 
-                    progressBar.style.width = progressPercentage.toFixed(0) + '%';
-                    percentText.textContent = progressPercentage.toFixed(0) + '%';
-                    status.textContent = '학습중';
+                        progressBar.style.width = progressPercentage.toFixed(0) + '%';
+                        percentText.textContent = progressPercentage.toFixed(0) + '%';
+                        status.textContent = '학습중';
 
-                    if(progressPercentage === 100) {
-                        status.textContent = '학습완료';
-                    }
-                    /*교육 (총)이수율 계산*/
-                    ProgressRate = calculateProgress(totalDuration, totalWatchedTime);
-                    document.getElementById("gEduVideoProgress").textContent = ProgressRate;
-                });
+                            if (progressPercentage === 100) {
+                                status.textContent = '학습완료';
+                            }
+                        /*교육 (총)이수율 계산*/
+                        ProgressRate = calculateProgress(totalDuration, totalWatchedTime);
+                        document.getElementById("gEduVideoProgress").textContent = ProgressRate;
+                    });
                 /*타임업데이트 END*/
             } else
                 console.log("이 영상은 이미 학습완료 상태입니다.")
-
-
-
-            player.on('pause', function (){
-                console.log("비디오 재생이 정지되었습니다.")
-                console.log("시청자의 마지막 시청길이 : " + totalWatchedTime)
-            })
-
-            /* 비디오 종료이벤트 시작 */
-            player.on('ended', function (){
-
-                alert("학습이 완료되었습니다.")
-
-                var enrollmentStatus = '';
-                if(totalDuration === totalWatchedTime) {
-                    enrollmentStatus = '학습완료';
-                } else
-                    enrollmentStatus = '학습중';
-                lastWatchedTime = totalWatchedTime //이전시청시간할당
-
-                //prograserate있던자리
-
-                console.log("시청자의 마지막 시청길이 : " + totalWatchedTime)
-                console.log("비디오 총길이 : " + totalDuration)
-                console.log("진도율 : " + ProgressRate)
-                console.log("학습상태 : " + enrollmentStatus);
-                console.log("비디오 학습이 완료되었습니다.")
-
-                fetch('/student/lastWatchedSave', {
-                    method: 'POST',  // POST 요청
-                    headers: {
-                        'Content-Type': 'application/json',  // JSON 형식으로 데이터 전송
-                    },
-                    body: JSON.stringify({
-                        last_watched: totalWatchedTime, // 마지막 시청 시간
-                        studentCourseId: studentCourseId, //학생 강좌 ID
-                        enrollmentStatus : enrollmentStatus, //학습상태
-                        ProgressRate : ProgressRate //진도율
-                    })
-                })
-                    .then(response => response.text())
-                    .then(data => {
-                        console.log('Server data: ' + data);
-                    })
-                    .catch(error => {
-                        console.error("AJAX 오류", error)
-                    });
-                nextVideo(index);
-            })
-            /* 비디오 종료이벤트 END */
-
-
         }); /* 플레이어 로드이벤트 END */
-
-
-
     }
+
+    player.on('pause', function (){
+        console.log("비디오 재생이 정지되었습니다. \n" +
+            "시청자의 마지막 시청길이 : " + totalWatchedTime)
+    })
+
+    /* 비디오 종료이벤트 시작 */
+    player.on('ended', function (){
+
+        alert("학습이 완료되었습니다.")
+
+        var enrollmentStatus = '';
+        if(totalDuration === totalWatchedTime) {
+            enrollmentStatus = '학습완료';
+        } else
+            enrollmentStatus = '학습중';
+        lastWatchedTime = totalWatchedTime //이전시청시간할당
+
+        //prograserate있던자리
+
+        console.log("시청자의 마지막 시청길이 : " + totalWatchedTime)
+        console.log("비디오 총길이 : " + totalDuration)
+        console.log("진도율 : " + ProgressRate)
+        console.log("학습상태 : " + enrollmentStatus);
+        console.log("비디오 학습이 완료되었습니다.")
+
+        fetch('/student/lastWatchedSave', {
+            method: 'POST',  // POST 요청
+            headers: {
+                'Content-Type': 'application/json',  // JSON 형식으로 데이터 전송
+            },
+            body: JSON.stringify({
+                last_watched: totalWatchedTime, // 마지막 시청 시간
+                studentCourseId: studentCourseId, //학생 강좌 ID
+                enrollmentStatus : enrollmentStatus, //학습상태
+                ProgressRate : ProgressRate //진도율
+            })
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Server data: ' + data);
+            })
+            .catch(error => {
+                console.error("AJAX 오류", error)
+            });
+    })
+    /* 비디오 종료이벤트 END */
 
     // 진도율 계산
     function calculateProgress(totalDuration, totalWatchedTime) {
         const progress = (totalWatchedTime / totalDuration) * 100;
-        return progress.toFixed(1); // 소수점 둘째 자리까지 반올림
+        return progress.toFixed(0); // 소수점 둘째 자리까지 반올림
     }
 
     // 학습완료 시 다음영상 재생
@@ -242,11 +234,21 @@ document.addEventListener('DOMContentLoaded', function () {
         let nextIndex = Number(index) + 1;
         console.log("nextIndex => " + nextIndex);
         const targetButton = document.querySelector(`button[data-index="${nextIndex}"]`)
-        if (targetButton) {
-            targetButton.click();
-        } else {
+        if (!targetButton) {
             console.log("다음영상이 없습니다.");
-            return;
+        } else {
+            for(let i =1; i<=index; i++) {
+                console.log(i + "번 영상 학습완료")
+                const successProgressBar = document.getElementById('progress-' + i);
+                const successPercentText = document.getElementById('percent-' + i);  //
+                const successStatus = document.getElementById('status-' + i);  //
+
+                successProgressBar.style.width ='100%';
+                successPercentText.textContent = '100%';
+                successStatus.textContent = '학습완료';
+                successStatus.style.color = '#0076c0';
+            }
+            targetButton.click();
         }
 
     }

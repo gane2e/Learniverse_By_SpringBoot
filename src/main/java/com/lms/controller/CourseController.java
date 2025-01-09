@@ -6,6 +6,7 @@ import com.lms.repository.MemberRepository;
 import com.lms.service.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +35,8 @@ public class CourseController {
     private QuestionService questionService; //시험문제관리
     @Autowired
     private StudentTestService studentTestService; //사용자 시험응시내역
+    @Autowired
+    private CourseHashTagService courseHashTagService; //교육 해시태그
 
     @GetMapping({"/courses", "/courses/search"})
     public String courses(@RequestParam(value = "keyword", required = false) String keyword,
@@ -45,7 +48,7 @@ public class CourseController {
         List<Category> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
 
-        List<CourseListDto> courseList = courseService.getCourseList(keyword, categoryId, subCategoryId );
+        Page<List<CourseListDto>> courseList = courseService.getCourseList(keyword, categoryId, subCategoryId,0,15);
         model.addAttribute("pageTitle", "온라인 교육");
         model.addAttribute("courseList", courseList);
         model.addAttribute("keyword", keyword); // 키워드 추가
@@ -60,8 +63,10 @@ public class CourseController {
 
         CourseListDto courseDto = courseService.CourseByCourseId(courseId);
         List<CourseVideoDto> video = courseService.findVideoById(courseId);
+        List<HashTagFormDto> hashTagFormDtos = courseHashTagService.getHashTagFormDto(courseId);
         model.addAttribute("course", courseDto);
         model.addAttribute("video", video);
+        model.addAttribute("hashTags", hashTagFormDtos);
         model.addAttribute("pageTitle", "온라인 교육");
         return "course/courseDtl";
     }

@@ -1,7 +1,9 @@
 // 모달 열기 버튼과 모달 요소를 선택
+
 const openModalBtn = document.getElementById('openModalBtn');
 const modal = document.getElementById('modal');
 const closeBtn = document.getElementById('closeBtn');
+
 
 // 모달 열기
 openModalBtn.onclick = function() {

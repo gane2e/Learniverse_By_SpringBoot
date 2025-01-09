@@ -12,6 +12,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
@@ -30,9 +33,9 @@ public class CourseService {
     /* 교육과정 CRUD 구현 */
     private final CourseRepository courseRepository;
 
-    /* 교육과정 CRUD 구현 */
+    /* 교육영상 CRUD 구현 */
     private final CourseVideoRepository courseVideoRepository;
-    
+
     /* 회원 CRUD 구현 */
     private final MemberRepository memberRepository;
     
@@ -44,6 +47,7 @@ public class CourseService {
 
     /* 시험내역 CRUD 구현 */
     private final StudentTestRepository testEntityRepository;
+    private final CourseHashTagRepository courseHashTagRepository;
 
     /* 영상 저장경로 */
     @Value("${courseVideoLocation}")
@@ -125,9 +129,13 @@ public class CourseService {
         for(CourseVideo courseVideo : courseVideoList){
             courseVideo.updatecourseId(courses);
         }
+        List<CourseHashTag> courseHashTags = courseHashTagRepository.findByCourseIsNull();
+        for(CourseHashTag courseHashTag : courseHashTags){
+            courseHashTag.updatecourseId(courses);
+        }
 
     }
-    /* 이미지 저장 로직 실행 END  */
+    /* 교육과정 저장 로직 실행 END  */
 
 
 
@@ -161,12 +169,23 @@ public class CourseService {
 
    /* }*/
 
+    // 사용자페이지 - 교육 전체 리스트 반환
+    public Page<List<CourseListDto>> getCourseList(String keyword, Long categoryId, Long subCategoryId, int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size); // PageRequest.of(pageNumber, size)
+        Page<List<CourseListDto>> userPage = courseRepository.findAllCourseWithCategoryInfo(keyword, categoryId, subCategoryId,pageable);
+
+        return userPage;
+    }
+
+    /*
 
     // 사용자페이지 - 교육 전체 리스트 반환
     public List<CourseListDto> getCourseList(String keyword, Long categoryId, Long subCategoryId){
         List<CourseListDto> courseList = courseRepository.findAllCourseWithCategoryInfo(keyword, categoryId, subCategoryId);
         return courseList;
     }
+*/
 
 
     // 사용자 페이지 - 특정교육 상세페이지 정보반환
@@ -187,6 +206,9 @@ public class CourseService {
         //username으로 멤버 객체 얻기
         Courses course = courseRepository.findById(courseId)
                 .orElseThrow( ()-> new EntityNotFoundException() );
+        course.setNumberOfApplications(course.getNumberOfApplications() + 1);
+        courseRepository.save(course); //신청 수 카운트 +1
+
         Member member = memberRepository.findByLoginId(username);
 
         //신청내역 테이블 생성
@@ -212,11 +234,6 @@ public class CourseService {
         testEntityDto.setReset(false);
         //위에서 생성한 수강내역 테이블을 외래키로 지정
         StudentTest testEntity = testEntityDto.createTestEntity(testEntityDto);
-        
-        //디버깅용
-        log.info("DB에 저장될 첫번째 시험 상태 => " + testEntity.getFirstAttemptStatus().toString());
-        log.info("DB에 저장될 두번째 시험 상태 => " + testEntity.getSecondAttemptStatus().toString());
-        log.info("DB에 저장될 세번째 시험 상태 => " + testEntity.getThirdAttemptStatus().toString());
         
         testEntity.setStudentCourse(student);
         testEntityRepository.save(testEntity); //DB에저장

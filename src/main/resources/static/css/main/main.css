@@ -66,5 +66,14 @@ button {
     width: 100%;
     height: 50px;
 }
+#section1 {
+    background: #d9c400;
+}
+#section2 {
+    padding-left: 350px;
+    padding-right: 350px;
+    background: #70cbf1;
+}
+
 
 

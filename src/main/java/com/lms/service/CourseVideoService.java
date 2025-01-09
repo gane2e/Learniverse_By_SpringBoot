@@ -1,7 +1,6 @@
 package com.lms.service;
 
 import com.lms.dto.CourseVideoDto;
-import com.lms.dto.VideoFormDto;
 import com.lms.entity.CourseVideo;
 import com.lms.entity.Videos;
 import com.lms.repository.CourseVideoRepository;
@@ -11,10 +10,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional

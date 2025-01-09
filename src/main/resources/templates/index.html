@@ -13,48 +13,53 @@
 </head>
 
 <div layout:fragment="sub_cont">
+    <section id="section1">
+        <div class="slider-container">
+            <div class="slider">
+                <div class="slide">
+                    <div class="left_cont">
+                        <div>
+                            <span>1차</span>
+                            <span> > </span>
+                            <span>2차</span>
+                        </div>
+                        <div class="visual_title">AI시대 데이터 직군을 위한 생존 전략</div>
+                        <div class="visual_description">
+                            <span>#해시태그1</span> <span>#해시태그2</span>
+                        </div>
+                        <div class="visual_date">
+                            <div>모집기간 : </div>
+                            <div>교육기간 : </div>
+                        </div>
+                    </div>
+                    <div class="right_cont">
+                        <img src="/img/디자인%20썸네일.png" class="slide_img">
+                    </div>
 
-
-    <div class="slider-container">
-        <div class="slider">
-            <div class="slide">
-                <div class="left_cont">
-                    <div>
-                        <span>1차</span>
-                        <span> > </span>
-                        <span>2차</span>
-                    </div>
-                    <div class="visual_title">AI시대 데이터 직군을 위한 생존 전략</div>
-                    <div class="visual_description">
-                        <span>#해시태그1</span> <span>#해시태그2</span>
-                    </div>
-                    <div class="visual_date">
-                        <div>모집기간 : </div>
-                        <div>교육기간 : </div>
-                    </div>
                 </div>
-                <div class="right_cont">
-                    <img src="/img/디자인%20썸네일.png" class="slide_img">
+                <div class="slide">
+                    <h2>데이터제목2</h2>
+                    <p>데이터설명2</p>
+                </div>
+                <div class="slide">
+                    <h2>데이터제목3</h2>
+                    <p>데이터설명3</p>
                 </div>
 
-            </div>
-            <div class="slide">
-                <h2>데이터제목2</h2>
-                <p>데이터설명2</p>
-            </div>
-            <div class="slide">
-                <h2>데이터제목3</h2>
-                <p>데이터설명3</p>
+
             </div>
 
-
+            <div class="controls">
+                <button class="control-btn" id="prevBtn">&#10094;</button>
+                <button class="control-btn" id="nextBtn">&#10095;</button>
+            </div>
         </div>
+    </section>
 
-        <div class="controls">
-            <button class="control-btn" id="prevBtn">&#10094;</button>
-            <button class="control-btn" id="nextBtn">&#10095;</button>
-        </div>
-    </div>
+    <section id="section2">
+        <div>최신 주목해야 할 온라인 학습</div>
+    </section>
+
 
     <script>
         const slider = document.querySelector('.slider');

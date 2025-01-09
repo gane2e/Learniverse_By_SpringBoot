@@ -15,7 +15,7 @@ a:hover {
 .modal {
     display: none;  /* 기본적으로 모달을 숨깁니다. */
     position: fixed;
-    z-index: 1;  /* 화면 위쪽에 나타나게 설정 */
+    z-index: 10;  /* 화면 위쪽에 나타나게 설정 */
     left: 0;
     top: 0;
     width: 100%;
@@ -26,7 +26,8 @@ a:hover {
 /* 모달 내용 영역 스타일 */
 .modal-content {
     background-color: #fff;
-    margin: 15% auto;
+    margin: auto;
+    margin-top: 100px;
     padding: 20px;
     border: 1px solid #888;
     width: 50%;  /* 모달 창의 너비 */
@@ -74,6 +75,13 @@ a:hover {
     font-weight: 700;
 }
 
+.preview-title {
+    font-size: 20px;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
 .blue_txt {
     color: #1f8ce9;
 }
@@ -104,6 +112,18 @@ a:hover {
     min-width: 160px;
     padding: 0 10px;
     background-color: #1f8ce9;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 48px;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 5px;
+}
+.modal_close_btn {
+    display: inline-block;
+    min-width: 160px;
+    padding: 0 10px;
+    background-color: #404040;
     font-weight: 400;
     font-size: 18px;
     line-height: 48px;

@@ -20,13 +20,11 @@
     flex-direction: row;
     justify-content: center;
     padding: 55px 350px;
-    background: #d9c400;
 }
 .left_cont, .right_cont {
     display: inline-block;
 }
 .left_cont {
-    background: #bd2130;
     width: 60%;
 }
 .visual_title {
@@ -38,7 +36,6 @@
 .right_cont{
     display: flex;
     justify-content: center;
-    background: #70cbf1;
     width: 40%;
 }
 .slide_img {

@@ -5,6 +5,8 @@ import com.lms.dto.CourseListDto;
 import com.lms.dto.CourseVideoDto;
 import com.lms.dto.VideoListDto;
 import com.lms.entity.Courses;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,9 +27,10 @@ public interface CourseRepository extends JpaRepository<Courses, Long> {
             "OR LOWER(co.description) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
             "AND (:categoryId IS NULL OR ct.categoryId = :categoryId) " +
             "AND (:subCategoryId IS NULL OR sct.subCategoryId = :subCategoryId)")
-    public List<CourseListDto> findAllCourseWithCategoryInfo(@Param("keyword") String keyword,
-                                                             @Param("categoryId") Long categoryId,
-                                                             @Param("subCategoryId") Long subCategoryId);
+    Page<List<CourseListDto>> findAllCourseWithCategoryInfo(@Param("keyword") String keyword,
+                                                      @Param("categoryId") Long categoryId,
+                                                      @Param("subCategoryId") Long subCategoryId,
+                                                            Pageable pageable);
 
 
 

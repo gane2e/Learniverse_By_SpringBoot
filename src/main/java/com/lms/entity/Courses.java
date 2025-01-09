@@ -41,16 +41,14 @@ public class Courses extends BaseEntity {
     private LocalDate course_start_date; //교육시작일(선택)
     private LocalDate course_end_date; //교육종료일(선택)
     
-    /* 해시태그 보류 */
-
+    /* 영상 / 이미지 */
     @Column(nullable = false, length = 500)
     private String completionCriteria; /* 수료기준 */
-
     private String imgName; /* 영상 파일명 */
-
     private String oriImgName; /* 썸네일 원본 이름 */
-
     private String imgUrl; /* 썸네일 조회 경로 */
+
+    private int numberOfApplications;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sub_category_id")
