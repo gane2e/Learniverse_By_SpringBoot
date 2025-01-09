@@ -56,6 +56,9 @@ public class Member extends BaseEntity {
     
     private String accessToken; //로그인 토큰
 
+    private String provider;
+    private String providerId;
+
     @Enumerated(EnumType.STRING) //
     private Role role; //권한
 
@@ -77,6 +80,4 @@ public class Member extends BaseEntity {
         }
         return member;
     }
-
-
 }

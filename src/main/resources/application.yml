@@ -10,7 +10,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/lms?serverTimezone=UTC
     username: root
-    password: 1234
+    password: Rkdmsdl11~
 
 
 
@@ -37,6 +37,12 @@ spring:
     oauth2:
       client:
         registration:
+          google:
+            client-id: 497858031245-0i9h7mjm7vjeqcbpj635lu1nk6jtbkon.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
           kakao:
             client-id: 70c4d976b0b45b6e04372cf2a3ebf3aa
             redirect-uri: http://localhost:8080/kakao-login
