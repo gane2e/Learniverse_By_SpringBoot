@@ -35,11 +35,32 @@ public class AdminController {
     @Autowired
     private CourseHashTagService courseHashTagService;
 
-    // 대시보드
-    @GetMapping(value = "/dashBoard")
-    public String dashBoard(Model model) {
-        return "admin/dashBoard";
+    // 교육과정 목록
+    @GetMapping(value = "/courseList")
+    public String courseList(Model model) {
+
+        List<AdminCourseListDto> adminCourseListDtos = courseService.getAdminCourseList();
+        model.addAttribute("courseList", adminCourseListDtos);
+
+        return "admin/course/courseList";
     }
+
+    // 관리자 영상 목록
+    @GetMapping(value = "/videoList")
+    public String videoList(Model model) {
+
+        List<VideoListDto> videoList  =videoService.findAllVideosByCategoryInfo();
+        model.addAttribute("videoList", videoList);
+
+        for (VideoListDto video : videoList) {
+            System.out.println(video.getTitle());
+            System.out.println("--------------------");
+        }
+
+        return "admin/video/videoList";
+    }
+
+
 
     /* 교육과정 등록페이지 */
     @GetMapping(value = "/newCourse")
@@ -97,20 +118,6 @@ public class AdminController {
     }
 
 
-    // 관리자 영상 목록
-    @GetMapping(value = "/videoList")
-    public String videoList(Model model) {
-
-        List<VideoListDto> videoList  =videoService.findAllVideosByCategoryInfo();
-        model.addAttribute("videoList", videoList);
-
-        for (VideoListDto video : videoList) {
-            System.out.println(video.getTitle());
-            System.out.println("--------------------");
-        }
-
-        return "admin/video/videoList";
-    }
 
     /*// 관리자 영상 상세페이지
     @GetMapping(value = "/video/${videoId}")

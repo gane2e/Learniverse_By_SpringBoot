@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,6 +60,7 @@ public class CourseService {
 
     /* 파일업로드 / 삭제처리 객체생성 */
     private final FileService fileService;
+
 
     /* 영상 저장 로직 실행 START */
     public void saveVideo(VideoFormDto videoFormDto, MultipartFile videoFile) throws Exception{
@@ -178,16 +180,6 @@ public class CourseService {
         return userPage;
     }
 
-    /*
-
-    // 사용자페이지 - 교육 전체 리스트 반환
-    public List<CourseListDto> getCourseList(String keyword, Long categoryId, Long subCategoryId){
-        List<CourseListDto> courseList = courseRepository.findAllCourseWithCategoryInfo(keyword, categoryId, subCategoryId);
-        return courseList;
-    }
-*/
-
-
     // 사용자 페이지 - 특정교육 상세페이지 정보반환
     public CourseListDto CourseByCourseId(Long courseId){
         return courseRepository.findCourseById(courseId);
@@ -245,6 +237,50 @@ public class CourseService {
         student.setCourseApplication(application);
 
         return applicationId;
+    }
+
+    /* 관리자 페이지 교육과정 리스트 조회 */
+    public List<AdminCourseListDto> getAdminCourseList(){
+        List<AdminCourseListDto> list = courseRepository.findAllAdminCourseList();
+
+        //각 리스트별 수료율 구하기
+        for (AdminCourseListDto dto : list) {
+            List<StudentCourse> studentList = new ArrayList<>(); /* 교육별 수강생을 저장하기 위한 리스트 */
+            Long courseId = dto.getCourseId(); //교육과정별 교육ID
+         
+            //교육ID에 해당하는 교육신청내역 => 교육신청내역에 해당하는 수강생 목록 조회
+            List<CourseApplication> app =
+                    courseApplicationRepository.findByCourse_CourseId(courseId);
+            for (CourseApplication application : app) {
+                Long appId = application.getApplicationId();
+                StudentCourse student =  studentCourseRepository.findByCourseApplication_ApplicationId(appId);
+                studentList.add(student); /* 한 교육과정의 수강생 리스트 저장 */
+            }
+            dto.setCompletionRate(getCompletionRate(studentList));
+            //수강생 리스트로 수료율 구하는 함수 실행후 수료율 리턴받기
+        }
+        return list;
+    }
+
+    
+    //수강생 목록으로 수료율 구하는 메서드
+    public double getCompletionRate(List<StudentCourse> studentList){
+
+        int totalStudent = studentList.size(); //총 수강생 수
+        int completedStudent = 0; //해당 교육 수강생의 수료 수
+        log.info("totalStudent:" + totalStudent + " /  completedStudent:" + completedStudent);
+
+        for(StudentCourse student : studentList){
+            if(student.getCompletionStatus() == Completion_status.수료) {
+                completedStudent++;
+            }
+        }
+        
+        if (totalStudent == 0) {
+            return 0.0; // 예시로 0.0을 반환
+        }
+        /* (수료자수 / 총 수강생 수) *100하기 */
+        return((double) (completedStudent /totalStudent)*100);
     }
 
 

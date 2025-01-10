@@ -1,6 +1,7 @@
 package com.lms.repository;
 
 
+import com.lms.dto.AdminCourseListDto;
 import com.lms.dto.CourseListDto;
 import com.lms.dto.CourseVideoDto;
 import com.lms.dto.VideoListDto;
@@ -32,9 +33,7 @@ public interface CourseRepository extends JpaRepository<Courses, Long> {
                                                       @Param("subCategoryId") Long subCategoryId,
                                                             Pageable pageable);
 
-
-
-    // 사용자 페이지 교육 상세정보 표출용
+    // 사용자 페이지 - 교육 상세정보 표출용
     @Query("SELECT new com.lms.dto.CourseListDto(co.courseId, co.title, co.description, co.recruitment_status, " +
             "co.recruitment_start_date, co.recruitment_end_date, co.course_status, co.course_start_date, co.course_end_date, " +
             "co.completionCriteria, co.regTime, co.updateTime, co.createdBy, co.modifiedBy, " +
@@ -46,6 +45,7 @@ public interface CourseRepository extends JpaRepository<Courses, Long> {
     public CourseListDto findCourseById(@Param("courseId") Long courseId);
 
 
+    // 사용자 페이지 - 특정교육 교육영상 반환
     @Query("SELECT new com.lms.dto.CourseVideoDto" +
             "(c.courseId , v.videoId , cv.courseVideoIndex, v.title, " +
             "v.videoName, v.oriVideoName, v.videoUrl, c.title) " +
@@ -54,6 +54,16 @@ public interface CourseRepository extends JpaRepository<Courses, Long> {
             "JOIN cv.courses c " +
             "WHERE cv.courses.courseId = :courseId")
     List<CourseVideoDto> findVideoById(@Param("courseId") Long courseId);
+
+    @Query("SELECT new com.lms.dto.AdminCourseListDto" +
+            "(s.courseId , s.recruitment_status , s.title, s.regTime, " +
+            "s.updateTime, s.createdBy, s.modifiedBy, s.imgName, s.imgUrl, s.oriImgName, " +
+            "s.numberOfApplications, sct.subCategoryName, ct.categoryName) " +
+            "FROM Courses s " +
+            "JOIN s.subCategory sct " +
+            "JOIN sct.categories ct " +
+            "order by s.regTime desc")
+    List<AdminCourseListDto> findAllAdminCourseList();
 
 
 }
