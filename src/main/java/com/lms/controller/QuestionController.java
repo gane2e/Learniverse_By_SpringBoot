@@ -10,6 +10,7 @@ import com.lms.repository.MemberRepository;
 import com.lms.repository.StudentCourseRepository;
 import com.lms.repository.StudentTestRepository;
 import com.lms.service.QuestionService;
+import com.lms.service.StudentCourseService;
 import com.lms.service.StudentTestService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ public class QuestionController {
     private MemberRepository memberRepository;
     @Autowired
     private StudentCourseRepository studentCourseRepository;
+    @Autowired
+    private StudentCourseService studentCourseService;
 
     @PostMapping(value = "/question/grading/{studentTestId}/{studentCourseId}/{courseTitle}/{subCategoryId}")
     public String gradingQuestion(@RequestParam Map<String, String> answers,
@@ -75,11 +78,8 @@ public class QuestionController {
             log.info("점수 : " + totalScore + " / " + "결과 : 합격");
             testCount = studentTestService.saveTest(studentTestId, Test_status.합격, totalScore);
             model.addAttribute("testStatus", Test_status.합격);
-            StudentCourse studentCourse = studentCourseRepository.findById(studentCourseId)
-                    .orElseThrow();
-            studentCourse.setCompletionStatus(Completion_status.수료); //수료처리
-            studentCourse.setCompletionDateTime(LocalDateTime.now());
-            studentCourseRepository.save(studentCourse);
+            //수료처리하기
+            studentCourseService.certificationSave(studentCourseId);
         }
 
         //로그인중인 사용자 ID로 성명 구하기

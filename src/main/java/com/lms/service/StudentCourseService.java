@@ -15,7 +15,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @Transactional
@@ -25,6 +28,8 @@ public class StudentCourseService {
 
     private final StudentCourseRepository studentCourseRepository;
     private final StudentTestRepository studentTestRepository;
+    private AtomicInteger count = new AtomicInteger(1); //수료번호 생성하기
+
 
     // 영상학습페이지 - 수강정보 반환
     public StudentCourseDto findByApplicationId(Long applicationId) {
@@ -86,5 +91,31 @@ public class StudentCourseService {
         }
         return dtos;
     }
+    
+    // 수료처리하기
+    public void certificationSave(Long studentCourseId){
+
+        StudentCourse studentCourse = studentCourseRepository.findById(studentCourseId).orElseThrow();
+       
+        studentCourse.setCompletionStatus(Completion_status.수료); //수료처리
+        studentCourse.setCompletionDateTime(LocalDateTime.now());
+
+        //수료번호 생성(현재연도+4자리숫자 수료순서(20250001,20250002..))
+        studentCourse.setCertificationNumber(generateCertificateNumber());
+
+        studentCourseRepository.save(studentCourse);
+    }
+
+    // 수료번호 생성하기
+    public String generateCertificateNumber() {
+        
+        int currentYear = LocalDate.now().getYear();
+        int currentCount = count.getAndIncrement();
+        
+        return String.format("%d%04d", currentYear, currentCount); // 4자리로 0을 채운 카운트와 연도 결합
+    }
+
+
+    
 
 }
