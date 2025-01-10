@@ -42,7 +42,7 @@ public class SecurityConfig { //시큐리티 설정
                     config
                             .loginPage("/members/login") //커스텀 로그인
                             .loginProcessingUrl("/login")
-                            .defaultSuccessUrl("/", true) //로그인 성공시
+                            .defaultSuccessUrl("/success", true) //로그인 성공시
                             .usernameParameter("loginId") //로그인화면에서 name=username이면 생략가능 / name=eamil이면 필수기입
                             .failureUrl("/members/login/error");
                         })
@@ -50,10 +50,11 @@ public class SecurityConfig { //시큐리티 설정
                         logout.logoutRequestMatcher(new AntPathRequestMatcher("/members/logout")) //로그아웃 처리
                                 .logoutSuccessUrl("/") //로그아웃 성공시
                 );
-        http.oauth2Login(form -> {
-           form
-                   .loginPage("/members/login")
-                   .userInfoEndpoint(userInfo -> {
+        http
+                .oauth2Login(form -> {
+                    form
+                            .loginPage("/members/login")
+                            .userInfoEndpoint(userInfo -> {
                        userInfo.userService(principalOauth2UserService);
                    });
         });

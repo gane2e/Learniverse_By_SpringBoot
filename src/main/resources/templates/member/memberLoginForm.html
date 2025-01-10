@@ -20,66 +20,83 @@
 
 <div layout:fragment="sub_cont">
 
-        <!-- 로그인 -->
-    <form role="form" method="post" action="/members/login">
+    <div class="login_container">
 
-            <div class="login_cont_area">
-                <div class="title_area">
-                    <div class="title">
-                        <span class="ft_c">Learniverse</span> 홈페이지에 <br /> 방문하신것을 환영합니다.
+        <div class="left_cont">
+            <!-- 로그인 -->
+            <form role="form" method="post" action="/login">
+
+                <div class="login_cont_area">
+                    <div class="title_area">
+                        <div class="title">
+                            <span class="ft_c">Learniverse</span> 홈페이지에 <br /> 방문하신것을 환영합니다.
+                        </div>
+                    </div>
+                    <div class="login_inp_area">
+                        <div class="box id">
+                            <input type="text" name="loginId" id="user_id" required
+                                   placeholder="아이디를 입력하세요." />
+                        </div>
+                        <div class="box pass">
+                            <input type="password" name="password" id="user_pw" required
+                                   placeholder="비밀번호를 입력하세요." />
+                        </div>
+                    </div>
+                    <div class="link_btn_area">
+                        <button class="btn btn-primary" style="background: #000000; border: none">로그인</button>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="checkbox" class="styled-checkbox">
+                        <label for="checkbox">아이디 기억하기</label>
+                    </div>
+                    <!-- 회원가입 / 아이디 비밀번호 찾기 -->
+                    <div class="login_etc_area">
+                        <!-- 텍스트부분 -->
+                        <ul class="list">
+                            <li>
+                                <div class="text">*회원이 아니십니까?</div>
+                            </li>
+                            <li>
+                                <div class="text">*아이디/비밀번호를 잊으셨나요?</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- 회원가입 / 아이디 비밀번호 찾기 버튼 -->
+                    <div class="link_btn_area2">
+                        <a href="/members/register">회원가입</a> <a href="#">아이디/비밀번호 찾기</a>
                     </div>
                 </div>
-                <div class="login_inp_area">
-                    <div class="box id">
-                        <input type="text" name="loginId" id="user_id" required
-                               placeholder="아이디를 입력하세요." />
-                    </div>
-                    <div class="box pass">
-                        <input type="password" name="password" id="user_pw" required
-                               placeholder="비밀번호를 입력하세요." />
-                    </div>
-                </div>
-                <div class="link_btn_area">
-                    <button class="btn btn-primary" style="background: #000000; border: none">로그인</button>
-                </div>
+            </form>
+        </div>
 
-    </form>
+        <div class="right_cont">
 
-        <!-- 회원가입 / 아이디 비밀번호 찾기 -->
-        <div class="login_etc_area">
-            <!-- 텍스트부분 -->
-            <ul class="list">
-                <li>
-                    <div class="text">*회원이 아니십니까?</div>
-                </li>
-                <li>
-                    <div class="text">*아이디/비밀번호를 잊으셨나요?</div>
-                </li>
-            </ul>
+            <div class="right_title">
+                소셜로그인으로 홈페이지를<br> 간편하게 이용해보세요!
+            </div>
+            <!-- SNS 로그인 -->
+            <div class="sns_area">
+                <ul class="sns_area_list">
+                    <!-- 구글 -->
+                    <li>
+                        <a href="/oauth2/authorization/google">
+                            <img src="/img/web_light_sq_SI@3x.png">
+                        </a>
+                    </li>
+                    <!-- 카카오톡 -->
+                    <li><a href="/oauth2/authorization/kakao">
+                        <img src="/img/kakao_login_large_narrow.png">
+                    </a></li>
+                    <!-- 네이버 -->
+                    <li><a href="/oauth2/authorization/naver">
+                        <img src="/img/btnG_official.png">
+                    </a></li>
+                </ul>
+            </div>
+            <!--  -->
         </div>
-        <!-- 회원가입 / 아이디 비밀번호 찾기 버튼 -->
-        <div class="link_btn_area2">
-            <a href="/members/register">회원가입</a> <a href="#">아이디/비밀번호 찾기</a>
-        </div>
-        <!-- SNS 로그인 -->
-        <div class="sns_area">
-            <ul class="list">
-                <li>
-<!--                    <a href="https://accounts.google.com/o/oauth2/auth?client_id=497858031245-0i9h7mjm7vjeqcbpj635lu1nk6jtbkon.apps.googleusercontent.com&redirect_uri=http://localhost:8080/auth/google/callback&response_type=code&scope=https://www.googleapis.com/auth/drive.metadata.readonly">구글 로그인</a>-->
-                    <a href="/oauth2/authorization/google">구글 로그인</a>
-                </li>
-                <!-- 카카오톡 -->
-                <li><a href="/oauth2/authorization/kakao">
-                    <div class="text">카카오톡으로 간편 로그인하기</div>
-                </a></li>
-                <!-- 네이버 -->
-                <li><a href="#">
-                    <div class="text">네이버로 간편 로그인하기</div>
-                </a></li>
-            </ul>
-        </div>
-        <!--  -->
     </div>
+
 </div>
 
 

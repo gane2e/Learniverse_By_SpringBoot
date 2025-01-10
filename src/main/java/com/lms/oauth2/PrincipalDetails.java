@@ -1,5 +1,6 @@
 package com.lms.oauth2;
 
+import com.lms.constant.Role;
 import com.lms.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +15,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private Member member; //콤포지션
     private Map<String, Object> attributes;
+    private Role role;
 
     //일반 로그인
     public PrincipalDetails(Member member) {
@@ -37,7 +39,8 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         collect.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return member.getRole().toString();
+                role = member.getRole();
+                return role.getAuthority();
             }
         });
         return collect;
