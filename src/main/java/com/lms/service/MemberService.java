@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Transactional
 @RequiredArgsConstructor
 @Log4j2
-public class MemberService implements UserDetailsService {
+public class MemberService{
     
     private final MemberRepository memberRepository;
 
@@ -40,7 +40,7 @@ public class MemberService implements UserDetailsService {
         return memberFormDto;
     }
 
-    @Override //로그인로직
+ /*   @Override //로그인로직
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
 
         log.info("------------------loadUserByUsername-------------------");
@@ -58,7 +58,7 @@ public class MemberService implements UserDetailsService {
                 .password(member.getPassword()) //pw
                 .roles(member.getRole().toString()) //권한정보
                 .build();
-    }
+    }*/
 
     public Member kakaoUserCheck(String kakaoKey) {
        return  memberRepository.findByKakaoKey(kakaoKey);
