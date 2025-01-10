@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Log4j2
@@ -18,6 +19,12 @@ public class MainController {
     @GetMapping(value = "/")
     public String index() {
         return "index";
+    }
+
+    @GetMapping(value = "/success")
+    public String loginSuccess(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("message", "로그인 되었습니다.");
+        return "redirect:/";
     }
 
     //로그인 여부 체크하는 공통 ajax 처리
