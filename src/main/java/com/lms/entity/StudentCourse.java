@@ -31,13 +31,11 @@ public class StudentCourse extends BaseEntity {
 
     private Long last_watched; //마지막 시청 시점(초 단위)
 
+    private String certificationNumber; //수료번호
+
     //수강상태(수강신청, 학습중, 학습완료)
     @Enumerated(EnumType.STRING)
     private Enrollment_status enrollmentStatus;
-
-   /* //시험응시상태(미응시, 합격, 불합격)
-    @Enumerated(EnumType.STRING)
-    private Test_status testStatus;*/
 
     //수료상태(수료, 미수료)
     @Enumerated(EnumType.STRING)
@@ -46,7 +44,6 @@ public class StudentCourse extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id")
     private CourseApplication courseApplication;
-
 
     //마지막 시청시간, 학습상태, 진도율 업데이트
     public void updateLastWatched(Long last_watched, Enrollment_status enrollment_status,  double ProgressRate){
