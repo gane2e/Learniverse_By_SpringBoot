@@ -14,6 +14,14 @@ a {
 ul {
   list-style: none;
 }
+.login_container {
+  border: 1px solid #333333;
+  display: flex;
+  padding: 30px 60px;
+}
+.left_cont{
+  width: 65%;
+}
 .login_cont_area {
   width: 440px;
   height: auto;
@@ -123,6 +131,22 @@ ul {
   background-color: #1f1f1f;
   border-radius: 5px;
 }
+
+.right_cont {
+  width: 35%;
+  border: 1px solid #e5c7ca;
+  border-radius: 10px;
+  padding: 50px;
+}
+.right_title {
+  text-align: center;
+  font-size: 20px;
+  padding: 0 50px 20px 50px;
+}
+.remember_box {
+  padding: 10px;
+}
+
 /* SNS 간편 로그인 */
 .login_cont_area .sns_area .list > li {
   list-style: none;
@@ -136,7 +160,14 @@ ul {
   margin-bottom: 10px;
   font-weight: 450;
 }
-.login_cont_area .sns_area .list > li > a .text {
+
+.sns_area_list > li{
+  padding: 20px;
+}
+.sns_area_list > li img{
+  width: 100%;
+}
+.text {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -147,18 +178,72 @@ ul {
   color: #000;
   border-radius: 5px;
 }
-/* 카카오 배경색 / 호버색  */
-.login_cont_area .sns_area .list > li:nth-child(1) > a .text {
-  background-color: #fae100;
+
+
+input[type = checkbox] {
+  margin-top: 7px;
 }
-.login_cont_area .sns_area .list > li:nth-child(1) > a .text:hover {
-  background-color: #d9c400;
+
+/* 체크박스 컨테이너 스타일 */
+.checkbox-container {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #333;
 }
-/* 네이버 배경색 / 호버색  */
-.login_cont_area .sns_area .list > li:nth-child(2) > a .text {
-  color: #ffffff;
-  background-color: #00aa4b;
+
+/* 기본 체크박스 숨기기 */
+.styled-checkbox {
+  display: none;
 }
-.login_cont_area .sns_area .list > li:nth-child(2) > a .text:hover {
-  background-color: #00843c;
+
+/* 커스터마이즈된 체크박스 디자인 */
+.styled-checkbox + label {
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  font-weight: 500;
+  display: inline-block;
+  transition: color 0.2s ease-in-out;
+}
+
+/* 체크박스의 사각형 모양 */
+.styled-checkbox + label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 23px;
+  height: 23px;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  background-color: white;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* 체크박스를 클릭했을 때의 스타일 */
+.styled-checkbox:checked + label::before {
+  background-color: #007BFF;
+  border-color: #007BFF;
+}
+
+/* 체크 표시 */
+.styled-checkbox:checked + label::after {
+  content: '✓';
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  color: white;
+  font-size: 14px;
+}
+
+/* 호버 상태에서 체크박스 스타일 */
+.styled-checkbox + label:hover::before {
+  border-color: #0056b3;
+}
+
+/* 체크박스를 체크한 상태에서 레이블 색상 변경 */
+.styled-checkbox:checked + label {
+  color: #007BFF;
 }
