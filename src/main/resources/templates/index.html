@@ -8,14 +8,18 @@
     <!-- Swiper css -->
     <link rel="stylesheet" th:href="@{/css/main/main.css}">
     <link rel="stylesheet" th:href="@{/css/main/mainSlide.css}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
+    <link rel="stylesheet" th:href="@{/slick/slick.css}">
+    <link rel="stylesheet" th:href="@{/slick/slick-theme.css}">
+    <script src="/slick/slick.js"></script>
 </head>
 
 <div layout:fragment="sub_cont">
     <section id="section1">
+
         <div class="slider-container">
+
             <div class="slider">
+
                 <div class="slide">
                     <div class="left_cont">
                         <div>
@@ -35,17 +39,27 @@
                     <div class="right_cont">
                         <img src="/img/디자인%20썸네일.png" class="slide_img">
                     </div>
-
                 </div>
                 <div class="slide">
-                    <h2>데이터제목2</h2>
-                    <p>데이터설명2</p>
+                    <div class="left_cont">
+                        <div>
+                            <span>1차</span>
+                            <span> > </span>
+                            <span>2차</span>
+                        </div>
+                        <div class="visual_title">AI시대 데이터 직군을 위한 생존 전략</div>
+                        <div class="visual_description">
+                            <span>#해시태그1</span> <span>#해시태그2</span>
+                        </div>
+                        <div class="visual_date">
+                            <div>모집기간 : </div>
+                            <div>교육기간 : </div>
+                        </div>
+                    </div>
+                    <div class="right_cont">
+                        <img src="/img/디자인%20썸네일.png" class="slide_img">
+                    </div>
                 </div>
-                <div class="slide">
-                    <h2>데이터제목3</h2>
-                    <p>데이터설명3</p>
-                </div>
-
 
             </div>
 
@@ -57,42 +71,202 @@
     </section>
 
     <section id="section2">
-        <div>최신 주목해야 할 온라인 학습</div>
+        <div class="section_title">
+            <img src="/img/우주1.png" class="title_img">
+            강의명으로 찾아보세요!</div>
+        <div class="search_box_container">
+            <div class="search">
+                <div class="search_box">
+                    <input type="text" placeholder="배우고싶은 강의명을 입력해보세요.">
+                </div>
+                <div>
+                    <button type="submit" class="search_btn">
+                      검색
+                    </button>
+                </div>
+            </div>
+            <div class="search_hashTag">
+                <span class="hashTag">
+                    <a>#해시태그1</a>
+                </span>
+                <span class="hashTag">
+                    <a>#해시태그2</a>
+                </span>
+                <span class="hashTag">
+                    <a>#해시태그3</a>
+                </span>
+                <span class="hashTag">
+                    <a>#해시태그4</a>
+                </span>
+                <span class="hashTag">
+                    <a>#해시태그5</a>
+                </span>
+                <span class="hashTag">
+                    <a>#해시태그6</a>
+                </span>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section id="section3">
+        <div class="section_title">
+            <img src="/img/BEST.png" class="title_img">
+            가장 많이 신청한 강의 순위!</div>
+
+        <div class="slick-slider">
+
+            <div class="slick-list">
+
+                <div class="slick-slide">
+                    <div class="list_container">
+                        <img src="/img/디자인%20썸네일.png">
+                        <span class="rank rank-1">1위</span>
+                        <div class="category_area">
+                            <span class="category main">1차</span>
+                            <span class="category sub">2차</span>
+                        </div>
+                        <div class="slide_title">
+                            피그마(Figma)를 활용한 UI디자인 입문부터 실전까지 A to Z
+                        </div>
+                        <div class="hashTag_area">
+                            <span class="slide_hashTag">#웹</span>
+                            <span class="slide_hashTag">#디자인</span>
+                        </div>
+                        <div class="count">
+                            <span class="count_txt bold">신청자 수 </span>
+                            <div class="line"></div>
+                            <span class="count_txt"> <span class="bold">99</span> 명</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slick-slide">
+                    <div class="list_container">
+                        <img src="/img/디자인%20썸네일.png">
+                        <span class="rank rank-1">1위</span>
+                        <div class="category_area">
+                            <span class="category main">1차</span>
+                            <span class="category sub">2차</span>
+                        </div>
+                        <div class="slide_title">
+                            피그마(Figma)를 활용한 UI디자인 입문부터 실전까지 A to Z
+                        </div>
+                        <div class="hashTag_area">
+                            <span class="slide_hashTag">#웹</span>
+                            <span class="slide_hashTag">#디자인</span>
+                        </div>
+                        <div class="count">
+                            <span class="count_txt bold">신청자 수 </span>
+                            <div class="line"></div>
+                            <span class="count_txt"> <span class="bold">99</span> 명</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slick-slide">
+                    <div class="list_container">
+                        <img src="/img/디자인%20썸네일.png">
+                        <span class="rank rank-1">1위</span>
+                        <div class="category_area">
+                            <span class="category main">1차</span>
+                            <span class="category sub">2차</span>
+                        </div>
+                        <div class="slide_title">
+                            피그마(Figma)를 활용한 UI디자인 입문부터 실전까지 A to Z
+                        </div>
+                        <div class="hashTag_area">
+                            <span class="slide_hashTag">#웹</span>
+                            <span class="slide_hashTag">#디자인</span>
+                        </div>
+                        <div class="count">
+                            <span class="count_txt bold">신청자 수 </span>
+                            <div class="line"></div>
+                            <span class="count_txt"> <span class="bold">99</span> 명</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slick-slide">
+                    <div class="list_container">
+                        <img src="/img/디자인%20썸네일.png">
+                        <span class="rank rank-1">1위</span>
+                        <div class="category_area">
+                            <span class="category main">1차</span>
+                            <span class="category sub">2차</span>
+                        </div>
+                        <div class="slide_title">
+                            피그마(Figma)를 활용한 UI디자인 입문부터 실전까지 A to Z
+                        </div>
+                        <div class="hashTag_area">
+                            <span class="slide_hashTag">#웹</span>
+                            <span class="slide_hashTag">#디자인</span>
+                        </div>
+                        <div class="count">
+                            <span class="count_txt bold">신청자 수 </span>
+                            <div class="line"></div>
+                            <span class="count_txt"> <span class="bold">99</span> 명</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="slick-slide">
+                    <div class="list_container">
+                        <img src="/img/디자인%20썸네일.png">
+                        <span class="rank rank-1">1위</span>
+                        <div class="category_area">
+                            <span class="category main">1차</span>
+                            <span class="category sub">2차</span>
+                        </div>
+                        <div class="slide_title">
+                            피그마(Figma)를 활용한 UI디자인 입문부터 실전까지 A to Z
+                        </div>
+                        <div class="hashTag_area">
+                            <span class="slide_hashTag">#웹</span>
+                            <span class="slide_hashTag">#디자인</span>
+                        </div>
+                        <div class="count">
+                            <span class="count_txt bold">신청자 수 </span>
+                            <div class="line"></div>
+                            <span class="count_txt"> <span class="bold">99</span> 명</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slick-slide">2</div>
+                <div class="slick-slide">3</div>
+                <div class="slick-slide">4</div>
+                <div class="slick-slide">5</div>
+            </div>
+        </div>
+        <div class="indicaotr">
+            <span class="prevArrow">이전</span>
+            <span class="nextArrow">다음</span>
+        </div>
+
     </section>
 
 
     <script>
-        const slider = document.querySelector('.slider');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
 
-        let currentIndex = 0;
-        const totalSlides = document.querySelectorAll('.slide').length;
-
-        // 슬라이드 이동 함수
-        function moveSlide(index) {
-            if (index < 0) {
-                currentIndex = totalSlides - 1; // 마지막 슬라이드로 이동
-            } else if (index >= totalSlides) {
-                currentIndex = 0; // 첫 번째 슬라이드로 이동
-            }
-            slider.style.transform = `translateX(-${currentIndex * 100}%)`; // 슬라이드 이동
-        }
-
-        // 이전 버튼 클릭
-        prevBtn.addEventListener('click', () => {
-            currentIndex--;
-            moveSlide(currentIndex);
+        $('.slick-list').slick({
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            /*autoplay: true,*/
+            autoplaySpeed: 2000,
+            prevArrow : $('.prevArrow'),
+            nextArrow : $('.nextArrow'),
+        });
+        $('.slider').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 3000,
+            prevArrow : $('#prevBtn'),
+            nextArrow : $('#nextBtn'),
         });
 
-        // 다음 버튼 클릭
-        nextBtn.addEventListener('click', () => {
-            currentIndex++;
-            moveSlide(currentIndex);
-        });
 
-        // 첫 번째 슬라이드로 초기화
-        moveSlide(currentIndex);
+
+
+
     </script>
     <th:block>
         <script th:inline="javascript">

@@ -2,23 +2,22 @@
 .slider-container {
     width: 100%;
     overflow: hidden; /* 슬라이드가 밖으로 넘어가지 않도록 함 */
+    background-size: cover;
 }
 
 .slider {
     width: 100%;
     display: flex; /* 슬라이드 요소를 가로로 배치 */
     transition: transform 0.5s ease; /* 슬라이드 전환 효과 */
-    background: #d9c400;
 }
 
 .slide {
+    position: relative;
     min-width: 100%; /* 각 슬라이드가 한 화면을 차지하도록 설정 */
     box-sizing: border-box;
-    background-color: white;
+    /*background-color: white;*/
     margin-right: 10px;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
     padding: 55px 350px;
 }
 .left_cont, .right_cont {
@@ -26,18 +25,29 @@
 }
 .left_cont {
     width: 60%;
-}
-.visual_title {
-    font-size: 36px;
-}
-.visual_date {
-    margin-top: 10px;
+    color: #ffffff;
 }
 .right_cont{
+    position: absolute;
+    top: 55px;
+    right: 180px;
     display: flex;
     justify-content: center;
     width: 40%;
 }
+.visual_title {
+    font-size: 36px;
+    font-weight: 600;
+    color: #ffffff;
+}
+.visual_description {
+    margin-bottom: 40px;
+}
+.visual_date {
+    margin-top: 10px;
+    color: #ffffff;
+}
+
 .slide_img {
 
 }
