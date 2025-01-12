@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns="http://www.w3.org/1999/html">
-     <!-- layout:decorate="~{layouts/sub_layout}"-->
 <head>
     <link th:href="@{/css/course/player.css}" rel="stylesheet">
     <link th:href="@{/css/member/modal.css}" rel="stylesheet">
@@ -25,7 +24,7 @@
              <!-- 영상플레이어 영역-->
              <div class="playerArea">
                  <video
-                         id="videoPlayer"
+                         id="video-player"
                          class="video-js vjs-big-play-centered"
                          width="1340"
                          height="670"
@@ -42,31 +41,25 @@
 
          <div class="right_cont">
              <div class="r_depth1">
-                 교육 목록 (이수율 <span id="gEduVideoProgress" class="blue">0</span> %)
+                 교육 목록 (이수율 <span id="total-progress" class="blue"></span>)
              </div>
              <div class="scroll_box">
                  <div class="inner_box">
                      <ul>
-                         <li th:each="courseVideo : ${courseVideo}">
-                             <button class="lecture_btn"
-                                     th:data-video-url="${courseVideo.videoUrl}"
-                                     th:data-index="${courseVideo.courseVideoIndex}"
-                                     data-duration="">
-                                <div class="title">[[${courseVideo.videoTitle}]]</div>
+                         <div id="video-container">
+                             <!-- 타임리프 반복문 -->
+                             <li th:each="video, indexStat : ${courseVideo}" class="video-item"
+                                  th:classappend="${indexStat.index == 0} ? 'active' : ''"
+                                  th:attr="data-index=${indexStat.index}" th:data-url="${video.videoUrl}">
+                                 <p th:text="${video.videoTitle}"></p>
                                  <div class="line">
-                                     <span class="line2"
-                                           th:id="'progress-' + ${courseVideo.courseVideoIndex}"></span>
+                                     <span class="line2"></span>
                                  </div>
-                                 <div class="data-area">
-                                     <span class="percentText"
-                                           th:id="'percent-' + ${courseVideo.courseVideoIndex}">
-                                         0%</span>
-                                     <span class="txt"
-                                           th:id="'status-' + ${courseVideo.courseVideoIndex}">
-                                         학습하기</span>
-                                 </div>
-                             </button>
-                         </li>
+                                 <sapn class="video-progress">진도율: 0%</sapn> <!-- 각 영상의 진도율 표시 -->
+                                 <button class="learn-button">학습하기</button> <!-- 학습하기 버튼 -->
+                             </li>
+                         </div>
+
                      </ul>
                  </div>
 
@@ -172,12 +165,132 @@
      <!-- 플러그인-->
      <script src="https://cdn.sc.gl/videojs-hotkeys/0.2/videojs.hotkeys.min.js"></script>
 <!--     <script type="text/javascript" src="/js/plugin/videojs-playlists.js"></script>-->
-     <script type="text/javascript" src="/js/your-custom-plugin.js"></script>
+<!--     <script type="text/javascript" src="/js/your-custom-plugin.js"></script>-->
      <script src="/js/testModal.js"></script>
+     <script>
+         const videoContainer = document.getElementById('video-container');
+         const videoPlayer = videojs('video-player');
+         const progressBars = videoContainer.querySelectorAll('.line2');
+         const videoProgressTexts = videoContainer.querySelectorAll('.video-progress');
+         const learnButtons = videoContainer.querySelectorAll('.learn-button');
+         const totalProgressText = document.getElementById('total-progress');
+         const studentCourseId = document.getElementById('studentCourseId').value;
+         let currentVideoIndex = 0;
+         let watchedVideos = new Set(); // 사용자가 시청한 영상의 인덱스 저장
+         let totalWatchedTime = 0;  // 서버로 전송할 토탈 시청시간
+         let lastWatchedTime = 0;   // 영상별 전체 시청시간
+         var enrollmentStatus = '';
 
 
+         // 영상 목록 가져오기
+         const videos = Array.from(videoContainer.querySelectorAll('.video-item'));
 
+         // 전체 진도율 계산
+         function updateTotalProgress() {
+             const totalVideos = videos.length;
+             const watchedVideosCount = watchedVideos.size;
+             const totalPercentage = Math.floor((watchedVideosCount / totalVideos) * 100);
+             totalProgressText.textContent = totalPercentage + '%';
+             return totalPercentage;
+         }
 
+         // 현재 영상의 진행 상태를 업데이트
+         function updateProgress(index, percentage) {
+             progressBars[index].style.width = percentage + '%';
+             videoProgressTexts[index].textContent = '진도율: ' + percentage + '%';
+         }
 
+         // 학습 완료 처리
+         function markVideoAsComplete(index) {
+             const button = learnButtons[index];
+             if (!watchedVideos.has(index)) {
+                 watchedVideos.add(index);
+                 button.textContent = '학습완료'; // 버튼 텍스트 변경
+                 button.classList.add('completed'); // 버튼 스타일 변경
+             }
+         }
 
+         // 영상 종료 이벤트 핸들러
+         videoPlayer.on('ended', () => {
+             const currentProgress = progressBars[currentVideoIndex];
+
+             // 현재 영상 100%로 업데이트
+             currentProgress.style.width = '100%';
+             videoProgressTexts[currentVideoIndex].textContent = '진도율: 100%';
+
+             // 학습완료 처리
+             markVideoAsComplete(currentVideoIndex);
+
+             // 총 진도율 업데이트
+             let ProgressRate = updateTotalProgress();
+
+             lastWatchedTime = totalWatchedTime //이전시청시간할당
+             fetch('/student/lastWatchedSave', {
+                 method: 'POST',  // POST 요청
+                 headers: {
+                     'Content-Type': 'application/json',  // JSON 형식으로 데이터 전송
+                 },
+                 body: JSON.stringify({
+                     last_watched: totalWatchedTime, // 마지막 시청 시간
+                     studentCourseId: studentCourseId, //학생 강좌 ID
+                     enrollmentStatus : enrollmentStatus, //학습상태
+                     ProgressRate : ProgressRate //진도율
+                 })
+             })
+                 .then(response => response.text())
+                 .then(data => {
+                     console.log('Server data: ' + data);
+                 })
+                 .catch(error => {
+                     console.error("AJAX 오류", error)
+                 });
+
+             if (currentVideoIndex < videos.length - 1) {
+                 // 다음 영상 활성화
+                 videos[currentVideoIndex].classList.remove('active');
+                 videos[++currentVideoIndex].classList.add('active');
+
+                 // 다음 영상으로 이동
+                 const nextVideoUrl = videos[currentVideoIndex].dataset.url;
+                 videoPlayer.src({ src: nextVideoUrl, type: 'video/mp4' });
+                 videoPlayer.pause();
+                 alert('다음 영상을 재생할 준비가 완료되었습니다!');
+             } else {
+                 alert('모든 영상 학습이 완료되었습니다.');
+                 enrollmentStatus = '학습완료';
+                 videoPlayer.pause();
+             }
+         });
+
+         // 영상 시간 업데이트 이벤트
+         videoPlayer.on('timeupdate', () => {
+             const percentage = Math.floor((videoPlayer.currentTime() / videoPlayer.duration()) * 100);
+             updateProgress(currentVideoIndex, percentage);
+             totalWatchedTime = Number(videoPlayer.currentTime()) + Number(lastWatchedTime);
+         });
+
+         // 클릭 이벤트 추가 (순차적 시청 방지)
+         videos.forEach((video, index) => {
+             const button = learnButtons[index];
+
+             // 학습하기 버튼 클릭 시
+             button.addEventListener('click', () => {
+                 if (video.classList.contains('active') && !watchedVideos.has(index)) {
+                     const videoUrl = video.dataset.url;
+                     videoPlayer.src({ src: videoUrl, type: 'video/mp4' });
+                     videoPlayer.play();
+                 } else if (watchedVideos.has(index)) {
+                     alert('이미 학습한 영상입니다. 진도율은 변경되지 않습니다.');
+                 } else {
+                     alert('이전 영상을 모두 학습한 후에 클릭할 수 있습니다.');
+                 }
+             });
+         });
+
+         // 첫 번째 영상 초기화
+         if (videos.length > 0) {
+             const firstVideoUrl = videos[0].dataset.url;
+             videoPlayer.src({ src: firstVideoUrl, type: 'video/mp4' });
+         }
+     </script>
 </html>
