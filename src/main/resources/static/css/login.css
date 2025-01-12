@@ -15,7 +15,8 @@ ul {
   list-style: none;
 }
 .login_container {
-  border: 1px solid #333333;
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
   display: flex;
   padding: 30px 60px;
 }
@@ -134,7 +135,7 @@ ul {
 
 .right_cont {
   width: 35%;
-  border: 1px solid #e5c7ca;
+  border: 1px solid #ebebeb;
   border-radius: 10px;
   padding: 50px;
 }

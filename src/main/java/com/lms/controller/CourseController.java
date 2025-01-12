@@ -134,17 +134,7 @@ public class CourseController {
         StudentTestDto studentTestDto = studentTestService.findByStudentCourseId(studentCourseId);
         model.addAttribute("studentTest", studentTestDto);
 
-
-        if(courseVideo.isEmpty()){
-            System.out.println("비디오 목록이 없습니다.");
-        }
-        for (CourseVideoDto courseVideoDto : courseVideo) {
-            System.out.println("-----------------------------------");
-            System.out.println(courseVideoDto.getCourseVideoIndex());
-            System.out.println(courseVideoDto.getVideoTitle());
-            System.out.println(courseVideoDto.getVideoUrl());
-        }
-
+//        return "member/testVideo";
         return "member/videoLearning";
     }
 
