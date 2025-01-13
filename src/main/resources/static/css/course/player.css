@@ -139,15 +139,15 @@ li {
     left: 0;
 }
 
-.learn-button {
-    all: unset;
+
+.video-item {
     width: 90%;
     padding: 10px 20px;
     transition: background-color 0.3s;
     cursor: pointer;
 }
 
-.lecture_btn:hover {
+.video-item:hover {
     background: #e7f6fb;
 }
 
@@ -191,7 +191,17 @@ li {
     line-height: 24px;
     color: #757575;
 }
-.txt {
+
+.learn-button {
+    display: inline;
+    all: unset;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 24px;
+    color: #757575;
+}
+.video-progress {
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;

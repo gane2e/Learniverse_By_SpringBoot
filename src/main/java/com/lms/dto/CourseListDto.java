@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,6 +31,7 @@ public class CourseListDto {
     private LocalDate course_end_date; //교육종료일(선택)
 
     private String completionCriteria; //수료기준
+    private int numberOfApplications; //신청자 수
 
     private LocalDateTime regTime;
     private LocalDateTime updateTime;
@@ -50,6 +52,8 @@ public class CourseListDto {
     private Long courseVideoIndex; /* 교육 내 영상 목차 순서 */
     private String videoTitle; /* 영상 제목 */
 
+    List<HashTagFormDto> hashTagFormDtoList; //해당 교육의 해시태그
+
     
 
 
@@ -61,7 +65,8 @@ public class CourseListDto {
                          LocalDateTime regTime, LocalDateTime updateTime, String createdBy, String modifiedBy,
                          String imgUrl, String oriImgName, Long categoryId, String categoryName,
                          Long subCategoryId, String subCategoryName,
-                         Long courseVideoIndex, String videoTitle) {
+                         Long courseVideoIndex, String videoTitle
+                        ) {
         this.courseId = courseId;
         this.title = title;
         this.description = description;
@@ -93,7 +98,7 @@ public class CourseListDto {
                          LocalDate course_start_date, LocalDate course_end_date, String completionCriteria,
                          LocalDateTime regTime, LocalDateTime updateTime, String createdBy, String modifiedBy,
                          String imgUrl, String oriImgName, Long categoryId, String categoryName,
-                         Long subCategoryId, String subCategoryName) {
+                         Long subCategoryId, String subCategoryName, int numberOfApplications) {
         this.courseId = courseId;
         this.title = title;
         this.description = description;
@@ -114,5 +119,6 @@ public class CourseListDto {
         this.categoryName = categoryName;
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
+        this.numberOfApplications = numberOfApplications;
     }
 }

@@ -17,17 +17,19 @@ import java.util.List;
 public interface CourseRepository extends JpaRepository<Courses, Long> {
 
 
+    // 사용자 페이지 - 교육과정 리스트
     @Query("SELECT new com.lms.dto.CourseListDto(co.courseId, co.title, co.description, co.recruitment_status, " +
             "co.recruitment_start_date, co.recruitment_end_date, co.course_status, co.course_start_date, co.course_end_date, " +
             "co.completionCriteria, co.regTime, co.updateTime, co.createdBy, co.modifiedBy, " +
-            "co.imgUrl, co.oriImgName, ct.categoryId, ct.categoryName, sct.subCategoryId, sct.subCategoryName) " +
+            "co.imgUrl, co.oriImgName, ct.categoryId, ct.categoryName, sct.subCategoryId, sct.subCategoryName, co.numberOfApplications) " +
             "FROM Courses co " +
             "JOIN co.subCategory sct " +
             "JOIN sct.categories ct " +
             "WHERE (:keyword IS NULL OR LOWER(co.title) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "OR LOWER(co.description) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
             "AND (:categoryId IS NULL OR ct.categoryId = :categoryId) " +
-            "AND (:subCategoryId IS NULL OR sct.subCategoryId = :subCategoryId)")
+            "AND (:subCategoryId IS NULL OR sct.subCategoryId = :subCategoryId) " +
+            "ORDER BY co.regTime DESC")
     Page<List<CourseListDto>> findAllCourseWithCategoryInfo(@Param("keyword") String keyword,
                                                       @Param("categoryId") Long categoryId,
                                                       @Param("subCategoryId") Long subCategoryId,
@@ -37,12 +39,12 @@ public interface CourseRepository extends JpaRepository<Courses, Long> {
     @Query("SELECT new com.lms.dto.CourseListDto(co.courseId, co.title, co.description, co.recruitment_status, " +
             "co.recruitment_start_date, co.recruitment_end_date, co.course_status, co.course_start_date, co.course_end_date, " +
             "co.completionCriteria, co.regTime, co.updateTime, co.createdBy, co.modifiedBy, " +
-            "co.imgUrl, co.oriImgName, ct.categoryId , ct.categoryName , sct.subCategoryId, sct.subCategoryName) " +
+            "co.imgUrl, co.oriImgName, ct.categoryId , ct.categoryName , sct.subCategoryId, sct.subCategoryName, co.numberOfApplications) " +
             "FROM Courses co " +
             "JOIN co.subCategory sct " +
             "JOIN sct.categories ct " +
             "WHERE co.courseId = :courseId")
-    public CourseListDto findCourseById(@Param("courseId") Long courseId);
+    CourseListDto findCourseById(@Param("courseId") Long courseId);
 
 
     // 사용자 페이지 - 특정교육 교육영상 반환
@@ -55,6 +57,31 @@ public interface CourseRepository extends JpaRepository<Courses, Long> {
             "WHERE cv.courses.courseId = :courseId")
     List<CourseVideoDto> findVideoById(@Param("courseId") Long courseId);
 
+
+    // 사용자 페이지 - 메인비주얼 교육 최근등록 5개
+    @Query("SELECT new com.lms.dto.CourseListDto(co.courseId, co.title, co.description, co.recruitment_status, " +
+            "co.recruitment_start_date, co.recruitment_end_date, co.course_status, co.course_start_date, co.course_end_date, " +
+            "co.completionCriteria, co.regTime, co.updateTime, co.createdBy, co.modifiedBy, " +
+            "co.imgUrl, co.oriImgName, ct.categoryId, ct.categoryName, sct.subCategoryId, sct.subCategoryName, co.numberOfApplications) " +
+            "FROM Courses co " +
+            "JOIN co.subCategory sct " +
+            "JOIN sct.categories ct " +
+            "ORDER BY co.regTime DESC limit 5")
+    List<CourseListDto> getMainVisualList();
+
+    // 사용자 페이지 - 메인 교육리스트 신청자많은순 8개
+    @Query("SELECT new com.lms.dto.CourseListDto(co.courseId, co.title, co.description, co.recruitment_status, " +
+            "co.recruitment_start_date, co.recruitment_end_date, co.course_status, co.course_start_date, co.course_end_date, " +
+            "co.completionCriteria, co.regTime, co.updateTime, co.createdBy, co.modifiedBy, " +
+            "co.imgUrl, co.oriImgName, ct.categoryId, ct.categoryName, sct.subCategoryId, sct.subCategoryName, co.numberOfApplications) " +
+            "FROM Courses co " +
+            "JOIN co.subCategory sct " +
+            "JOIN sct.categories ct " +
+            "ORDER BY co.numberOfApplications DESC, co.regTime DESC limit 8")
+    List<CourseListDto> top8CourseList();
+
+
+    // 관리자 페이지 - 교육과정 관리 리스트
     @Query("SELECT new com.lms.dto.AdminCourseListDto" +
             "(s.courseId , s.recruitment_status , s.title, s.regTime, " +
             "s.updateTime, s.createdBy, s.modifiedBy, s.imgName, s.imgUrl, s.oriImgName, " +

@@ -19,48 +19,28 @@
         <div class="slider-container">
 
             <div class="slider">
-
-                <div class="slide">
+                <div class="slide" th:each="mainVisual: ${mainVisualList}">
                     <div class="left_cont">
                         <div>
-                            <span>1차</span>
+                            <span th:text="${mainVisual.categoryName}">1차 카테고리</span>
                             <span> > </span>
-                            <span>2차</span>
+                            <span th:text="${mainVisual.subCategoryName}">2차 카테고리</span>
                         </div>
-                        <div class="visual_title">AI시대 데이터 직군을 위한 생존 전략</div>
+                        <div class="visual_title" th:text="${mainVisual.title}">AI시대 데이터 직군을 위한 생존 전략</div>
                         <div class="visual_description">
-                            <span>#해시태그1</span> <span>#해시태그2</span>
+                            <span th:each="hashTag: ${mainVisual.hashTagFormDtoList}">
+                                #[[${hashTag.hashTagName}]]
+                            </span>
                         </div>
                         <div class="visual_date">
-                            <div>모집기간 : </div>
-                            <div>교육기간 : </div>
+                            <div>모집기간 : [[${mainVisual.recruitment_start_date}]] ~ [[${mainVisual.recruitment_end_date}]]</div>
+                            <div>교육기간 : [[${mainVisual.course_start_date}]] ~ [[${mainVisual.course_end_date}]]</div>
                         </div>
                     </div>
                     <div class="right_cont">
-                        <img src="/img/디자인%20썸네일.png" class="slide_img">
+                        <img th:src="${mainVisual.imgUrl}" class="slide_img">
                     </div>
                 </div>
-                <div class="slide">
-                    <div class="left_cont">
-                        <div>
-                            <span>1차</span>
-                            <span> > </span>
-                            <span>2차</span>
-                        </div>
-                        <div class="visual_title">AI시대 데이터 직군을 위한 생존 전략</div>
-                        <div class="visual_description">
-                            <span>#해시태그1</span> <span>#해시태그2</span>
-                        </div>
-                        <div class="visual_date">
-                            <div>모집기간 : </div>
-                            <div>교육기간 : </div>
-                        </div>
-                    </div>
-                    <div class="right_cont">
-                        <img src="/img/디자인%20썸네일.png" class="slide_img">
-                    </div>
-                </div>
-
             </div>
 
             <div class="controls">
@@ -74,37 +54,24 @@
         <div class="section_title">
             <img src="/img/우주1.png" class="title_img">
             강의명으로 찾아보세요!</div>
-        <div class="search_box_container">
-            <div class="search">
-                <div class="search_box">
-                    <input type="text" placeholder="배우고싶은 강의명을 입력해보세요.">
-                </div>
-                <div>
-                    <button type="submit" class="search_btn">
-                      검색
-                    </button>
-                </div>
-            </div>
-            <div class="search_hashTag">
-                <span class="hashTag">
-                    <a>#해시태그1</a>
-                </span>
-                <span class="hashTag">
-                    <a>#해시태그2</a>
-                </span>
-                <span class="hashTag">
-                    <a>#해시태그3</a>
-                </span>
-                <span class="hashTag">
-                    <a>#해시태그4</a>
-                </span>
-                <span class="hashTag">
-                    <a>#해시태그5</a>
-                </span>
-                <span class="hashTag">
-                    <a>#해시태그6</a>
-                </span>
 
+        <div class="search_box_container" >
+            <form action="/course/courses/search" method="get" id="searchForm">
+                <div class="search">
+                    <div class="search_box">
+                        <input type="text"  name="keyword" placeholder="배우고싶은 강의명을 입력해보세요.">
+                    </div>
+                    <div>
+                        <button type="submit" class="search_btn">
+                            검색
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="search_hashTag">
+                <span class="hashTag" th:each="hashTag: ${top5Hashtags}">
+                    <a>#[[${hashTag.hashTagName}]]</a>
+                </span>
             </div>
         </div>
     </section>
@@ -119,121 +86,33 @@
 
             <div class="slick-list">
 
-                <div class="slick-slide">
+                <div class="slick-slide"
+                    th:each="course, iterStat : ${top8CourseList}">
                     <div class="list_container">
-                        <img src="/img/디자인%20썸네일.png">
-                        <span class="rank rank-1">1위</span>
+                        <span class="rank rank-1">[[${iterStat.index +1}]]위</span>
+                        <img th:src="${course.imgUrl}">
                         <div class="category_area">
-                            <span class="category main">1차</span>
-                            <span class="category sub">2차</span>
+                            <span class="category main"
+                            th:text="${course.categoryName}">1차</span>
+                            <span class="category sub"
+                            th:text="${course.subCategoryName}">2차</span>
                         </div>
-                        <div class="slide_title">
+                        <div class="slide_title" th:text="${course.title}">
                             피그마(Figma)를 활용한 UI디자인 입문부터 실전까지 A to Z
                         </div>
                         <div class="hashTag_area">
-                            <span class="slide_hashTag">#웹</span>
-                            <span class="slide_hashTag">#디자인</span>
+                            <span class="slide_hashTag"
+                                  th:each="hashTag : ${course.hashTagFormDtoList}">
+                                #[[${hashTag.hashTagName}]]
+                            </span>
                         </div>
                         <div class="count">
                             <span class="count_txt bold">신청자 수 </span>
                             <div class="line"></div>
-                            <span class="count_txt"> <span class="bold">99</span> 명</span>
+                            <span class="count_txt"> <span class="bold" th:text="${course.numberOfApplications}"></span> 명</span>
                         </div>
                     </div>
                 </div>
-                <div class="slick-slide">
-                    <div class="list_container">
-                        <img src="/img/디자인%20썸네일.png">
-                        <span class="rank rank-1">1위</span>
-                        <div class="category_area">
-                            <span class="category main">1차</span>
-                            <span class="category sub">2차</span>
-                        </div>
-                        <div class="slide_title">
-                            피그마(Figma)를 활용한 UI디자인 입문부터 실전까지 A to Z
-                        </div>
-                        <div class="hashTag_area">
-                            <span class="slide_hashTag">#웹</span>
-                            <span class="slide_hashTag">#디자인</span>
-                        </div>
-                        <div class="count">
-                            <span class="count_txt bold">신청자 수 </span>
-                            <div class="line"></div>
-                            <span class="count_txt"> <span class="bold">99</span> 명</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="slick-slide">
-                    <div class="list_container">
-                        <img src="/img/디자인%20썸네일.png">
-                        <span class="rank rank-1">1위</span>
-                        <div class="category_area">
-                            <span class="category main">1차</span>
-                            <span class="category sub">2차</span>
-                        </div>
-                        <div class="slide_title">
-                            피그마(Figma)를 활용한 UI디자인 입문부터 실전까지 A to Z
-                        </div>
-                        <div class="hashTag_area">
-                            <span class="slide_hashTag">#웹</span>
-                            <span class="slide_hashTag">#디자인</span>
-                        </div>
-                        <div class="count">
-                            <span class="count_txt bold">신청자 수 </span>
-                            <div class="line"></div>
-                            <span class="count_txt"> <span class="bold">99</span> 명</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="slick-slide">
-                    <div class="list_container">
-                        <img src="/img/디자인%20썸네일.png">
-                        <span class="rank rank-1">1위</span>
-                        <div class="category_area">
-                            <span class="category main">1차</span>
-                            <span class="category sub">2차</span>
-                        </div>
-                        <div class="slide_title">
-                            피그마(Figma)를 활용한 UI디자인 입문부터 실전까지 A to Z
-                        </div>
-                        <div class="hashTag_area">
-                            <span class="slide_hashTag">#웹</span>
-                            <span class="slide_hashTag">#디자인</span>
-                        </div>
-                        <div class="count">
-                            <span class="count_txt bold">신청자 수 </span>
-                            <div class="line"></div>
-                            <span class="count_txt"> <span class="bold">99</span> 명</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="slick-slide">
-                    <div class="list_container">
-                        <img src="/img/디자인%20썸네일.png">
-                        <span class="rank rank-1">1위</span>
-                        <div class="category_area">
-                            <span class="category main">1차</span>
-                            <span class="category sub">2차</span>
-                        </div>
-                        <div class="slide_title">
-                            피그마(Figma)를 활용한 UI디자인 입문부터 실전까지 A to Z
-                        </div>
-                        <div class="hashTag_area">
-                            <span class="slide_hashTag">#웹</span>
-                            <span class="slide_hashTag">#디자인</span>
-                        </div>
-                        <div class="count">
-                            <span class="count_txt bold">신청자 수 </span>
-                            <div class="line"></div>
-                            <span class="count_txt"> <span class="bold">99</span> 명</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="slick-slide">2</div>
-                <div class="slick-slide">3</div>
-                <div class="slick-slide">4</div>
-                <div class="slick-slide">5</div>
             </div>
         </div>
         <div class="indicaotr">

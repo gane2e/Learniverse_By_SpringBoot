@@ -56,8 +56,7 @@
             <div class="title_before"></div>
             <div class="title" id="education">교육소개</div>
         </div>
-            <div class="edu_cont_area" th:text="${course.description}"></div>
-
+            <div class="edu_cont_area" th:utext="${course.description}"></div>
         <div class="title_area">
             <div class="title_before"></div>
             <div class="title" id="table-of-contents">목차</div>
@@ -114,7 +113,7 @@
             <div class="title_before"></div>
             <div class="title" id="completion-criteria">수료기준</div>
         </div>
-        <div class="edu_cont_area" th:text="${course.completionCriteria}">
+        <div class="edu_cont_area" th:utext="${course.completionCriteria}">
         </div>
     </div>
 
@@ -132,7 +131,7 @@
                         <div class="m_cont_tit">
                             <img src="/img/check_15790612.png" class="check_img">수료기준</div>
 
-                        <div class="m_cont_txt" th:text="${course.completionCriteria}">
+                        <div class="m_cont_txt" th:utext="${course.completionCriteria}">
                             강의 100% 이수 및 시험 합격시 수료<br>
                         </div>
 

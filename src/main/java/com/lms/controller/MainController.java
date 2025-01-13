@@ -1,6 +1,13 @@
 package com.lms.controller;
 
+import com.lms.dto.CourseListDto;
+import com.lms.dto.HashTagCountDto;
+import com.lms.dto.HashTagFormDto;
+import com.lms.entity.Courses;
+import com.lms.service.CourseHashTagService;
+import com.lms.service.CourseService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,13 +18,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @Log4j2
 @RequestMapping("/")
 public class MainController {
 
+    @Autowired
+    private CourseService courseService;
+
+    @Autowired
+    private CourseHashTagService courseHashTagService;
+
     @GetMapping(value = "/")
-    public String index() {
+    public String index(Model model) {
+
+        //메인비주얼 교육목록 (최근등록순 5개)
+        List<CourseListDto> getMainVisualList = courseService.getMainVisualList();
+        model.addAttribute("mainVisualList", getMainVisualList);
+        
+        //메인검색기 해시태그 표출(가장 많이등록된순 5개)
+        List<HashTagCountDto> top5Hashtags = courseHashTagService.findByTop5Hashtags();
+        model.addAttribute("top5Hashtags", top5Hashtags);
+
+        //가장 많이 신청한 교육과정 8개
+        List<CourseListDto> top8CourseList = courseService.top8CourseList();
+        model.addAttribute("top8CourseList", top8CourseList);
         return "index";
     }
 

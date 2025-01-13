@@ -48,7 +48,7 @@ public class Courses extends BaseEntity {
     private String oriImgName; /* 썸네일 원본 이름 */
     private String imgUrl; /* 썸네일 조회 경로 */
 
-    private int numberOfApplications;
+    private int numberOfApplications; //신청자 수
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sub_category_id")

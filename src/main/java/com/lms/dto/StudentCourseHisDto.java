@@ -55,12 +55,14 @@ public class StudentCourseHisDto {
     private Test_status lastStatus;
     private int lastScore;
     private int testCount;
+    
+    private String certificationNumber; //수료번호
 
     public StudentCourseHisDto(Long applicationId, Application_status application_status,
                                Long studentCourseId, double ProgressRate, LocalDateTime completionDateTime,  Completion_status completionStatus,  LocalDateTime courseStarDateTime,
                                Enrollment_status enrollmentStatus, LocalDateTime regTime,
                                Long memberId, String memberName, Long courseId, String courseTitle, String subCategoryName,
-                               Long subCategoryId, String categoryName) {
+                               Long subCategoryId, String categoryName, String certificationNumber) {
 
         // 신청내역
         this.applicationId = applicationId;
@@ -87,6 +89,8 @@ public class StudentCourseHisDto {
         this.subCategoryName = subCategoryName;
         this.subCategoryId = subCategoryId;
         this.categoryName = categoryName;
+
+        this.certificationNumber = certificationNumber; //수료번호
 
     }
 

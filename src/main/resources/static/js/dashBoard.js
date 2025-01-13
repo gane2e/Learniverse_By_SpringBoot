@@ -1,22 +1,16 @@
-function generateCertificate() {
-    // 서버에서 HTML 템플릿을 동적으로 가져옵니다.
-    fetch('/student/certificate')
-        .then(response => response.text())  // HTML을 텍스트로 받음
-        .then(htmlContent => {
-            // 새 창 열기
-            let printWindow = window.open("", "", "width=1050,height=800");
-
-            // HTML 콘텐츠를 새 창에 삽입
-            printWindow.document.write(htmlContent);  // 서버에서 받은 HTML 삽입
-            printWindow.document.close();  // 문서 닫기
-
-            // 인쇄 대화상자 띄우기
-            printWindow.print();
-        })
-        .catch(error => console.error("수료증 로드 실패:", error));
-}
-
 function printCertificate() {
+
+    var userName = document.getElementById('userName').value;
+    var certificationNumber = document.getElementById('certificationNumber').value;
+    var courseTitle = document.getElementById('courseTitle').value;
+    var completionDateTime = document.getElementById('completionDateTime').value;
+    var birthDate = document.getElementById('birthDate').value;
+    var date = new Date(completionDateTime);
+
+    var formattedDate = date.getFullYear() + '-' +
+        (date.getMonth() + 1).toString().padStart(2, '0') + '-' +
+        date.getDate().toString().padStart(2, '0');
+
     var printWindow = window.open('', '_blank', 'width=800,height=600');
     printWindow.document.write(`
 <!DOCTYPE html>
@@ -25,7 +19,6 @@ function printCertificate() {
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<!--    <link th:href="@{/css/course/certificate.css}" rel="stylesheet">-->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap');
     @page {
@@ -146,7 +139,7 @@ function printCertificate() {
 <img src="/img/certificate_image.png" 
     class="page">
 <div class="page_cont">
-     <div class="completionNum">제 2025-0001호</div>
+     <div class="completionNum">제 ${certificationNumber}호</div>
   <div class="title">교육 수료증</div>
   <div class="content">
     <table>
@@ -155,19 +148,19 @@ function printCertificate() {
           &nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;명&nbsp;&nbsp;:
          </th>
-        <td>김가은</td>
+        <td> ${userName}</td>
       </tr>
       <tr>
         <th>생&nbsp;&nbsp;&nbsp;&nbsp;년&nbsp;&nbsp;&nbsp;&nbsp;월&nbsp;&nbsp;&nbsp;일&nbsp;&nbsp;:</th>
-        <td>2003-02-06</td>
+        <td> ${birthDate}</td>
       </tr>
       <tr>
         <th>교&nbsp;&nbsp;육&nbsp;&nbsp;과&nbsp;&nbsp;정&nbsp;&nbsp;명&nbsp;&nbsp;:</th>
-        <td>교육과정명 입니다.교육과정명 입니다.교육과정명 입니다.</td>
+        <td> ${courseTitle}</td>
       </tr>
       <tr>
         <th>수&nbsp;&nbsp;&nbsp;&nbsp;료&nbsp;&nbsp;&nbsp;&nbsp;일&nbsp;&nbsp;&nbsp;자&nbsp;&nbsp;:</th>
-        <td>2024-01-07</td>
+        <td> ${formattedDate}</td>
       </tr>
     </table>
     <div class="txt">

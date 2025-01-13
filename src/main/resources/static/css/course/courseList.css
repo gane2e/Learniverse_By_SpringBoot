@@ -87,15 +87,20 @@ input:focus {
     height: 40px;
 }
 
-.search_btn {
+.search_btn, .reset_btn {
     all: unset; /* 버튼의 모든 기본 스타일 제거 */
     display: inline-block;
     padding: 0 20px;
-    background-color: #54575e;
     border-radius: 3px;
     color: #ffffff;
     outline: none;
     height: 40px;
+}
+.search_btn {
+    background: #7678ff;
+}
+.reset_btn {
+    background-color: #54575e;
 }
 
 button:focus {
@@ -103,6 +108,22 @@ button:focus {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스 시 강조 효과 */
 }
 /* 검색기 END */
+
+.total_count_area {
+    padding: 20px 0 5px 0;
+    border-bottom: 3px solid #e3e3e3;
+    margin-bottom: 20px;
+}
+.total_count {
+    font-size: 16px;
+}
+.total_img {
+    width: 25px;
+}
+.red_txt {
+    color: #ed4040;
+    font-size: 16px;
+}
 
 .course_list_ul {
     display: flex;
@@ -125,7 +146,9 @@ button:focus {
 }
 .image_container img {
     width: 100%;
+    height: 150px;
     border-radius: 10px;
+    object-fit: contain;
 }
 
 .status {
@@ -142,6 +165,11 @@ button:focus {
 
 .thum {
     width: 320px;
+    transition: transform 0.3s ease;
+}
+
+.thum:hover {
+    transform: translateY(-3px);
 }
 
 img:hover {

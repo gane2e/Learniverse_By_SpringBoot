@@ -19,7 +19,7 @@ public interface StudentCourseRepository extends JpaRepository<StudentCourse, Lo
             "m.id, m.name, " +
             "c.courseId , c.title ," +
             "sct.subCategoryName, sct.subCategoryId," +
-            "ct.categoryName) " +
+            "ct.categoryName, s.certificationNumber) " +
             "FROM StudentCourse s " +
             "JOIN s.courseApplication a " +
             "JOIN a.member m " +

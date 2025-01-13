@@ -90,6 +90,8 @@ button {
 }
 .list_container > img {
     width: 280px;
+    height: 182px;
+    object-fit: contain;
 }
 .rank {
     position: absolute;
@@ -97,34 +99,18 @@ button {
     left: 5px;
     z-index: 1;
     padding: 10px;
-    border-radius: 50px;
+    border-radius: 10px;
     font-weight: 600;
     display: inline-block;
     text-align: center;
     color:#333333;
     font-size: 14px;
+    background: #eeeeee;
 }
 
-/* 1위부터 4위까지는 각각 다르게 스타일링 */
-.rank-1 {
-    background: radial-gradient(circle, #f4de89, #d7ac4d);
-}
-.rank-2 {
-    background: linear-gradient(135deg, #c2c2c2, #8e8e8e); /* 은색 그라데이션 */
-}
-.rank-3 {
-    background: linear-gradient(135deg, #d97b3e, #b66e2f); /* 동색 그라데이션 */
-}
-.rank-4 {
-    background: linear-gradient(135deg, #f56c64, #e3a7b5); /* 따뜻한 핑크와 오렌지 그라데이션 */
-}
-.rank-5, .rank-6, .rank-7, .rank-8 {
-    background-color: #e6e6e6;
-    color: #333;
-    border: none;
-}
+
 .category{
-    padding: 0 18px;
+    padding: 0 14px;
     border-radius: 5px;
     font-size: 15px;
     line-height: 24px;

@@ -60,6 +60,16 @@ public class AdminController {
         return "admin/video/videoList";
     }
 
+    // 시험문제 목록
+    @GetMapping(value = "/questionList")
+    public String questionList(Model model) {
+
+        /*List<AdminCourseListDto> adminCourseListDtos = courseService.getAdminCourseList();
+        model.addAttribute("courseList", adminCourseListDtos);*/
+
+        return "admin/question/questionList";
+    }
+
 
 
     /* 교육과정 등록페이지 */

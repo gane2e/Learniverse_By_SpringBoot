@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -91,6 +94,7 @@ public class MemberController {
         Member member = memberRepository.findByLoginId(username);
         Long memberId = member.getId();
         String userName = member.getName();
+        Date birthDate = member.getBirthdate();
 
         List<StudentCourseHisDto> dtos =
                 studentCourseService.findStudentCourseHis(memberId);
@@ -132,7 +136,8 @@ public class MemberController {
         model.addAttribute("pageTitle", "나의 수강현황");
         model.addAttribute("hisDtos", hisDtos);
         model.addAttribute("dashBoardCount", dashBoardCountDto);
-        model.addAttribute("userName", userName);
+        model.addAttribute("userName", userName); //유저 성명
+        model.addAttribute("birthDate", birthDate); //유저 생년월일
         model.addAttribute("enrollmentStatus", Enrollment_status.학습완료);
         model.addAttribute("completionStatus", Completion_status.수료);
         return "member/dashBoard";

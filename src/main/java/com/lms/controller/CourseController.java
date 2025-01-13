@@ -7,6 +7,8 @@ import com.lms.service.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @Log4j2
@@ -38,22 +41,27 @@ public class CourseController {
     @Autowired
     private CourseHashTagService courseHashTagService; //교육 해시태그
 
-    @GetMapping({"/courses", "/courses/search"})
+    @GetMapping({"/courses", "/courses/search", "/courses/{page}"})
     public String courses(@RequestParam(value = "keyword", required = false) String keyword,
                           @RequestParam(value = "categoryId", required = false) Long categoryId,
                           @RequestParam(value = "subCategoryId", required = false) Long subCategoryId,
-                          Model model) {
+                          Model model,
+                          @PathVariable("page") Optional<Integer> page) {
+
+        Pageable pageable =
+                PageRequest.of(page.isPresent() ? page.get() : 0, 15);
 
         // 1차카테고리 얻어서 모델로 보내기
         List<Category> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
 
-        Page<List<CourseListDto>> courseList = courseService.getCourseList(keyword, categoryId, subCategoryId,0,15);
+        Page<List<CourseListDto>> courseList = courseService.getCourseList(keyword, categoryId, subCategoryId, pageable);
         model.addAttribute("pageTitle", "온라인 교육");
         model.addAttribute("courseList", courseList);
         model.addAttribute("keyword", keyword); // 키워드 추가
         model.addAttribute("categoryId", categoryId); // 카테고리 ID 추가
         model.addAttribute("subCategoryId", subCategoryId); // 서브카테고리 ID 추가
+        model.addAttribute("maxPage", 5);
         return "course/courseList";
     }
 

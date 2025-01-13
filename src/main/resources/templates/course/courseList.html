@@ -6,6 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:href="@{/css/course/courseList.css}" rel="stylesheet">
     <!-- 사용자 CSS 추가 -->
+
+    <!-- 사용자 스크립트 추가 -->
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+
+            $(document).ready(function(){
+                $("#searchBtn").on("click",function(e) {
+                    e.preventDefault();
+                    page(0);
+                });
+            });
+            function page(page){
+                location.href="/course/courses/" + page
+            }
+        </script>
+    </th:block>
 </head>
     <div layout:fragment="sub_cont">
 
@@ -20,7 +36,8 @@
                 <th:block th:each="category : ${categories}">
                     <option th:value="${category.categoryId}"
                             th:text="${category.categoryName}"
-                            th:selected="${category.categoryId == categoryId}">></option>
+                            th:selected="${category.categoryId == categoryId}">
+                    </option>
                 </th:block>
             </select>
 
@@ -39,10 +56,16 @@
             <!--검색 버튼-->
             <button type="submit" class="search_btn"><span class="text">검색</span></button>
             <!--검색 초기화 버튼-->
-            <button type="button" class="search_btn" onclick="resetSearchForm()"><span class="text">초기화</span></button>
+            <button type="button" class="reset_btn" onclick="resetSearchForm()"><span class="text">초기화</span></button>
         </div>
     </form>
 
+        <div class="total_count_area">
+            <span>
+                <img src="/img/total_count2.png" class="total_img">
+            </span>
+            <span class="total_count">total : <span class="red_txt">99</span></span>
+        </div>
     
    <ul class="course_list_ul">
        <li class="course_list_li" th:each="course, status : ${courseList}">
@@ -65,24 +88,28 @@
    </ul>
     <input type="hidden" id="selectSubCategory" th:value="${subCategoryId}">
 
-    <div class="paging_box">
-        <!-- 페이징 -->
-        <nav aria-label="...">
-            <ul class="pagination">
-                <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
+        <div th:with="start=${(courseList.number/maxPage)*maxPage + 1}, end=(${(courseList.totalPages == 0) ? 1 : (start + (maxPage - 1) < courseList.totalPages ? start + (maxPage - 1) : courseList.totalPages)})" >
+            <ul class="pagination justify-content-center">
+
+                <li class="page-item" th:classappend="${courseList.first} ? 'disabled' : ''">
+                    <a th:onclick="'javascript:page(' + ${courseList.number - 1} + ')'" aria-label="Previous" class="page-link">
+                        <span aria-hidden="true">Previous</span>
+                    </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active" aria-current="page">
-                    <a class="page-link" href="#">2</a>
+
+                <li class="page-item" th:each="page : ${#numbers.sequence(start, end)}" th:classappend="${courseList.number == page - 1} ? 'active' : ''">
+                    <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
+
+                <li class="page-item" th:classappend="${courseList.last} ? 'disabled' : ''">
+                    <a th:onclick="'javascript:page(' + ${courseList.number + 1} + ')'" aria-label="Next" class="page-link">
+                        <span aria-hidden="true">Next</span>
+                    </a>
                 </li>
+
+
             </ul>
-        </nav>
-    </div>
+        </div>
 
 
     <!-- 카테고리 스크립트 -->

@@ -189,11 +189,19 @@
                                        target="_blank">
                                         수료증
                                     </a>
+
+                                    <input type="hidden" id="userName" th:value="${userName}">
+                                    <input type="hidden" id="certificationNumber" th:value="${history.certificationNumber}">
+                                    <input type="hidden" id="courseTitle" th:value="${history.courseTitle}">
+                                    <input type="hidden" id="completionDateTime" th:value="${history.completionDateTime}">
+                                    <input type="hidden" id="birthDate" th:value="${birthDate}">
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
+
+
 
 
                 <!-- 모달 창 -->
@@ -227,21 +235,17 @@
                         <ul class="modal_btn_list">
                             <li>
                                 <a th:href="'/course/question?subCategoryId='+${history.subCategoryId}+
-                  '&studentCourseId='+${history.studentCourseId}+
-                  '&courseTitle='+${history.courseTitle}"
+                                              '&studentCourseId='+${history.studentCourseId}+
+                                              '&courseTitle='+${history.courseTitle}"
                                    class="modal_play_btn">시험보기</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </li>
-
-
+        </ul>
     <script src="/js/testModal.js"></script>
-            <script src="/js/dashBoard.js"></script>
-
-
-
-</div>
+    <script src="/js/dashBoard.js"></script>
+    </div>
 
 </html>

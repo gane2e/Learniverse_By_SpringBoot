@@ -14,7 +14,7 @@ public class HashTagFormDto {
 
     private Long courseHashTagId;
     private String hashTagName;
-    private Courses course;
+    private long course_id;
 
     private static ModelMapper modelMapper = new ModelMapper();
 

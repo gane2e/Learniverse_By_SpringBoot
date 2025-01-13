@@ -172,10 +172,9 @@ public class CourseService {
    /* }*/
 
     // 사용자페이지 - 교육 전체 리스트 반환
-    public Page<List<CourseListDto>> getCourseList(String keyword, Long categoryId, Long subCategoryId, int page, int size) {
+    public Page<List<CourseListDto>> getCourseList(String keyword, Long categoryId, Long subCategoryId, Pageable pageable) {
 
-        Pageable pageable = PageRequest.of(page, size); // PageRequest.of(pageNumber, size)
-        Page<List<CourseListDto>> userPage = courseRepository.findAllCourseWithCategoryInfo(keyword, categoryId, subCategoryId,pageable);
+        Page<List<CourseListDto>> userPage = courseRepository.findAllCourseWithCategoryInfo(keyword, categoryId, subCategoryId, pageable);
 
         return userPage;
     }
@@ -283,6 +282,39 @@ public class CourseService {
         return((double) (completedStudent /totalStudent)*100);
     }
 
+    //메인비주얼 교육 최근등록순 5개 + 해당 교육과정의 해시태그 리스트 가져오기
+    public List<CourseListDto> getMainVisualList(){
+        return getHashTag(courseRepository.getMainVisualList());
+    }
+
+    //가장 많이 신청한 교육과정 8개
+    public List<CourseListDto> top8CourseList(){
+        return  getHashTag(courseRepository.top8CourseList());
+    }
+
+
+    //교육과정 리스트 전달받아 해당 교육과정의 해시태그 리스트 추가하여 리턴해주는 메서드
+    private  List<CourseListDto> getHashTag(List<CourseListDto> dtos){
+
+        for (CourseListDto dto : dtos) {  //교육과정별 courseId구해 해당 Id의 해시태그 조회하기
+
+            List<HashTagFormDto> hashTagFormDtos = new ArrayList<>();
+            long courseId = dto.getCourseId();
+
+            //courseId에 해당하는 해시태그 엔티티 리스트
+            List<CourseHashTag> courseHashTags =
+                    courseHashTagRepository.findByCourse_CourseId(courseId);
+
+            //해시태그 엔티티 Dto로 변환후 해시태그 리스트에 넣기
+            for (CourseHashTag courseHashTag : courseHashTags) {
+                HashTagFormDto hashTagFormDto = HashTagFormDto.of(courseHashTag);
+                hashTagFormDtos.add(hashTagFormDto);
+            }
+            //해시태그 리스트를 교육과정 dto에 넣기
+            dto.setHashTagFormDtoList(hashTagFormDtos);
+        }
+        return dtos;
+    }
 
 
 }

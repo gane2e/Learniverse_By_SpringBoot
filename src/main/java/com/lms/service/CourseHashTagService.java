@@ -1,6 +1,7 @@
 package com.lms.service;
 
 import com.lms.dto.CourseListDto;
+import com.lms.dto.HashTagCountDto;
 import com.lms.dto.HashTagFormDto;
 import com.lms.entity.CourseHashTag;
 import com.lms.entity.StudentCourse;
@@ -43,5 +44,12 @@ public class CourseHashTagService {
         });
         return hashTagFormDtoList;
     }
+
+    //해시태그 많이 등록된 순으로 5개 조회하기
+    public List<HashTagCountDto> findByTop5Hashtags(){
+        return courseHashTagRepository.findByTop5Hashtags();
+    }
+
+
     
 }
