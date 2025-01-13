@@ -7,6 +7,7 @@ import com.lms.dto.MemberFormDto;
 import com.lms.dto.StudentCourseHisDto;
 import com.lms.entity.Member;
 import com.lms.repository.MemberRepository;
+import com.lms.service.EmailService;
 import com.lms.service.MemberService;
 import com.lms.service.StudentCourseService;
 import lombok.extern.log4j.Log4j2;
@@ -19,9 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +34,7 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final StudentCourseService studentCourseService;
+    private EmailService emailService;
 
     public MemberController(MemberService memberService, MemberRepository memberRepository, StudentCourseService studentCourseService) {
         this.memberService = memberService;
@@ -132,7 +133,6 @@ public class MemberController {
         dashBoardCountDto.setCompletion_notCompleted(completion_notCompleted);
         dashBoardCountDto.setTotal_enrollment(total_enrollment);
 
-
         model.addAttribute("pageTitle", "나의 수강현황");
         model.addAttribute("hisDtos", hisDtos);
         model.addAttribute("dashBoardCount", dashBoardCountDto);
@@ -142,6 +142,26 @@ public class MemberController {
         model.addAttribute("completionStatus", Completion_status.수료);
         return "member/dashBoard";
     }
+
+
+    /* 인증번호 요청받기 */
+    @GetMapping(value = "/id-find")
+    public String ifFind(@RequestParam("email") String email, Model model) {
+
+        int certificationNumber = generateAuthNo4(); //인증번호 6자리 생성
+        System.out.println("certificationNumber ===> " + certificationNumber);
+
+       /* emailService.sendEmail(email,);*/
+        return "redirect:/";
+    }
+
+    //인증번호 메서드
+    public static int generateAuthNo4() {
+        return (int)(Math.random() * 899999) + 100000;
+    }
+
+
+
 
 }
 

@@ -2,6 +2,7 @@ package com.lms.controller;
 
 import com.lms.dto.*;
 import com.lms.entity.Category;
+import com.lms.entity.Member;
 import com.lms.repository.MemberRepository;
 import com.lms.service.*;
 import lombok.extern.log4j.Log4j2;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,7 @@ import java.util.Optional;
 @Controller
 @Log4j2
 @RequestMapping("/course/")
+@Transactional
 public class CourseController {
 
     @Autowired
@@ -40,6 +43,10 @@ public class CourseController {
     private StudentTestService studentTestService; //사용자 시험응시내역
     @Autowired
     private CourseHashTagService courseHashTagService; //교육 해시태그
+    @Autowired
+    private EmailService emailService; //메일발송
+    @Autowired
+    private MemberRepository memberRepository;
 
     @GetMapping({"/courses", "/courses/search", "/courses/{page}"})
     public String courses(@RequestParam(value = "keyword", required = false) String keyword,
@@ -91,9 +98,15 @@ public class CourseController {
 
         Long applicationId = courseService.saveApplication(courseId, username);
 
+        Member member = memberRepository.findByLoginId(username);
+        String subject = "온라인학습 수강신청이 완료되었습니다.";
+        String templateName = "Mail-courseApplication";
+        emailService.sendEmail(member.getEmail(), subject, templateName);
+
         // 응답으로 applicationId 반환
         Map<String, Long> response = new HashMap<>();
         response.put("applicationId", applicationId);
+
 
         return ResponseEntity.ok(response);
     }
@@ -117,7 +130,6 @@ public class CourseController {
     @GetMapping(value = "/video/{applicationId}")
     public String videoLearning(@PathVariable("applicationId") Long applicationId,
                                 Model model) {
-
 
         // 신청내역 고유키 => 교육 신청내역 반환
         CourseApplicationDto application = applicationService.findByApplicationId(applicationId);

@@ -68,5 +68,10 @@ public class MainController {
         }
     }
 
+    @GetMapping(value = "/id-find")
+    public String idFind(Model model) {
+        return "member/id-find";
+    }
+
 
 }
