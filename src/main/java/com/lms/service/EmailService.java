@@ -50,6 +50,9 @@ public class EmailService {
     public void sendEmail(String email, String subject, String templateName) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
+            System.out.println("email => " + email);
+            System.out.println("subject => " + subject);
+            System.out.println("templateName => " + templateName);
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
             helper.setTo(email);  // 메일 수신자
             helper.setSubject(subject); // 메일 제목

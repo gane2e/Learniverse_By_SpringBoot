@@ -8,7 +8,7 @@ body {
   padding: 0;
 }
 
-a {
+a, a:hover {
   text-decoration: none;
 }
 ul {
@@ -83,11 +83,11 @@ ul {
   color: #ffffff;
 }
 .login_cont_area .login_etc_area .list{
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 
@@ -178,6 +178,7 @@ ul {
   height: 64px;
   color: #000;
   border-radius: 5px;
+  font-size: 14px;
 }
 
 

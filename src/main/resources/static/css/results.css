@@ -8,6 +8,7 @@ body {
 }
 a, a:hover {
     text-decoration: none;
+    cursor: pointer;
 }
 .success_container {
     width: 100%;

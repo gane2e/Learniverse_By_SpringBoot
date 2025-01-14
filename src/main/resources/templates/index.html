@@ -23,7 +23,7 @@
                     <div class="left_cont">
                         <div>
                             <span th:text="${mainVisual.categoryName}">1차 카테고리</span>
-                            <span> > </span>
+                            <span> &#10095; </span>
                             <span th:text="${mainVisual.subCategoryName}">2차 카테고리</span>
                         </div>
                         <div class="visual_title" th:text="${mainVisual.title}">AI시대 데이터 직군을 위한 생존 전략</div>
@@ -33,7 +33,9 @@
                             </span>
                         </div>
                         <div class="visual_date">
-                            <div>모집기간 : [[${mainVisual.recruitment_start_date}]] ~ [[${mainVisual.recruitment_end_date}]]</div>
+                            <div>모집기간 : [[${mainVisual.recruitment_start_date}]] ~
+                                [[${mainVisual.recruitment_end_date}]]
+                            </div>
                             <div>교육기간 : [[${mainVisual.course_start_date}]] ~ [[${mainVisual.course_end_date}]]</div>
                         </div>
                     </div>
@@ -53,13 +55,14 @@
     <section id="section2">
         <div class="section_title">
             <img src="/img/우주1.png" class="title_img">
-            강의명으로 찾아보세요!</div>
+            강의명으로 찾아보세요!
+        </div>
 
-        <div class="search_box_container" >
+        <div class="search_box_container">
             <form action="/course/courses/search" method="get" id="searchForm">
                 <div class="search">
                     <div class="search_box">
-                        <input type="text"  name="keyword" placeholder="배우고싶은 강의명을 입력해보세요.">
+                        <input type="text" name="keyword" placeholder="&nbsp;배우고싶은 강의명을 입력해보세요.">
                     </div>
                     <div>
                         <button type="submit" class="search_btn">
@@ -80,22 +83,23 @@
     <section id="section3">
         <div class="section_title">
             <img src="/img/BEST.png" class="title_img">
-            가장 많이 신청한 강의 순위!</div>
+            가장 많이 신청한 강의 순위!
+        </div>
 
         <div class="slick-slider">
 
             <div class="slick-list">
 
                 <div class="slick-slide"
-                    th:each="course, iterStat : ${top8CourseList}">
+                     th:each="course, iterStat : ${top8CourseList}">
                     <div class="list_container">
                         <span class="rank rank-1">[[${iterStat.index +1}]]위</span>
                         <img th:src="${course.imgUrl}">
                         <div class="category_area">
                             <span class="category main"
-                            th:text="${course.categoryName}">1차</span>
+                                  th:text="${course.categoryName}">1차</span>
                             <span class="category sub"
-                            th:text="${course.subCategoryName}">2차</span>
+                                  th:text="${course.subCategoryName}">2차</span>
                         </div>
                         <div class="slide_title" th:text="${course.title}">
                             피그마(Figma)를 활용한 UI디자인 입문부터 실전까지 A to Z
@@ -108,16 +112,25 @@
                         </div>
                         <div class="count">
                             <span class="count_txt bold">신청자 수 </span>
-                            <div class="line"></div>
+                            <img src="/img/appCount.png" width="15px" style="display: inline">
                             <span class="count_txt"> <span class="bold" th:text="${course.numberOfApplications}"></span> 명</span>
+                        </div>
+                        <div class="rating_area">
+                            <img src="/img/rating.png" width="15px" style="display: inline">
+                            &nbsp;[[${course.totalRating}]]
+                            ([[${course.ratingCount}]])
                         </div>
                     </div>
                 </div>
+                <div class="slick-slide"></div>
+                <div class="slick-slide"></div>
+                <div class="slick-slide"></div>
+                <div class="slick-slide"></div>
             </div>
         </div>
         <div class="indicaotr">
-            <span class="prevArrow">이전</span>
-            <span class="nextArrow">다음</span>
+            <span class="prevArrow"><img src="/img/prev.png" class="slick_slide_img"></span>
+            <span class="nextArrow"><img src="/img/next.png" class="slick_slide_img"></span>
         </div>
 
     </section>
@@ -130,22 +143,17 @@
             slidesToScroll: 1,
             /*autoplay: true,*/
             autoplaySpeed: 2000,
-            prevArrow : $('.prevArrow'),
-            nextArrow : $('.nextArrow'),
+            prevArrow: $('.prevArrow'),
+            nextArrow: $('.nextArrow'),
         });
         $('.slider').slick({
             slidesToShow: 1,
             slidesToScroll: 1,
             autoplay: true,
             autoplaySpeed: 3000,
-            prevArrow : $('#prevBtn'),
-            nextArrow : $('#nextBtn'),
+            prevArrow: $('#prevBtn'),
+            nextArrow: $('#nextBtn'),
         });
-
-
-
-
-
     </script>
     <th:block>
         <script th:inline="javascript">

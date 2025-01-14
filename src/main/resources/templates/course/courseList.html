@@ -62,9 +62,11 @@
 
         <div class="total_count_area">
             <span>
-                <img src="/img/total_count2.png" class="total_img">
+                <img src="/img/total.png" class="total_img">
             </span>
-            <span class="total_count">total : <span class="red_txt">99</span></span>
+            <span class="total_count">
+                total : <span class="red_txt" th:text="${#lists.size(courseList)}">99</span>
+            </span>
         </div>
     
    <ul class="course_list_ul">

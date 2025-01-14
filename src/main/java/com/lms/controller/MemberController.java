@@ -71,6 +71,20 @@ public class MemberController {
         return "member/register";
     }
 
+    @PostMapping(value = "/checkloginId")
+    public ResponseEntity<String> checkloginId(@RequestBody MemberFormDto memberFormDto) {
+        String loginId = memberFormDto.getLoginId();
+        boolean result =
+                memberService.checkloginId(loginId);
+        if(result) {
+            return ResponseEntity.ok().body("true");
+        } else {
+            return ResponseEntity.ok().body("false");
+        }
+    }
+
+
+
     @PostMapping(value = "/new")
     public String memberRegister(MemberFormDto memberFormDto, Model model) {
 
@@ -196,6 +210,7 @@ public class MemberController {
         Member member = memberRepository.findByEmail(email);
         response.put("loginId", member.getLoginId());
 
+        System.out.println("certificationNumber = " + certificationNumber);
         return ResponseEntity.ok(response);
     }
 

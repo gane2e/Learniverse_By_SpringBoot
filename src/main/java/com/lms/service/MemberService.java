@@ -33,6 +33,14 @@ public class MemberService{
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
     }
+    /* 아이디 중복체크 */
+    public boolean checkloginId(String loginId) {
+        Member findMember = memberRepository.findByLoginId(loginId);
+        if (findMember != null) {
+            return false;
+        } else
+            return true;
+    }
 
     public MemberFormDto modifyMember(String loginId) {
         Member member = memberRepository.findByLoginId(loginId);

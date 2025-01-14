@@ -92,6 +92,7 @@
                     //사용자가 입력한 인증번호
                     const userEnteredAuthNo = document.getElementById("userEnteredAuthNo").value;
                     if(certificationNumber !=  userEnteredAuthNo) {
+                        console.log("certificationNumber = " + certificationNumber)
                         alert("인증번호가 일치하지 않습니다.");
                         return;
                     } else

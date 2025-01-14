@@ -4,7 +4,7 @@ a {
 #section1 {
     padding-top: 30px;
     padding-bottom: 50px;
-    background-image: url("../../img/slide2.jpg");
+    background-image: url("../../img/slide3.jpg");
     background-size: cover; /* 이미지를 영역에 맞게 꽉 채우도록 설정 */
     background-position: center; /* 이미지가 영역 중앙에 오도록 설정 */
     position: relative; /* 위치를 상대적으로 설정 */
@@ -74,15 +74,15 @@ button {
 }
 .prevArrow {
     position: absolute;
-    background-color: #6a1a21;
-    top: 105px;
+    top: 200px;
     left: 250px;
+    cursor: pointer;
 }
 .nextArrow {
     position: absolute;
-    top: 105px;
-    right: 260px;
-    background-color: #6a1a21;
+    top: 200px;
+    right: 270px;
+    cursor: pointer;
 }
 .list_container {
     position: relative;
@@ -127,6 +127,7 @@ button {
 .count {
     width: 100%;
     height: 100%;
+    margin-bottom: 8px;
 }
 .category_area {
     padding: 10px 0 5px 0;
@@ -140,15 +141,27 @@ button {
 .count_txt {
     font-size: 15px;
 }
-.line {
-    display: inline-block;
-    width: 2px;
-    height: 11px;
-    background-color: #333333;
-    margin: 0 5px;
+.hashTag_area {
+    margin-bottom: 10px;
+}
+.slide_hashTag{
+    font-size: 14px;
+    color: #757575;
 }
 .bold {
     font-weight: bold;
+}
+.slide_img {
+    width: 20px;
+}
+.slick_slide_img {
+    width: 30px;
+}
+.rating_area {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    font-size: 14px;
 }
 
 
