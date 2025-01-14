@@ -33,9 +33,9 @@ public class SecurityConfig { //시큐리티 설정
                 .authorizeHttpRequests(config -> {
                     config
                             .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                            .requestMatchers("/", "/oauth2/**", "/members/**", "/images/**", "/videos/**", "/course/**", "/admin/login", "/kakao-login", "/subcategories").permitAll() //해당 경로의 요청은 누구나 허용한다.
+                            .requestMatchers("/", "/oauth2/**", "/members/**", "/images/**", "/videos/**", "/course/**", "/admin/login",  "/subcategories").permitAll() //해당 경로의 요청은 누구나 허용한다.
                             .requestMatchers("/admin/**").hasRole("ADMIN") //해당 경로의 요청은 ADMIN 만 가능
-                            .anyRequest().permitAll();
+                            .anyRequest().authenticated();
                         });
         http
                 .formLogin(config -> {

@@ -62,6 +62,7 @@ public class MainController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated()) {
+            System.out.println("authentication : " + authentication.getName());
             return ResponseEntity.ok("로그인 상태입니다."); // 로그인 상태
         } else {
             return ResponseEntity.status(401).body("로그인되지 않았습니다."); // 비로그인 상태
@@ -70,7 +71,14 @@ public class MainController {
 
     @GetMapping(value = "/id-find")
     public String idFind(Model model) {
+        model.addAttribute("pageTitle", "아이디/비밀번호 찾기");
         return "member/id-find";
+    }
+
+    @GetMapping(value = "/pw-find")
+    public String pwFind(Model model) {
+        model.addAttribute("pageTitle", "아이디/비밀번호 찾기");
+        return "member/pw-find";
     }
 
 

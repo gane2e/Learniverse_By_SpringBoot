@@ -36,11 +36,11 @@
                 <span class="bold">별점을 등록해주시면 최종 수료가 완료됩니다.</span>
 
                 <div class="star-rating">
-                    <input type="radio" class="star" value="1">
-                    <input type="radio" class="star" value="2">
-                    <input type="radio" class="star" value="3">
-                    <input type="radio" class="star" value="4">
-                    <input type="radio" class="star" value="5">
+                    <input type="radio" name="rating" class="star" value="1">
+                    <input type="radio" name="rating" class="star" value="2">
+                    <input type="radio" name="rating" class="star" value="3">
+                    <input type="radio" name="rating" class="star" value="4">
+                    <input type="radio" name="rating" class="star" value="5">
                 </div>
 
                 <!-- 별점 END -->
@@ -65,11 +65,52 @@
 
                 <!-- 대시보드로 이동 -->
                 <li>
-                    <a href="/members/dashBoard" class="btn2">확인</a>
+                    <a onclick="saveRating()" class="btn2">확인</a>
+                    <input type="hidden" th:value="${courseId}" id="courseId">
                 </li>
             </ul>
         </div>
 
+        <th:block layout:fragment="script">
+
+            <script th:inline="javascript">
+
+                const rating = document.getElementsByName('rating')
+                const courseId = document.getElementById('courseId').value;
+                let selectedRating = null;
+
+                function saveRating(){
+
+                    for (let i = 0; i < rating.length; i++) {
+                        if (rating[i].checked) {
+                            selectedRating = rating[i].value; // 선택된 rating 값
+                            break; // 선택된 값이 있으면 루프 종료
+                        }
+                    }
+                    if(selectedRating != null){
+                        fetch('/course/saveRating', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                rating: selectedRating,
+                                courseId: courseId
+                            })
+                        })
+                            .then(() => {
+                                alert("별점 등록이 완료되었습니다.\n수료증은 [나의 수강현황]에서 출력하실 수 있습니다.")
+                                window.location.href = '/members/dashBoard';
+                            })
+                            .catch(error => {
+                                alert("서버통신중 오류가 발생하였습니다.")
+                                console.error("AJAX 오류", error)
+                            });
+                    } else
+                        alert("별점을 선택해주세요.")
+                }
+            </script>
+        </th:block>
 
     </div>
 

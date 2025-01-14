@@ -68,21 +68,28 @@
         </div>
     
    <ul class="course_list_ul">
+
        <li class="course_list_li" th:each="course, status : ${courseList}">
+
            <a th:href="'/course/courseDtl/' + ${course.courseId}" >
                <div class="image_container">
                    <img class="thum" th:src="${course.imgUrl}">
                    <div class="status" th:text="${course.recruitment_status}"></div>
                </div>
-           </a><br>
+           </a>
+
            <div class="category_area">
                <span class="category_title1" th:text="${course.categoryName}">  </span>
-               <span> > </span>
+               <span class="category_title1"> &#10095; </span>
                <span class="category_title2" th:text="${course.subCategoryName}">  </span>
            </div>
+
            <a th:href="'/course/courseDtl/' + ${course.courseId}" >
-               <p class="title" th:text="${course.title}"></p>
+               <p class="courseTitle" th:text="${course.title}"></p>
            </a>
+           <div class="rating_area">
+               <img src="/img/rating.png"> [[${course.totalRating}]] ([[${course.ratingCount}]])
+           </div>
 
        </li>
    </ul>
@@ -92,18 +99,18 @@
             <ul class="pagination justify-content-center">
 
                 <li class="page-item" th:classappend="${courseList.first} ? 'disabled' : ''">
-                    <a th:onclick="'javascript:page(' + ${courseList.number - 1} + ')'" aria-label="Previous" class="page-link">
-                        <span aria-hidden="true">Previous</span>
+                    <a th:onclick="'javascript:page(' + ${courseList.number - 1} + ')'" aria-label="Previous" class="page-link" style="cursor: pointer">
+                        <span aria-hidden="true">이전</span>
                     </a>
                 </li>
 
                 <li class="page-item" th:each="page : ${#numbers.sequence(start, end)}" th:classappend="${courseList.number == page - 1} ? 'active' : ''">
-                    <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+                    <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link" style="cursor: pointer">[[${page}]]</a>
                 </li>
 
                 <li class="page-item" th:classappend="${courseList.last} ? 'disabled' : ''">
-                    <a th:onclick="'javascript:page(' + ${courseList.number + 1} + ')'" aria-label="Next" class="page-link">
-                        <span aria-hidden="true">Next</span>
+                    <a th:onclick="'javascript:page(' + ${courseList.number + 1} + ')'" aria-label="Next" class="page-link" style="cursor: pointer">
+                        <span aria-hidden="true">다음</span>
                     </a>
                 </li>
 

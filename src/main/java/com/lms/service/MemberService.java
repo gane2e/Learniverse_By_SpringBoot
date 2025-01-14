@@ -27,7 +27,7 @@ public class MemberService{
     } 
     
     /* 아이디 중복체크 */
-    private void validateDuplicateMember(Member member) {
+    public void validateDuplicateMember(Member member) {
         Member findMember = memberRepository.findByLoginId(member.getLoginId());
         if (findMember != null) {
             throw new IllegalStateException("이미 가입된 회원입니다.");
@@ -39,6 +39,27 @@ public class MemberService{
         MemberFormDto memberFormDto = MemberFormDto.of(member);
         return memberFormDto;
     }
+
+    /* 이메일인증 체크 */
+    public boolean emailCheck(String email) {
+
+        Member findMember = memberRepository.findByEmail(email);
+        if (findMember != null)
+            return true;
+        else
+            return false;
+    }
+    
+    /* 아이디인증 체크 */
+    public boolean loginIdCheck(String loginId) {
+
+        Member findMember = memberRepository.findByLoginId(loginId);
+        if (findMember != null)
+            return true;
+        else
+            return false;
+    }
+
 
  /*   @Override //로그인로직
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
@@ -60,9 +81,6 @@ public class MemberService{
                 .build();
     }*/
 
-    public Member kakaoUserCheck(String kakaoKey) {
-       return  memberRepository.findByKakaoKey(kakaoKey);
-    }
 
     public Member create(String loginId, String password, String email) {
         Member member = new Member();

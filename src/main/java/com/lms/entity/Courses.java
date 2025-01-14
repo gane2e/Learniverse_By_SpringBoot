@@ -50,16 +50,25 @@ public class Courses extends BaseEntity {
 
     private int numberOfApplications; //신청자 수
 
+    private double totalRating; //평균 별점
+    private int ratingCount; //별점 평가한 수
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sub_category_id")
     private SubCategory subCategory;
     
 
-    /* 원본명, 업데이트 이미지명, 이미지 경로를 파라미터로 입력받아 이미지 정보를 업데이트하는 메서드 */
+    // 원본명, 업데이트 이미지명, 이미지 경로를 파라미터로 입력받아 이미지 정보를 업데이트하는 메서드
     public void updateImg(String oriImgName, String imgName, String imgUrl){
         this.oriImgName = oriImgName;
         this.imgName = imgName;
         this.imgUrl = imgUrl;
+    }
+
+    // 별점 평가자 수 / 평균별점 업데이트
+    public void updateRating(double totalRating, int ratingCount){
+        this.totalRating = totalRating;
+        this.ratingCount = ratingCount;
     }
 
 

@@ -2,13 +2,8 @@ package com.lms.controller;
 
 import com.lms.constant.Completion_status;
 import com.lms.constant.Test_status;
-import com.lms.entity.Member;
-import com.lms.entity.StudentCourse;
-import com.lms.entity.StudentTest;
-import com.lms.repository.CourseApplicationRepository;
-import com.lms.repository.MemberRepository;
-import com.lms.repository.StudentCourseRepository;
-import com.lms.repository.StudentTestRepository;
+import com.lms.entity.*;
+import com.lms.repository.*;
 import com.lms.service.QuestionService;
 import com.lms.service.StudentCourseService;
 import com.lms.service.StudentTestService;
@@ -38,6 +33,8 @@ public class QuestionController {
     private StudentCourseRepository studentCourseRepository;
     @Autowired
     private StudentCourseService studentCourseService;
+    @Autowired
+    private CourseApplicationRepository courseApplicationRepository;
 
     @PostMapping(value = "/question/grading/{studentTestId}/{studentCourseId}/{courseTitle}/{subCategoryId}")
     public String gradingQuestion(@RequestParam Map<String, String> answers,
@@ -91,6 +88,11 @@ public class QuestionController {
         StudentCourse studentCourse = studentCourseRepository.findById(studentCourseId)
                 .orElseThrow();
         Long applicationId = studentCourse.getCourseApplication().getApplicationId();
+        
+        //신청내역으로 교육정보 구하기
+        CourseApplication app =
+                courseApplicationRepository.findByApplicationId(applicationId);
+        Long courseId = app.getCourse().getCourseId();
 
         //결과페이지 표출용 점수, 차시, 성명, 합격여부
         model.addAttribute("totalScore", totalScore); //점수
@@ -105,6 +107,9 @@ public class QuestionController {
 
         //3회 불합격으로 [다시 학습하기] 표출 시 필요한 쿼리파라미터
         model.addAttribute("applicationId", applicationId);
+
+        //합격일시 별점 평가에 필요한 쿼리파라미터
+        model.addAttribute("courseId", courseId);
         return "course/results-page";
     }
 

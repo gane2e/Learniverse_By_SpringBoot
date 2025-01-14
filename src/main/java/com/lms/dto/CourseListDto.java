@@ -1,5 +1,7 @@
 package com.lms.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lms.constant.Course_status;
 import com.lms.constant.Recruitment_status;
 import jakarta.validation.constraints.NotBlank;
@@ -53,9 +55,10 @@ public class CourseListDto {
     private String videoTitle; /* 영상 제목 */
 
     List<HashTagFormDto> hashTagFormDtoList; //해당 교육의 해시태그
-
     
-
+    private int rating; //사용자가 등록한 별점 값
+    private double totalRating; //별점 평균
+    private int ratingCount; //별점 평가한 수
 
     // 상세페이지 표출용
     public CourseListDto(Long courseId, String title, String description,
@@ -98,7 +101,7 @@ public class CourseListDto {
                          LocalDate course_start_date, LocalDate course_end_date, String completionCriteria,
                          LocalDateTime regTime, LocalDateTime updateTime, String createdBy, String modifiedBy,
                          String imgUrl, String oriImgName, Long categoryId, String categoryName,
-                         Long subCategoryId, String subCategoryName, int numberOfApplications) {
+                         Long subCategoryId, String subCategoryName, int numberOfApplications, double totalRating, int ratingCount) {
         this.courseId = courseId;
         this.title = title;
         this.description = description;
@@ -120,5 +123,13 @@ public class CourseListDto {
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
         this.numberOfApplications = numberOfApplications;
+        this.totalRating = totalRating;
+        this.ratingCount = ratingCount;
+    }
+
+    @JsonCreator
+    public CourseListDto(@JsonProperty("courseId") long courseId, @JsonProperty("rating") int rating) {
+        this.courseId = courseId;
+        this.rating = rating;
     }
 }

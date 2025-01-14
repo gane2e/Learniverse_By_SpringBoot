@@ -11,19 +11,22 @@ import com.lms.service.EmailService;
 import com.lms.service.MemberService;
 import com.lms.service.StudentCourseService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Log4j2
@@ -34,6 +37,10 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final StudentCourseService studentCourseService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
     private EmailService emailService;
 
     public MemberController(MemberService memberService, MemberRepository memberRepository, StudentCourseService studentCourseService) {
@@ -143,25 +150,71 @@ public class MemberController {
         return "member/dashBoard";
     }
 
+    @PostMapping(value = "/email-find-check")
+    public ResponseEntity<String> emailCheck(@RequestBody MemberFormDto memberDto) {
 
-    /* 인증번호 요청받기 */
-    @GetMapping(value = "/id-find")
-    public String ifFind(@RequestParam("email") String email, Model model) {
+        boolean check = memberService.emailCheck(
+                memberDto.getEmail()
+        );
+        if(check){ //해당이메일로 가입된 회원이 있으면 이메일을 뷰로 다시전송
+            return ResponseEntity.ok().body("true");
+        } else {
+            return ResponseEntity.ok().body("false");
+        }
+    }
+    
+    //비밀번호 찾기 시 아이디 인증 메서드
+    @PostMapping(value = "/id-find-check")
+    public ResponseEntity<HashMap<String, String>> idCheck(@RequestBody MemberFormDto memberDto) {
 
-        int certificationNumber = generateAuthNo4(); //인증번호 6자리 생성
-        System.out.println("certificationNumber ===> " + certificationNumber);
-
-       /* emailService.sendEmail(email,);*/
-        return "redirect:/";
+        boolean check = memberService.loginIdCheck(
+                memberDto.getLoginId()
+        );
+        HashMap<String, String> response = new HashMap<>();
+        if(check){ //아이디로 가입된 회원이 있으면 이메일을 뷰로 다시전송
+            Member member = memberRepository.findByLoginId( memberDto.getLoginId());
+            response.put("email", member.getEmail());
+        }
+        return ResponseEntity.ok(response);
     }
 
-    //인증번호 메서드
+
+    /* 인증번호 요청받기 */
+    @PostMapping(value = "/idPw-find")
+    public ResponseEntity<HashMap<Object, Object>> ifFind(@RequestBody MemberFormDto memberDto, Model model) {
+
+        String email = memberDto.getEmail();
+        String subject = "아이디/비밀번호 찾기 인증번호가 도착했습니다.";
+        String templateName = "Mail-id-find";
+        int certificationNumber = generateAuthNo4(); //인증번호 6자리 생성
+
+        emailService.sendEmailIdFind(email, subject, templateName, certificationNumber);
+
+        HashMap<Object, Object> response = new HashMap<>();
+        response.put("certificationNumber", certificationNumber);
+
+        Member member = memberRepository.findByEmail(email);
+        response.put("loginId", member.getLoginId());
+
+        return ResponseEntity.ok(response);
+    }
+
+
     public static int generateAuthNo4() {
         return (int)(Math.random() * 899999) + 100000;
     }
 
 
+    @PostMapping(value = "/modifyPass")
+    public void modifyPassword(@RequestBody MemberFormDto memberFormDto, Model model) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loginId = authentication.getName();
+
+        Member member = memberRepository.findByLoginId(loginId);
+        member.updatePassword(passwordEncoder , memberFormDto.getPassword());
+        memberRepository.save(member);
+    }
 
 }
 

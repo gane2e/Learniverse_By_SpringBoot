@@ -183,6 +183,7 @@
                             console.log(data)
                             const courseId = document.getElementById('courseId').value;
                             if(confirm('수강 신청하시겠습니까?')) {
+
                                 fetch('/course/courseApplication', {
                                     method: 'POST',  // POST 요청
                                     headers: {

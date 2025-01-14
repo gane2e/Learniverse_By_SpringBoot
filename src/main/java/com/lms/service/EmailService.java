@@ -28,6 +28,24 @@ public class EmailService {
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
 
+
+    //인증번호를 포함하여 발송하는 메서드
+    @Async
+    public void sendEmailIdFind(String email, String subject, String templateName, int certificationNumber) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+            helper.setTo(email);  // 메일 수신자
+            helper.setSubject(subject); // 메일 제목
+            helper.setText(setContextIdFind(templateName, certificationNumber), true); // 메일 본문 내용, HTML 여부
+            javaMailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            log.info("Failed to send email to " + email, e);
+            throw new RuntimeException(e);
+        }
+    }
+    
+    //기본 안내만 발송하는 메서드
     @Async
     public void sendEmail(String email, String subject, String templateName) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -49,10 +67,20 @@ public class EmailService {
         return todayDate.format(formatter);
     }
 
-    //thymeleaf를 통한 html 적용
+
+    //일반 안내용 컨텍스트
     public String setContext(String date, String templateName) {
         Context context = new Context();
         context.setVariable("date", date);
         return templateEngine.process(templateName, context);
     }
+    
+    //인증번호 발송용 컨텍스트
+    public String setContextIdFind(String templateName, int certificationNumber) {
+        Context context = new Context();
+        context.setVariable("certificationNumber", certificationNumber);
+        return templateEngine.process(templateName, context);
+    }
+
+
 }

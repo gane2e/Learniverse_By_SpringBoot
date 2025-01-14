@@ -316,5 +316,23 @@ public class CourseService {
         return dtos;
     }
 
+    //사용자가 입력한 별점 / 교육ID 받아 새로운 평균 업데이트하기
+    public void saveRating(int rating, long courseId){
+        Courses course = courseRepository.findById(courseId).orElseThrow( ()-> new EntityNotFoundException() );
+
+        int currentRatingCount = course.getRatingCount(); //현재까지 평가자 수
+        double currentTotalRating = course.getTotalRating(); //현재까지 평균별점
+
+        int newRatingCount = currentRatingCount + 1;
+        double newTotalRating = currentTotalRating + rating;
+
+        //새 평균 계산
+        double newAverageRating = (double) newTotalRating / newRatingCount;
+        System.out.println("newAverageRating => " + newAverageRating);
+
+        course.updateRating(newAverageRating, newRatingCount);
+        courseRepository.save(course);
+    }
+
 
 }
