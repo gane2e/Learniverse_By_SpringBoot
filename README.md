@@ -1,5 +1,11 @@
-## 🙌 LMS 온라인 학습관리 시스템
-![easyme](/assets/readme/cartoon.png)   
+<div style="font-size: 24px; font-weight: bold; text-align: center;" >
+    🙌 LMS 온라인 학습관리 시스템
+</div>
+
+<div style="text-align:center">
+관리자는 교육영상과 교육과정을 등록하고,
+사용자는 온라인 수강신청과 온라인 시험 응시, 수료증 발급을 할 수 있는 **학습관리 시스템**입니다.
+</div>
 
 ## ❓ EASYME.md가 뭐예요?   
 - **EASYME.md**는 **<u>개발자가 README.md를 좀 더 쉽게 작성할 수 있도록</u>** 하기 위해 만들었어요.   
