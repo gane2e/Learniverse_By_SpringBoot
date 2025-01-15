@@ -29,7 +29,7 @@ public class QuestionService {
                 .collect(Collectors.toList()); // 변환된 객체들을 리스트로 모은다
 
         Collections.shuffle(questionDtoList);
-        return questionDtoList.subList(0, Math.min(10, questionDtoList.size()));
+        return questionDtoList.subList(0, Math.min(3, questionDtoList.size()));
     }
 
     // 사용자 정답제출시 문제별 정답 DB에서 가져와 사용자정답과 비교하기

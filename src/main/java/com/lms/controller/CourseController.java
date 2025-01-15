@@ -99,10 +99,10 @@ public class CourseController {
         Long applicationId = courseService.saveApplication(courseId, username);
 
         Member member = memberRepository.findByLoginId(username);
-        String email = member.getEmail();
+    /*    String email = member.getEmail();
         String subject = "온라인학습 수강신청이 완료되었습니다.";
         String templateName = "Mail-courseApplication";
-        emailService.sendEmail(email, subject, templateName);
+        emailService.sendEmail(email, subject, templateName);*/
 
         // 응답으로 applicationId 반환
         Map<String, Long> response = new HashMap<>();

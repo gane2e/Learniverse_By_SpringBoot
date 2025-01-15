@@ -64,10 +64,15 @@ public class AdminController {
     @GetMapping(value = "/questionList")
     public String questionList(Model model) {
 
-        /*List<AdminCourseListDto> adminCourseListDtos = courseService.getAdminCourseList();
-        model.addAttribute("courseList", adminCourseListDtos);*/
-
         return "admin/question/questionList";
+    }
+
+
+    // 시험문제 등록페이지
+    @GetMapping(value = "/newQuestion")
+    public String newQuestion(Model model) {
+
+        return "admin/question/newQuestion";
     }
 
 

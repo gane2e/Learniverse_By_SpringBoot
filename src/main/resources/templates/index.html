@@ -28,12 +28,14 @@
                         </div>
                         <div class="visual_title" th:text="${mainVisual.title}">AI시대 데이터 직군을 위한 생존 전략</div>
                         <div class="visual_description">
-                            <span th:each="hashTag: ${mainVisual.hashTagFormDtoList}">
-                                #[[${hashTag.hashTagName}]]
+                            <img src="/img/해시태그.png" width="15px" style="display: inline">
+                            <span th:each="hashTag: ${mainVisual.hashTagFormDtoList}" class="hashTag_data">
+                                [[${hashTag.hashTagName}]]
                             </span>
                         </div>
                         <div class="visual_date">
-                            <div>모집기간 : [[${mainVisual.recruitment_start_date}]] ~
+                            <div style="margin-bottom: 10px">
+                                모집기간 : [[${mainVisual.recruitment_start_date}]] ~
                                 [[${mainVisual.recruitment_end_date}]]
                             </div>
                             <div>교육기간 : [[${mainVisual.course_start_date}]] ~ [[${mainVisual.course_end_date}]]</div>
@@ -94,7 +96,7 @@
                      th:each="course, iterStat : ${top8CourseList}">
                     <div class="list_container">
                         <span class="rank rank-1">[[${iterStat.index +1}]]위</span>
-                        <img th:src="${course.imgUrl}">
+                        <img th:src="${course.imgUrl}" class="border-radius">
                         <div class="category_area">
                             <span class="category main"
                                   th:text="${course.categoryName}">1차</span>

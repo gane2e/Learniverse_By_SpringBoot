@@ -6,10 +6,17 @@ function printCertificate() {
     var completionDateTime = document.getElementById('completionDateTime').value;
     var birthDate = document.getElementById('birthDate').value;
     var date = new Date(completionDateTime);
+    var date2 = new Date(birthDate);
 
     var formattedDate = date.getFullYear() + '-' +
         (date.getMonth() + 1).toString().padStart(2, '0') + '-' +
         date.getDate().toString().padStart(2, '0');
+
+    var formattedDate2 = date2.getFullYear() + '-' +
+        (date2.getMonth() + 1).toString().padStart(2, '0') + '-' +
+        date2.getDate().toString().padStart(2, '0');
+
+
 
     var printWindow = window.open('', '_blank', 'width=800,height=600');
     printWindow.document.write(`
@@ -152,7 +159,7 @@ function printCertificate() {
       </tr>
       <tr>
         <th>생&nbsp;&nbsp;&nbsp;&nbsp;년&nbsp;&nbsp;&nbsp;&nbsp;월&nbsp;&nbsp;&nbsp;일&nbsp;&nbsp;:</th>
-        <td> ${birthDate}</td>
+        <td> ${formattedDate2}</td>
       </tr>
       <tr>
         <th>교&nbsp;&nbsp;육&nbsp;&nbsp;과&nbsp;&nbsp;정&nbsp;&nbsp;명&nbsp;&nbsp;:</th>
