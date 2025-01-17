@@ -90,6 +90,13 @@ ER다이어그램</br>
 ### 로그인
 ![로그인](https://github.com/user-attachments/assets/9acceb51-5d3e-43f2-a7a8-b6c64eb50160)
 
+### OAuth2 소셜로그인
+ - 구글/네이버/카카오
+   ![구글 로그인](https://github.com/user-attachments/assets/76f71055-0fc0-4d94-a9a7-f6b68b97dbef)
+   ![image](https://github.com/user-attachments/assets/840fdb20-f432-4ecd-8eda-555e8bbb201f)
+
+
+
 1. [❓ EASYME.md가 뭐예요?  ](#-easymemd가-뭐예요)
 2. [🙋‍♀️ 좀 더 구체적으로 가르쳐주세요!](#-좀-더-구체적으로-가르쳐주세요)
 3. [🛠 기능 엿보기](#-기능-엿보기)
