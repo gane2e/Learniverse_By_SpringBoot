@@ -44,8 +44,6 @@ public class CourseController {
     @Autowired
     private CourseHashTagService courseHashTagService; //교육 해시태그
     @Autowired
-    private EmailService emailService; //메일발송
-    @Autowired
     private MemberRepository memberRepository;
 
     @GetMapping({"/courses", "/courses/search", "/courses/{page}"})
@@ -69,6 +67,7 @@ public class CourseController {
         model.addAttribute("categoryId", categoryId); // 카테고리 ID 추가
         model.addAttribute("subCategoryId", subCategoryId); // 서브카테고리 ID 추가
         model.addAttribute("maxPage", 5);
+        model.addAttribute("total", courseList.getSize());  // 리스트의 크기를 total로 전달
         return "course/courseList";
     }
 
@@ -99,10 +98,6 @@ public class CourseController {
         Long applicationId = courseService.saveApplication(courseId, username);
 
         Member member = memberRepository.findByLoginId(username);
-    /*    String email = member.getEmail();
-        String subject = "온라인학습 수강신청이 완료되었습니다.";
-        String templateName = "Mail-courseApplication";
-        emailService.sendEmail(email, subject, templateName);*/
 
         // 응답으로 applicationId 반환
         Map<String, Long> response = new HashMap<>();
