@@ -1,29 +1,126 @@
-<div style="font-size: 24px; font-weight: bold; text-align: center;" >
-    🙌 LMS 온라인 학습관리 시스템
+<img src="https://github.com/user-attachments/assets/01ee4a1b-577b-4454-8a58-46778779b66a" width="200px"> <br/>
+"학습과 우주적 탐구가 만나는 무한한 가능성의 공간"
+
+
+
+## 🙋‍♀️ 프로젝트 참여자
+- 참여자 : 김가은(프론트엔드&백엔드 개발)
+- 이메일 : b1a409896@naver.com
+- 휴대폰 : 010-7933-6261
+- 기  간 : 2024-12-26 ~ 2025-01-15 (약 3주일)
+
+## 🔮프로젝트 소개
+- ### 온라인 학습관리 시스템이란?
+   관공서, 기업에서 필요로하는 온라인 영상학습 시스템을 구축하여,<br/>
+  사용자의 교육영상 학습 진도율 추적, 문제은행식 온라인 시험 응시, 수료증 발급이 가능한 홈페이지입니다.
+- ### 주제 선정 배경
+     최근 몇 년 간, **온라인 교육과 디지털 학습 환경이 급격히 확산**되었습니다. <br/>
+      특히 코로나19 팬데믹 이후, 
+    많은 교육 기관들이 오프라인 수업에서 온라인 수업으로 빠르게 전환하였고, <br/>
+    이는 학습 관리 시스템(LMS)의 중요성을 더욱 부각시켰습니다.
+- ### 기획 의도
+  LMS는 학습자의 진도를 추적하며, 수업 자료를 관리할 수 있는 중요한 도구로 자리 잡았습니다. <br/>
+    **다양한 온라인 학습이 필요한 기업과 관공서가 간편하게 활용**할 수 있는 
+    LMS 템플릿을 개발하였습니다.
+
+
+## 🛠 개발환경
+<img src="https://github.com/user-attachments/assets/38f6b2e6-d2c4-4e96-b3fe-4a84eabcd163" width="800px">
+
+## 🛠 기술소개
+### Spring Security
+- Spring Security를 사용해 웹 애플리케이션의 보안을 강화하고, 세부적인 경로별 접근 권한을 관리.
+- OAuth2 기반 소셜 로그인과의 통합을 통해 보안 강화를 동시에 구현.
+  
+### Spring Boot JPA 
+- JPA Repository에서 제공하는 CRUD 메서드를 활용하여 SQL 작업을 간편하게 처리.
+- JPQL을 이용하여 동적 쿼리를 작성, 재사용성과 유지보수성을 향상시켰습니다.
+
+### API
+- **[VideoJs]** VideoJS API를 활용하여 사용자의 마지막 시청초를 추적하고, 영상의 길이를 계산하여 총 진도율을 계산하는 기능을 구현하였습니다.
+- **[VideoJs]** API에서 제공하는 메서드를 활용해 영상별 총길이를 구하여 해당 교육과정의 영상길이 합산 초 및 사용자가 총 시청한 시점을 추적하는 기능을 구현하였습니다.
+- **[Fetch]** 영상 종료 시점이나 영상 일시정지 시, 마지막 시청 초를 FETCH API를 통해 서버로 전송하여 비동기 통신을 구현하고 진도율을 실시간으로 저장하도록 하며, 성공/실패에 따른 예외처리를 다양하게 할수있도록 하였습니다.
+- **[Slick]** Slick 슬라이드 API를 사용하여 자동 슬라이드 기능과 화면에 표시되는 슬라이드 수를 직접 조정할 수 있어, 개발 시간을 단축하고 효율성을 높였습니다.
+- **[Kakao, Google, Naver]** 카카오, 네이버, 구글 소셜로그인을 통해 사용자가 손쉽게 로그인할 수 있도록 하며,  OAuth2를 기반으로 한 보안 로그인을 적용하여 사용자 인증을 처리했습니다.
+
+
+## 🛠 UML(다이어그램)
+ER다이어그램</br>
+<img src="https://github.com/user-attachments/assets/71389521-253a-49c6-ade3-9f3b050b626e" width="800px"></br>
+액티비티 다이어그램</br>
+<img src="https://github.com/user-attachments/assets/34801402-bae3-48a0-bb1e-781a642cd6c2" width="800px">
+
+
+## 개발일정 및 작업 관리
+- 전체 개발 기간 : 2024-12-24 ~ 2025-01-15
+- UI 구현 : 2024-12-24 ~ 2025-01-10
+- 기능 구현 : 2024-12-24 ~ 2022-01-14
+- 작업 관리 : 노션(https://www.notion.so/13ec99b9b63e80c6bf3fdf2fee349c64?v=15ec99b9b63e80a6a421000c70dbd718)
+
+## 개발후_기능시연
+<img src="https://github.com/user-attachments/assets/d3aa760c-48f6-4945-a9d6-e3beb7d11d10" width="800px">
+<img src="https://github.com/user-attachments/assets/9625332e-4a5d-49c5-9ed0-10d0f6ff3d8d" width="800px">
+
+
+
+## 개발후_화면소개
+### (사용자) 메인 페이지
+![image](https://github.com/user-attachments/assets/6e2d2990-bc1a-409a-bea1-26de17a20a63)
+### (사용자) 강의 리스트
+![강의 리스트](https://github.com/user-attachments/assets/ade63de0-b051-4b89-a5e2-27cd667d49f7)
+### (사용자) 강의 상세페이지
+![강의 상세페이지](https://github.com/user-attachments/assets/07139eff-b4b2-4894-a7b6-cc3ce1ef1737)
+### (사용자) 수강신청 완료 페이지
+![강의 신청완료화면](https://github.com/user-attachments/assets/8f605a16-b767-43b6-a6cb-783a928665f9)
+### (사용자) 교육 대시보드
+![대시보드](https://github.com/user-attachments/assets/cbd016ff-268b-48e5-9153-92ac1dbeaaea)
+### (사용자) 학습하기 페이지
+![학습하기](https://github.com/user-attachments/assets/3b5a8376-8753-4b73-8c63-85661e318efb)
+### (사용자) 시험보기 팝업
+![시험보기 팝업](https://github.com/user-attachments/assets/428ef033-1ad9-4165-8163-8abe8cb8baa4)
+### (사용자) 시험보기 페이지
+![시험보기 페이지](https://github.com/user-attachments/assets/a45b535e-6e0f-4bd1-bcfb-9b18c248cf18)
+### (사용자) 시험 결과화면
+- 합격 결과화면
+![시험 합격 화면](https://github.com/user-attachments/assets/4403193c-0822-45a4-8327-57ae9246e829)
+- 불합격 결과화면
+- ![시험 불합격 화면](https://github.com/user-attachments/assets/9eeafff9-7ffd-453d-8ed7-65d3e3be1b42)
+- 3회 불합격 결과화면
+![시험 3회차 불합격 화면](https://github.com/user-attachments/assets/2e5ae5f0-335d-42eb-b8b5-1af9fd213dc2)
+### (사용자) 수료증 인쇄화면
+![수료증 인쇄화면](https://github.com/user-attachments/assets/aed3cd9d-5a6a-4ea3-b3ab-eaecebd09067)
+
+### 회원가입
+![회원가입 페이지](https://github.com/user-attachments/assets/93e3126d-bc10-4bbd-9625-a4622c0d9286)
+
+### 로그인
+![로그인](https://github.com/user-attachments/assets/9acceb51-5d3e-43f2-a7a8-b6c64eb50160)
+
+### OAuth2 소셜로그인 (Google/Naver/Kakao)
+<img src="https://github.com/user-attachments/assets/76f71055-0fc0-4d94-a9a7-f6b68b97dbef" width="500px"> <br />
+<img src="https://github.com/user-attachments/assets/840fdb20-f432-4ecd-8eda-555e8bbb201f" width="500px"> <br />
+<img src="https://github.com/user-attachments/assets/562223b3-c619-459b-bf2a-76163e649b4c" width="500px"> <br />
+
+### 아이디/비밀번호 찾기
+
+#### 아이디 찾기
+![아이디찾기-1](https://github.com/user-attachments/assets/183a1d18-1878-4c07-86b4-204674ac58d0)
+<div align="center">
+   <img src="https://github.com/user-attachments/assets/f61dc165-afb4-427d-b082-b19164c8767b" width="790px"  align="center">
 </div>
 
-<div style="text-align:center">
-관리자는 교육영상과 교육과정을 등록하고,
-사용자는 온라인 수강신청과 온라인 시험 응시, 수료증 발급을 할 수 있는 **학습관리 시스템**입니다.
-</div>
+![아이디찾기 - 2](https://github.com/user-attachments/assets/58894654-2b0e-43f9-8cd1-fea1208c1f1f)
+![아이디찾기-3](https://github.com/user-attachments/assets/d6c23e39-a410-4dfd-8d4d-b4e6b8485473)
 
-## ❓ EASYME.md가 뭐예요?   
-- **EASYME.md**는 **<u>개발자가 README.md를 좀 더 쉽게 작성할 수 있도록</u>** 하기 위해 만들었어요.   
-- 블로그에서 글을 쓰는 것처럼 쉽게 글을 작성하고 스타일을 적용하면 오른쪽(👉)에 미리보기로 확인하실 수 있어요.   
-- 스타일을 적용하면 마크다운 문법 및 md 파일에서 인식할 수 있는 소스코드가 자동으로 적용돼요.   
-- 커서 위치, 드래그한 영역 등에 따라 스타일을 적용할 수 있으니 자유롭게 사용해보세요!
-- 복사하기를 통해 본문 내용을 복사하고 여러분의 README에 적용해보세요.   
+#### 비밀번호 찾기
+![비밀번호 찾기 -1](https://github.com/user-attachments/assets/94f32470-4c69-4357-b4e6-837503690f8a)
+![비밀번호 찾기 -2](https://github.com/user-attachments/assets/1a63f50f-9c62-4995-8689-0b465d410583)
+![비밀번호 찾기 -3](https://github.com/user-attachments/assets/c139d051-e293-4280-a038-6724297dde7e)
+![비밀번호 찾기 -4](https://github.com/user-attachments/assets/9b212abc-88ed-4733-b1ac-3caa685be780)
 
-## 🙋‍♀️ 좀 더 구체적으로 가르쳐주세요!   
-1. 왼쪽 공간에서 블로그에 글을 쓰는 것처럼 README를 작성해주세요!   
-2. 👆 위에 툴바창에 보이는 다양한 스타일을 적용해보세요!   
-3. 다 작성하셨나요? 예쁘게 잘 나왔는지 오른쪽 미리보기 화면에서 확인해보세요.   
-4. 오른쪽에 작성한 글 전체를 복사하세요!   
-(저장을 원할 경우 `Ctrl + S` / `Command + S` 또는 툴바창 제일 오른쪽에 `공유하기 아이콘`을 클릭해주세요.)   
-5. 이제 여러분의 **README.md** 에 붙여넣으세요!   
-(저장 또는 공유를 할 경우 링크를 다른 사람에게 전달할 수 있어요! 😀)  
 
-## 🛠 기능 엿보기   
+
+
 
 1. [❓ EASYME.md가 뭐예요?  ](#-easymemd가-뭐예요)
 2. [🙋‍♀️ 좀 더 구체적으로 가르쳐주세요!](#-좀-더-구체적으로-가르쳐주세요)
