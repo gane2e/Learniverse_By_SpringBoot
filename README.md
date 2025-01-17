@@ -92,8 +92,8 @@ ER다이어그램</br>
 
 ### OAuth2 소셜로그인
  - 구글/네이버/카카오
-   ![구글 로그인](https://github.com/user-attachments/assets/76f71055-0fc0-4d94-a9a7-f6b68b97dbef)
-   ![image](https://github.com/user-attachments/assets/840fdb20-f432-4ecd-8eda-555e8bbb201f)
+<img src="https://github.com/user-attachments/assets/76f71055-0fc0-4d94-a9a7-f6b68b97dbef" width="300px"> <img src="https://github.com/user-attachments/assets/840fdb20-f432-4ecd-8eda-555e8bbb201f" width="300px">  <img src="" width="300px"> 
+
 
 
 
