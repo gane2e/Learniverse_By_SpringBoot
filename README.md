@@ -59,6 +59,7 @@ ER다이어그램</br>
 
 ## 개발후_기능시연
 <img src="https://github.com/user-attachments/assets/d3aa760c-48f6-4945-a9d6-e3beb7d11d10" width="800px">
+<img src="https://github.com/user-attachments/assets/9625332e-4a5d-49c5-9ed0-10d0f6ff3d8d" width="800px">
 
 
 
