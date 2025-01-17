@@ -58,6 +58,7 @@ ER다이어그램</br>
 - 작업 관리 : 노션(https://www.notion.so/13ec99b9b63e80c6bf3fdf2fee349c64?v=15ec99b9b63e80a6a421000c70dbd718)
 
 ## 개발후_기능시연
+<img src="https://github.com/user-attachments/assets/96c58a1a-d263-401e-ac0d-154e056a40f7" width="1000px">
 
 
 
