@@ -1,6 +1,5 @@
-<div style="font-size: 24px; font-weight: bold; text-align: center;" >
-    🙌 LMS 온라인 학습관리 시스템
-</div>
+<div align="center" style="font-size: 24px; font-weight: bold;">🙌 온라인 학습관리 시스템</div>
+
 
 <div style="text-align:center">
 관리자는 교육영상과 교육과정을 등록하고,
