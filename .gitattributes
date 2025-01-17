@@ -1,5 +1,7 @@
 /gradlew text eol=lf
 *.bat text eol=crlf
 *.jar binary
-*styles.css linguist-detectable=false 
+*admin-styles.css linguist-detectable=false 
 *registerProduct.css linguist-detectable=false 
+*slick.css linguist-detectable=false 
+*slick-theme.css linguist-detectable=false 
