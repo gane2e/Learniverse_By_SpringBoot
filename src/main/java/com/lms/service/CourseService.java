@@ -175,13 +175,15 @@ public class CourseService {
     public Page<List<CourseListDto>> getCourseList(String keyword, Long categoryId, Long subCategoryId, Pageable pageable) {
 
         Page<List<CourseListDto>> userPage = courseRepository.findAllCourseWithCategoryInfo(keyword, categoryId, subCategoryId, pageable);
-
         return userPage;
     }
 
     // 사용자 페이지 - 특정교육 상세페이지 정보반환
     public CourseListDto CourseByCourseId(Long courseId){
-        return courseRepository.findCourseById(courseId);
+        CourseListDto dto =  courseRepository.findCourseById(courseId);
+        double totalRating = Math.round(dto.getTotalRating());
+        dto.setTotalRating(totalRating);
+        return dto;
     }
 
 
@@ -299,6 +301,9 @@ public class CourseService {
         for (CourseListDto dto : dtos) {  //교육과정별 courseId구해 해당 Id의 해시태그 조회하기
 
             List<HashTagFormDto> hashTagFormDtos = new ArrayList<>();
+            double totalRating = Math.round(dto.getTotalRating());
+            dto.setTotalRating(totalRating);
+
             long courseId = dto.getCourseId();
 
             //courseId에 해당하는 해시태그 엔티티 리스트
