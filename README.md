@@ -58,12 +58,20 @@ ER다이어그램</br>
 - 작업 관리 : 노션(https://www.notion.so/13ec99b9b63e80c6bf3fdf2fee349c64?v=15ec99b9b63e80a6a421000c70dbd718)
 
 ## 개발후_기능시연
-<img src="https://github.com/user-attachments/assets/d3aa760c-48f6-4945-a9d6-e3beb7d11d10" width="800px">
-<img src="https://github.com/user-attachments/assets/9625332e-4a5d-49c5-9ed0-10d0f6ff3d8d" width="800px">
+### 메인 페이지
+<img src="https://github.com/user-attachments/assets/d3aa760c-48f6-4945-a9d6-e3beb7d11d10" width="800px"></br>
+### 회원가입
+<img src="https://github.com/user-attachments/assets/9625332e-4a5d-49c5-9ed0-10d0f6ff3d8d" width="800px"></br>
+### 로그인
+<img src="https://github.com/user-attachments/assets/003fcb9f-c72e-4bb8-8fdb-03c8bd63924e" width="800px"></br>
 
 
 
-## 개발후_화면소개
+
+
+<details><summary>## 개발후_화면소개
+</summary>
+
 ### (사용자) 메인 페이지
 ![image](https://github.com/user-attachments/assets/6e2d2990-bc1a-409a-bea1-26de17a20a63)
 ### (사용자) 강의 리스트
@@ -117,6 +125,9 @@ ER다이어그램</br>
 ![비밀번호 찾기 -2](https://github.com/user-attachments/assets/1a63f50f-9c62-4995-8689-0b465d410583)
 ![비밀번호 찾기 -3](https://github.com/user-attachments/assets/c139d051-e293-4280-a038-6724297dde7e)
 ![비밀번호 찾기 -4](https://github.com/user-attachments/assets/9b212abc-88ed-4733-b1ac-3caa685be780)
+</details>
+
+
 
 
 
@@ -155,11 +166,7 @@ ER다이어그램</br>
 
 >인용문   
    
-<details><summary>접고 펴는 기능
-</summary>
 
-*Write here!*
-</details>
 
 - EASYME.md를 드래그하고 상단에 `Aa` 아이콘을 누르면? 👉 Easyme.md   
 - EASYME.md를 드래그하고 상단에 `A` 아이콘을 누르면? 👉 EASYME.MD   
