@@ -75,29 +75,69 @@ Slick 슬라이드 API를 사용하여 자동 슬라이드 기능과 화면에 �
 
 ## 개발후_기능시연
 ### 메인 페이지
-- [섹션1] 메인비주얼 : slick 슬라이드 API를 사용하여 최근 등록된 교육과정 5개를 AUTO슬라이드가 가능하도록 하였습니다.
-- [섹션2] 교육과정 검색기 : 교육과정명을 입력하여 검색된 페이지로 이동할 수 있도록 하였습니다.<br />해시태그는 관리자가 교육 등록 시 입력한 해시태그를 DB에 저장하여 가장 많이 등록된(중복수가 가장 높은)순으로 5개가 노출됩니다.
-- [섹션3] 가장 많이 신청한 교육 리스트 : 사용자가 교육과정 신청 시 해당 교육과정 테이블의 "신청자 수" 를 1씩 증가시켜 <br /> 신청자가 많은 순으로, 신청자 수가 같을 시 최근 등록된 순으로 1차>2차정렬을 하였습니다.
+- **[섹션1]**  <br />메인비주얼 : slick 슬라이드 API를 사용하여 최근 등록된 교육과정 5개를 AUTO슬라이드가 가능하도록 하였습니다.
+- **[섹션2]**  <br />교육과정 검색기 : 교육과정명을 입력하여 검색된 페이지로 이동할 수 있도록 하였습니다.<br />해시태그는 관리자가 교육 등록 시 입력한 해시태그를 DB에 저장하여 가장 많이 등록된(중복수가 가장 높은)순으로 5개가 노출됩니다.
+- **[섹션3]**  <br />가장 많이 신청한 교육 리스트 : 사용자가 교육과정 신청 시 해당 교육과정 테이블의 "신청자 수" 를 1씩 증가시켜 <br /> 신청자가 많은 순으로, 신청자 수가 같을 시 최근 등록된 순으로 1차>2차정렬을 하였습니다.
 <img src="https://github.com/user-attachments/assets/d3aa760c-48f6-4945-a9d6-e3beb7d11d10" width="800px"></br>
 
 ### 회원가입
-- [아이디 중복체크] 아이디 입력 후 "중복확인" 클릭 시 사용자가 입력 한 ID를 JSON형태(key,Value)로 FetchAPI 통신을 POST 방식으로 요청합니다. <br />
+- **[아이디 중복체크]** <br />아이디 입력 후 "중복확인" 클릭 시 사용자가 입력 한 ID를 JSON형태(key,Value)로 FetchAPI 통신을 POST 방식으로 요청합니다. <br />
 서버에서 아이디 중복체크 후 반환된 "true", "false" 값으로 중복 여부에따른 success 로직을 실행합니다.
-- [유효성검사] 회원가입 버튼 클릭 시 자바스크립트의 유효성검사 함수를 실행하여, 각 입력폼이 빈 문자열인지 또는 형식에 맞지않는지 if문으로 검사하여 통과하지 못할시 return으로 함수를 종료시켜 폼 제출을 방지하였습니다. <br />
+- **[유효성검사]** <br />회원가입 버튼 클릭 시 자바스크립트의 유효성검사 함수를 실행하여, 각 입력폼이 빈 문자열인지 또는 형식에 맞지않는지 if문으로 검사하여 통과하지 못할시 return으로 함수를 종료시켜 폼 제출을 방지하였습니다. <br />
 유효성검사를 모두 통과시 폼 id값으로 DOM요소를 선택하여 Form submit을 실행시킵니다.
 <img src="https://github.com/user-attachments/assets/9625332e-4a5d-49c5-9ed0-10d0f6ff3d8d" width="800px"></br>
 ### 로그인
-- [입력필드 필수값] 아이디 및 비밀번호는 html태그 속성 중 required를 사용하여 "폼 제출 전 반드시 채워져있어야 하는 필드"임을 명시하였습니다.
-- [아이디/비밀번호 체킹] 스프링 시큐리티를 통해 로그인처리를 하였습니다. 
+- **[입력필드 필수값]** <br />아이디 및 비밀번호는 html태그 속성 중 required를 사용하여 "폼 제출 전 반드시 채워져있어야 하는 필드"임을 명시하였습니다.
+- **[아이디/비밀번호 체킹]** <br />스프링 시큐리티를 통해 로그인처리를 하였습니다. 
 <img src="https://github.com/user-attachments/assets/003fcb9f-c72e-4bb8-8fdb-03c8bd63924e" width="800px"></br>
 ### 수강신청
-- [카테고리] 1차 카테고리는 서버에서 전송한 1차 카테고리 데이터를 셀렉트할 수 있도록 하였고, <br />
+- **[카테고리]**  <br />1차 카테고리는 서버에서 전송한 1차 카테고리 데이터를 셀렉트할 수 있도록 하였고, <br />
 1차 값 선택 시 자바스크립트의 AJAX통신 GET 요청을 통해 쿼리파라미터로 1차 카테고리 값 전달, 응답으로 json형태인 2차카테고리 값을 반환받았습니다.
-- [검색기] 검색기를 GET방식의 Form태그로 감싸고, "검색" 버튼은 submit요청을 하도록 하여 쿼리파라미터로 {키워드}/{서브카테고리Id}/{1차카테고리Id} 값이 하나라도 있을 경우 해당 조건을 포함하여 JPQL 쿼리를 통해 조회하도록 했습니다.
-- [수강신청] 비회원은 수강신청이 불가하며, 수강신청 버튼 클릭 시 FetchAPI GET 요청을 통해 서버에서 로그인 체크 함수를 실행하도록 했고, 시큐리티 Authentication 인터페이스를 통해 인증된 사용자 정보를 조회하여 회원여부를 체크하였습니다.
+- **[검색기]**  <br />검색기를 GET방식의 Form태그로 감싸고, "검색" 버튼은 submit요청을 하도록 하여 쿼리파라미터로 {키워드}/{서브카테고리Id}/{1차카테고리Id} 값이 하나라도 있을 경우 해당 조건을 포함하여 JPQL 쿼리를 통해 조회하도록 했습니다.
+- **[수강신청]**  <br />비회원은 수강신청이 불가하며, 수강신청 버튼 클릭 시 FetchAPI GET 요청을 통해 서버에서 로그인 체크 함수를 실행하도록 했고, 시큐리티 Authentication 인터페이스를 통해 인증된 사용자 정보를 조회하여 회원여부를 체크하였습니다.
 <img src="https://github.com/user-attachments/assets/579a5b9a-0d7e-4724-b6ef-999fde0a30c5" width="800px"></br>
-### 학습하기 -1
+
+### 영상 학습하기
+- **[교육영상 목록]**  <br />서버에서 전달한 해당 교육과정의 videoUrl를 타임리프 th:each="" 반복문을 통해 비디오 개수만큼 아이템을 생성했습니다.
+- **[진도율 저장]**  <br /> 진도율은 videoJs API에서 제공하는 **currentTime()** 함수를 사용하여, 실시간 진도율 추적이 가능합니다.  <br /> 비디오가 종료될 시, FetchAPI를 호출하여 POST방식으로 즉시 해당 수강생의 진도율을 서버로 전송하도록 했습니다.
+- **[예외처리]** <br /> 1. 교육 이수율이 100%가 되지 않은 상태에서
 <img src="https://github.com/user-attachments/assets/15573d41-c22b-4855-87ac-63b384138b9f" width="800px"></br>
+
+<details>
+<summary>진도율 계산 code 🖱️</summary>
+
+```angular2html
+         // 영상 목록 가져오기
+         const videos = Array.from(videoContainer.querySelectorAll('.video-item'));
+
+         // 전체 진도율 계산
+         function updateTotalProgress() {
+             const totalVideos = videos.length;
+             const watchedVideosCount = watchedVideos.size;
+             const totalPercentage = Math.floor((watchedVideosCount / totalVideos) * 100);
+             totalProgressText.textContent = totalPercentage + '%';
+             return totalPercentage;
+         }
+
+         // 현재 영상의 진행 상태를 업데이트
+         function updateProgress(index, percentage) {
+             progressBars[index].style.width = percentage + '%';
+             videoProgressTexts[index].textContent = '진도율: ' + percentage + '%';
+         }
+
+         // 학습 완료 처리
+         function markVideoAsComplete(index) {
+             const button = learnButtons[index];
+             if (!watchedVideos.has(index)) {
+                 watchedVideos.add(index);
+                 button.textContent = '학습완료'; // 버튼 텍스트 변경
+                 button.classList.add('completed'); // 버튼 스타일 변경
+             }
+         }
+```
+</details>
+
+
 ### 학습하기 -2, 시험보기-불합격
 <img src="https://github.com/user-attachments/assets/04105d26-db0d-4e75-a7d6-c10f983ecf52" width="800px"></br>
 ### 시험보기-합격
