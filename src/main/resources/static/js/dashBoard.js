@@ -7,6 +7,7 @@ function printCertificate() {
     var birthDate = document.getElementById('birthDate').value;
     var date = new Date(completionDateTime);
     var date2 = new Date(birthDate);
+    document.title = userName + "_수료증_" + certificationNumber;
 
     var formattedDate = date.getFullYear() + '-' +
         (date.getMonth() + 1).toString().padStart(2, '0') + '-' +
@@ -17,7 +18,6 @@ function printCertificate() {
         date2.getDate().toString().padStart(2, '0');
 
 
-
     var printWindow = window.open('', '_blank', 'width=800,height=600');
     printWindow.document.write(`
 <!DOCTYPE html>
@@ -25,7 +25,7 @@ function printCertificate() {
       xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>수료증</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap');
     @page {
@@ -194,5 +194,9 @@ function printCertificate() {
         printWindow.document.close();
         printWindow.print();
     }
+
+    printWindow.onafterprint = function() {
+        printWindow.close();
+    };
 
 }
