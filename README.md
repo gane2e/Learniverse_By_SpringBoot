@@ -74,6 +74,13 @@ Slick 슬라이드 API를 사용하여 자동 슬라이드 기능과 화면에 �
 - 작업 관리 : 노션(https://www.notion.so/13ec99b9b63e80c6bf3fdf2fee349c64?v=15ec99b9b63e80a6a421000c70dbd718)
 
 ## 개발후_기능시연
+### 교육영상 등록
+<img src="https://github.com/user-attachments/assets/7ef30cd0-1078-4245-bc3b-d2c78875c69a" width="800px"></br>
+
+### 교육과정 등록
+<img src="https://github.com/user-attachments/assets/c2b9f1ff-4ed6-44b0-b297-364647b75400" width="800px"></br>
+
+
 ### 메인 페이지
 - **[섹션1]**  <br />메인비주얼 : slick 슬라이드 API를 사용하여 최근 등록된 교육과정 5개를 AUTO슬라이드가 가능하도록 하였습니다.
 - **[섹션2]**  <br />교육과정 검색기 : 교육과정명을 입력하여 검색된 페이지로 이동할 수 있도록 하였습니다.<br />해시태그는 관리자가 교육 등록 시 입력한 해시태그를 DB에 저장하여 가장 많이 등록된(중복수가 가장 높은)순으로 5개가 노출됩니다.
