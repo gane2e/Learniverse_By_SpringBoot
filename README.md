@@ -1,5 +1,3 @@
-<img src="https://github.com/user-attachments/assets/01ee4a1b-577b-4454-8a58-46778779b66a" width="200px"> <br/>
-
 ## 📋 목차
 1. [🔮 프로젝트 소개](#프로젝트-소개)
 2. [🙋‍♀️ 프로젝트 참여자](#프로젝트-참여자)
