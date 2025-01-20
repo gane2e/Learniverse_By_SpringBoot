@@ -98,7 +98,16 @@
 <img src="https://github.com/user-attachments/assets/f554d635-b684-4793-90b5-c306b242ef54" width="800px"></br>
 ### 수료증 출력
 <img src="https://github.com/user-attachments/assets/2a7047ec-fcdc-4f41-9c4d-78d1c1ab8af7" width="800px"></br>
-
+### 아이디 찾기
+<img src="https://github.com/user-attachments/assets/031bb090-cc62-41b2-94a3-3a8a9e9b0973" width="800px"></br>
+### 비밀번호 찾기
+<img src="https://github.com/user-attachments/assets/f64dadcf-7479-4723-8cfa-17281982cddb" width="800px"></br>
+### 소셜로그인 - 구글
+<img src="https://github.com/user-attachments/assets/0a921760-f2ac-45e6-b27c-0867b5f9653b" width="800px"></br>
+### 소셜로그인 - 카카오
+<img src="" width="800px"></br>
+### 소셜로그인 - 네이버
+<img src="" width="800px"></br>
 
 <details><summary>📸개발후_화면소개
 </summary>
