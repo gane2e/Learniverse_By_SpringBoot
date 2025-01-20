@@ -2,16 +2,12 @@
 "학습과 우주적 탐구가 만나는 무한한 가능성의 공간"
 
 ## :clipboard: 목차
-1. [❓ EASYME.md가 뭐예요?  ](#-easymemd가-뭐예요)
-2. [🙋‍♀️ 좀 더 구체적으로 가르쳐주세요!](#-좀-더-구체적으로-가르쳐주세요)
-3. [🛠 기능 엿보기](#-기능-엿보기)
-    - [Header](#header)   
-    - [Text Style1](#text-style1)   
-    - [Text Stlye2](#text-style2)   
-    - [List](#list)      
-    - [Link](#link)   
-    - [Code Block](#code-block)   
-    - [Table](#table)   
+1. [🔮 프로젝트 소개](#프로젝트-소개)
+2. [🙋‍♀️ 프로젝트 참여자](#-좀-더-구체적으로-가르쳐주세요)
+3. [🛠 개발환경](#개발환경)
+4. [🛠 기술소개](#기술소개)
+
+
 
 
 ## 🙋‍♀️ 프로젝트 참여자
@@ -35,10 +31,10 @@
     LMS 템플릿을 개발하였습니다.
 
 
-## 🛠 개발환경
+## 개발환경
 <img src="https://github.com/user-attachments/assets/38f6b2e6-d2c4-4e96-b3fe-4a84eabcd163" width="800px">
 
-## 🛠 기술소개
+## 기술소개
 ### Spring Security
 - Spring Security를 사용해 웹 애플리케이션의 보안을 강화하고, 세부적인 경로별 접근 권한을 관리.
 - OAuth2 기반 소셜 로그인과의 통합을 통해 보안 강화를 동시에 구현.
