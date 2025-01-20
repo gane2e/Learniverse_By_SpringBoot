@@ -1,6 +1,17 @@
 <img src="https://github.com/user-attachments/assets/01ee4a1b-577b-4454-8a58-46778779b66a" width="200px"> <br/>
 "학습과 우주적 탐구가 만나는 무한한 가능성의 공간"
 
+## :clipboard: 목차
+1. [❓ EASYME.md가 뭐예요?  ](#-easymemd가-뭐예요)
+2. [🙋‍♀️ 좀 더 구체적으로 가르쳐주세요!](#-좀-더-구체적으로-가르쳐주세요)
+3. [🛠 기능 엿보기](#-기능-엿보기)
+    - [Header](#header)   
+    - [Text Style1](#text-style1)   
+    - [Text Stlye2](#text-style2)   
+    - [List](#list)      
+    - [Link](#link)   
+    - [Code Block](#code-block)   
+    - [Table](#table)   
 
 
 ## 🙋‍♀️ 프로젝트 참여자
@@ -44,12 +55,15 @@
 - **[Kakao, Google, Naver]** 카카오, 네이버, 구글 소셜로그인을 통해 사용자가 손쉽게 로그인할 수 있도록 하며,  OAuth2를 기반으로 한 보안 로그인을 적용하여 사용자 인증을 처리했습니다.
 
 
-## 🛠 UML(다이어그램)
-ER다이어그램</br>
-<img src="https://github.com/user-attachments/assets/71389521-253a-49c6-ade3-9f3b050b626e" width="800px"></br>
-액티비티 다이어그램</br>
-<img src="https://github.com/user-attachments/assets/34801402-bae3-48a0-bb1e-781a642cd6c2" width="800px">
-
+## :triangular_ruler: UML(다이어그램)
+<details>
+   <summary>ER다이어그램</summary>
+   <img src="https://github.com/user-attachments/assets/71389521-253a-49c6-ade3-9f3b050b626e" width="800px"></br>
+</details>
+<details>
+   <summary>액티비티 다이어그램</summary>
+   <img src="https://github.com/user-attachments/assets/34801402-bae3-48a0-bb1e-781a642cd6c2" width="800px"></br>
+</details>
 
 ## 개발일정 및 작업 관리
 - 전체 개발 기간 : 2024-12-24 ~ 2025-01-15
@@ -126,6 +140,18 @@ ER다이어그램</br>
 ![비밀번호 찾기 -3](https://github.com/user-attachments/assets/c139d051-e293-4280-a038-6724297dde7e)
 ![비밀번호 찾기 -4](https://github.com/user-attachments/assets/9b212abc-88ed-4733-b1ac-3caa685be780)
 </details>
+
+## :memo: 프로젝트 후 느낀점
+이번 프로젝트를 진행하면서 혼자 개발하는 과정에서 부족한 점도 많았고, 많은 것을 배울 수 있었습니다. <br />
+특히 기간이 부족하여 충분한 예외 처리를 하지 못한 점이 아쉬움으로 남습니다. 이 부분은 향후 더 신경 써야 할 부분이라고 느꼈고, 팀원과의 협업을 통해 해결할 수 있는 문제들이 많다는 것도 실감했습니다. <br /><br />
+
+카테고리 선택과 실시간 진도율 저장을 구현하기 위해 Ajax 비동기 처리 방식을 사용했는데, 이 과정에서 Fetch API에 대해 알게 되었습니다. Fetch 방식은 스트림을 사용하여 응답 본문을 처리할 수 있어 편리하게 느껴졌습니다. <br />
+이를 통해 비동기 통신 방식에 대해 더 깊이 이해할 수 있었습니다.<br /><br />
+
+백엔드 로직을 개발하는 과정에서 큰 재미를 느꼈습니다. 그러나 컨트롤러에서 로직을 지나치게 길게 작성하거나 중복된 코드를 반복하게 되는 순간들이 있었습니다. <br />
+다행히도 인텔리제이에서 중복된 코드를 메서드로 분리하거나, 서비스에서 처리하라는 알림을 띄워주어 불필요한 코드작성을 피할 수 있게 되었습니다.<br /><br />
+
+이번 프로젝트는 저에게 큰 경험이 되었으며, 앞으로도 더 많은 공부가 필요할것 같다고 느꼈습니다.
 
 
 
