@@ -17,7 +17,8 @@ public interface VideoRepository extends JpaRepository<Videos, Long> {
             "v.videoId, v.regTime, v.updateTime, v.createdBy, v.modifiedBy) " +
             "FROM Videos v " +
             "JOIN v.subCategory s " +
-            "JOIN s.categories c")
+            "JOIN s.categories c " +
+            "order by v.regTime desc")
     List<VideoListDto> findVideoWithCategoryInfo();
 
 }

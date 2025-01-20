@@ -108,7 +108,7 @@
                             <tbody>
                                 <tr th:each="video, status : ${videoList}">
                                     <td th:text="${videoList.size() - status.index}"></td>  <!-- 내림차순 번호 -->
-                                    <td>[[${video.categoryName}]] > <br> [[${video.subCategoryName}]]</td>
+                                    <td>[[${video.categoryName}]] >  [[${video.subCategoryName}]]</td>
                                     <td><a th:href="'/admin/video/'+${video.videoId}"><strong> [[${video.title}]] </strong></a></td>
                                     <td th:text="${video.oriVideoName}"></td>
                                     <td th:text="${video.createdBy + ' / ' + #temporals.format(video.regTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
