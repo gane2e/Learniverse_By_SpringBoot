@@ -179,9 +179,9 @@ Slick 슬라이드 API를 사용하여 자동 슬라이드 기능과 화면에 �
 <img src="https://github.com/user-attachments/assets/f64dadcf-7479-4723-8cfa-17281982cddb" width="800px"></br>
 
 ### ✔OAuth2 소셜로그인 (Google/Kakao/Naver)
-<img src="https://github.com/user-attachments/assets/0a921760-f2ac-45e6-b27c-0867b5f9653b" width="300px">
-<img src="https://github.com/user-attachments/assets/9c57ff50-f117-4a00-a552-8ba0039dd422" width="300px">
-<img src="https://github.com/user-attachments/assets/4e1854c9-60f6-4c02-b939-4e4803beca08" width="300px">
+<img src="https://github.com/user-attachments/assets/0a921760-f2ac-45e6-b27c-0867b5f9653b" width="265px">
+<img src="https://github.com/user-attachments/assets/9c57ff50-f117-4a00-a552-8ba0039dd422" width="265px">
+<img src="https://github.com/user-attachments/assets/4e1854c9-60f6-4c02-b939-4e4803beca08" width="265px">
 
 <details><summary>📸개발후_화면소개
 </summary>
