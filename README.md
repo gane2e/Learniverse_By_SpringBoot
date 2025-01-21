@@ -238,19 +238,21 @@ Slick 슬라이드 API를 사용하여 자동 슬라이드 기능과 화면에 �
 
 ## 💥TroubleShooting 
 > 1차 카테고리, 2차 카테고리 테이블의 연관관계를 맵핑하면서 1차 카테고리에 해당하는 2차 카테고리를 한번에 조회하기 위해 아래와 같은 관계를 설정하였습니다.<br />
-
 ```
-/* 1차 카테고리 테이블 */
+/* Category 엔티티 일부*/
 @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL)
    private List<SubCategory> subCategories = new ArrayList<SubCategory>();
 ```
-
 ```
-/* 2차 카테고리 테이블 */
+/* subCategory 엔티티 일부 */
 @ManyToOne(fetch = FetchType.LAZY) 
 @JoinColumn(name = "category_id")
+@JsonIgnore //@JsonIgnore없을시 순환참조 문제발생
     private Category categories;
 ```
+> 결과적으로, subCategory엔티티의 조인컬럼인 category_id를 통해 양방향 연관관계 매핑 시 순환참조(무한루프)하게되는 문제가 발생하였습니다.
+> 구글링해본 결과 @JsonIgnore 애너테이션을 발견할 수 있었고, 해당 애너테이션을 필드나 메서드에 추가하면 직렬화 과정에서 제외할 수 있다는것을 알게되었습니다.
+>  SubCategory 엔티티의 Category 참조에 @JsonIgnore 애너테이션을 추가하여 SubCategory 엔티티를 직렬화할 때 Category가 참조에서 제외되어 순환참조를 방지할 수 있었습니다.
 
 ## 📝프로젝트 소감
 > 이번 프로젝트를 진행하면서 혼자 개발하는 과정에서 부족한 점도 많았고, 많은 것을 배울 수 있었습니다. <br />
