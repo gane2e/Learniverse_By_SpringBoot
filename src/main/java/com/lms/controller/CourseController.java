@@ -63,11 +63,11 @@ public class CourseController {
         Page<List<CourseListDto>> courseList = courseService.getCourseList(keyword, categoryId, subCategoryId, pageable);
         model.addAttribute("pageTitle", "온라인 교육");
         model.addAttribute("courseList", courseList);
-        model.addAttribute("keyword", keyword); // 키워드 추가
-        model.addAttribute("categoryId", categoryId); // 카테고리 ID 추가
-        model.addAttribute("subCategoryId", subCategoryId); // 서브카테고리 ID 추가
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("categoryId", categoryId);
+        model.addAttribute("subCategoryId", subCategoryId); 
         model.addAttribute("maxPage", 5);
-        model.addAttribute("total", courseList.getSize());  // 리스트의 크기를 total로 전달
+        model.addAttribute("total", courseList.getTotalElements());
         return "course/courseList";
     }
 
