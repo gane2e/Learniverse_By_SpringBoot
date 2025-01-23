@@ -4,18 +4,6 @@
       layout:decorate="~{layouts/sub_layout}">
 <head>
 <link th:href="@{/css/login.css}" rel="stylesheet">
-
-    <th:block layout:fragment="script">
-        <script th:inline="javascript">
-            $(document).ready(function() {
-                var errorMessage = [[${loginErrorMsg}]];
-                    if (errorMessage) { // 빈 문자열이 아닐 때 알림 표시
-                        alert(errorMessage);
-                    }
-            });
-        </script>
-    </th:block>
-
 </head>
 
 <div layout:fragment="sub_cont">
@@ -45,9 +33,9 @@
                     <div class="link_btn_area">
                         <button class="btn btn-primary" style="background: #000000; border: none">로그인</button>
                     </div>
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="checkbox" class="styled-checkbox">
-                        <label for="checkbox">아이디 기억하기</label>
+                    <!-- 로그인 오류 메시지를 화면에 빨간색으로 출력 -->
+                    <div th:if="${loginErrorMsg != null}" style="color: red; margin-bottom: 20px; text-align: center" >
+                        [[${loginErrorMsg}]]
                     </div>
                     <!-- 회원가입 / 아이디 비밀번호 찾기 -->
                     <div class="login_etc_area">
