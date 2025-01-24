@@ -2,6 +2,7 @@ package com.lms.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lms.dto.SubCategoryDto;
 import com.lms.entity.Category;
 import com.lms.entity.SubCategory;
 import com.lms.service.CategoryService;
@@ -21,6 +22,10 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
+
     @GetMapping("/categories")
     public String getCategories(Model model) {
         List<Category> categories = categoryService.getAllCategories();
@@ -30,8 +35,17 @@ public class CategoryController {
 
     @GetMapping("/subcategories")
     @ResponseBody
-    public List<SubCategory> getSubCategories(@RequestParam("categoryId") Long categoryId) {
-        List<SubCategory> subCategoryList =  categoryService.getSubCategoriesByCategoryId(categoryId);
+    public List<SubCategoryDto> getSubCategories(@RequestParam("categoryId") Long categoryId) {
+        List<SubCategoryDto> subCategoryList =  categoryService.getSubCategoriesByCategoryId(categoryId);
+
+        // 순환 참조가 발생할 수 있는 부분을 직렬화 전에 로그로 찍어봄
+        try {
+            // subCategoryList의 JSON 직렬화
+            String subCategoryListJson = objectMapper.writeValueAsString(subCategoryList);
+            log.info("subCategoryList JSON: {}", subCategoryListJson);
+        } catch (Exception e) {
+            log.error("직렬화 중 오류 발생: ", e);
+        }
 
         return subCategoryList;
     }

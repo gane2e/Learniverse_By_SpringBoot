@@ -1,5 +1,6 @@
 package com.lms.service;
 
+import com.lms.dto.SubCategoryDto;
 import com.lms.entity.Category;
 import com.lms.entity.SubCategory;
 import com.lms.repository.CategoryRepository;
@@ -24,9 +25,8 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public List<SubCategory> getSubCategoriesByCategoryId(Long categoryId) {
-        List<SubCategory> subCategoryList = subCategoryRepository.findSubCategoriesByCategoryId(categoryId);
-        System.out.println("Number of subCategories: " + subCategoryList.size());
+    public List<SubCategoryDto> getSubCategoriesByCategoryId(Long categoryId) {
+        List<SubCategoryDto> subCategoryList = subCategoryRepository.findSubCategoriesByCategoryId(categoryId);
         return subCategoryList;
     }
 }

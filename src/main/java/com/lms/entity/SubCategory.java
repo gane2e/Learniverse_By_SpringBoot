@@ -23,7 +23,7 @@ public class SubCategory {
 
     @ManyToOne(fetch = FetchType.LAZY) /* 1차 카테고리 테이블 조인 */
     @JoinColumn(name = "category_id")
-    @JsonIgnore // 순환 참조 방지 (필요한 경우), 양방향 참조시 무한루프 발생가능
+/*    @JsonIgnore // 순환 참조 방지 (필요한 경우), 양방향 참조시 무한루프 발생가능*/
     private Category categories;
 
 
