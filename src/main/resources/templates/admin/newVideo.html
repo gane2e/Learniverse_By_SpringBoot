@@ -179,7 +179,7 @@
       type: 'GET', // 요청 방식
       dataType: 'json', // 기대하는 데이터 타입
       success: function(subCategories) {
-        console.log("Number of subCategories:", subCategories.length);
+        console.log("subCategories : ", subCategories);
         const subCategorySelect = document.getElementById("subCategorySelect");
         subCategorySelect.innerHTML = '<option value="">카테고리를 선택하세요.</option>'; // 초기화
 

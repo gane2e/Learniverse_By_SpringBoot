@@ -75,9 +75,6 @@ public class Member extends BaseEntity {
         member.setEmail(memberFormDto.getEmail());
         member.setRole(Role.USER);
 
-        if (memberFormDto.getKakaoKey() != null ) {
-            member.setKakaoKey(memberFormDto.getKakaoKey());
-        }
         return member;
     }
 

@@ -25,7 +25,6 @@ public class MemberFormDto {
     private String mobileNumber;
     private String address;
     private String email;
-    private String kakaoKey;
 
     private static ModelMapper modelMapper = new ModelMapper();
     /* Member -> MemberFormDto 변환 */

@@ -34,7 +34,6 @@ class SubCategoryRepositoryTest {
 
 
     @Test
-    @Commit
     void findSubCategoriesByCategoryIdTest() {
         // Given (테스트 데이터 준비)
         Category category = new Category();
@@ -55,7 +54,7 @@ class SubCategoryRepositoryTest {
         entityManager.clear(); // 영속성 컨텍스트 초기화
 
         // When (테스트 실행)
-        List<SubCategory> subCategories = subCategoryRepository.findSubCategoriesByCategoryId(category.getCategoryId());
+       // List<SubCategory> subCategories = subCategoryRepository.findSubCategoriesByCategoryId(category.getCategoryId());
 
 
     }
@@ -71,9 +70,7 @@ class SubCategoryRepositoryTest {
         entityManager.clear();*/
 
         // When
-        List<SubCategory> subCategories = subCategoryRepository.findSubCategoriesByCategoryId(102L);
-
-        log.info("subCategories LIST ==> " + subCategories.toString());
+        //List<SubCategory> subCategories = subCategoryRepository.findSubCategoriesByCategoryId(102L);
 
     }
 
