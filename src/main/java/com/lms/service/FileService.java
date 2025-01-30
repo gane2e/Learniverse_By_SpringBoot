@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.UUID;
 
@@ -21,15 +22,22 @@ public class FileService {
         /* uuid + 확장자명으로 신규파일명 생성 */
         String savedFileName = uuid.toString() + extenstion;
 
-        String fileUploadFullUrl = uploadPath + "/" + savedFileName;
+        String fileUploadFullUrl = uploadPath + File.separator + savedFileName;
+
+        File file = new File(uploadPath);
+        if(!file.exists()){
+            file.mkdirs();
+        }
 
         /* FileOutputStream => 바이트 단위의 출력을 내보내는 클래스 */
         /* 생성자로 파일이 저장될 위치와 파일의 이름을 넘겨 파일에 쓸 파일 출력 스트림을 만든다. */
-        FileOutputStream fos = new FileOutputStream(fileUploadFullUrl);
-        log.info("fos" + fos.toString());
-        fos.write(fileData); /* fileData를 출력스트림에 입력 */
-        fos.close();
-
+        try {
+            FileOutputStream fos = new FileOutputStream(fileUploadFullUrl);
+            fos.write(fileData); /* fileData를 출력스트림에 입력 */
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         return savedFileName;
     }
 
