@@ -38,14 +38,9 @@ public class QuestionService {
                 .orElseThrow();
         int correctAnswer = questions.getCorrectAnswer();
 
-        log.info("사용자가 선택한 정답 : " + userAnswer);
-        log.info("실제 정답 : " + correctAnswer);
-        
         if (correctAnswer == userAnswer) {
-            log.info("정답을 맞췄습니다.");
             return true;
         }
-        log.info("정답을 맞추지 못했습니다.");
         return false;
     }
 
