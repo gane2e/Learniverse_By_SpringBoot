@@ -7,6 +7,7 @@ import com.lms.repository.*;
 import com.lms.service.QuestionService;
 import com.lms.service.StudentCourseService;
 import com.lms.service.StudentTestService;
+import com.lms.service.UtilService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -28,13 +29,13 @@ public class QuestionController {
     @Autowired
     private StudentTestService studentTestService;
     @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
     private StudentCourseRepository studentCourseRepository;
     @Autowired
     private StudentCourseService studentCourseService;
     @Autowired
     private CourseApplicationRepository courseApplicationRepository;
+    @Autowired
+    private UtilService utilService;
 
     @PostMapping(value = "/question/grading/{studentTestId}/{studentCourseId}/{courseTitle}/{subCategoryId}")
     public String gradingQuestion(@RequestParam Map<String, String> answers,
@@ -47,7 +48,7 @@ public class QuestionController {
         int totalScore = 0;
         int passingScore = 60;
         int totalQuestions = answers.size();
-        int testCount = 0;
+        int testCount;
 
         // 문제의 배점 계산 (100점 / 문제 개수)
         int pointsPerQuestion = 100 / totalQuestions;
@@ -80,10 +81,7 @@ public class QuestionController {
         }
 
         //로그인중인 사용자 ID로 성명 구하기
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Member member = memberRepository.findByLoginId(username);
-        String name = member.getName();
+        String name = utilService.getUserName();
 
         StudentCourse studentCourse = studentCourseRepository.findById(studentCourseId)
                 .orElseThrow();
