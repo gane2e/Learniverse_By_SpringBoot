@@ -49,13 +49,8 @@ public class AdminController {
     @GetMapping(value = "/videoList")
     public String videoList(Model model) {
 
-        List<VideoListDto> videoList  =videoService.findAllVideosByCategoryInfo();
+        List<VideoListDto> videoList  = videoService.findAllVideosByCategoryInfo();
         model.addAttribute("videoList", videoList);
-
-        for (VideoListDto video : videoList) {
-            System.out.println(video.getTitle());
-            System.out.println("--------------------");
-        }
 
         return "admin/video/videoList";
     }
@@ -63,7 +58,6 @@ public class AdminController {
     // 시험문제 목록
     @GetMapping(value = "/questionList")
     public String questionList(Model model) {
-
         return "admin/question/questionList";
     }
 
@@ -71,10 +65,8 @@ public class AdminController {
     // 시험문제 등록페이지
     @GetMapping(value = "/newQuestion")
     public String newQuestion(Model model) {
-
         return "admin/question/newQuestion";
     }
-
 
 
     /* 교육과정 등록페이지 */
@@ -133,24 +125,6 @@ public class AdminController {
     }
 
 
-
-    /*// 관리자 영상 상세페이지
-    @GetMapping(value = "/video/${videoId}")
-    public String videoDtl(@PathVariable("videoId") Long videoId, Model model) {
-
-      *//*  // 비디오 정보 반환
-        List<VideoListDto> videoList  =videoService.findAllVideosByCategoryInfo();
-        model.addAttribute("videoList", videoList);
-
-        for (VideoListDto video : videoList) {
-            System.out.println(video.getTitle());
-            System.out.println("--------------------");
-        }*//*
-
-        return "admin/video/videoDtl";
-    }*/
-
-
     // 교육과정 등록 시 선택한 카테고리의 영상목록 반환하기
     @GetMapping("/getVideosBySubCategory")
     @ResponseBody
@@ -159,15 +133,7 @@ public class AdminController {
 
         // 위에서 선택한 카테고리별 교육영상 불러오기
         List<VideoFormDto> scByVideoList = videoService.findVideosBySubCategoryId(subCategoryId);
-
         model.addAttribute("videoList", scByVideoList);
-
-        for (VideoFormDto video : scByVideoList) {
-            System.out.println("video ID : " + video.getVideoId());
-            System.out.println("video Title : " + video.getTitle());
-            System.out.println("video fileName : " + video.getOriVideoName());
-            System.out.println("--------------------");
-        }
 
         return scByVideoList;
     }
@@ -207,8 +173,8 @@ public class AdminController {
             Long rowCount = null;
 
             try {
-                videoId = Long.parseLong(videoIdString); // 또는 Long.valueOf(videoIdString)
-                rowCount = Long.parseLong(rowCountString); // 또는 Long.valueOf(rowCountString)
+                videoId = Long.parseLong(videoIdString);
+                rowCount = Long.parseLong(rowCountString);
             } catch (NumberFormatException e) {
                 System.err.println("Invalid number format: " + e.getMessage());
             }
@@ -217,11 +183,6 @@ public class AdminController {
             CourseVideoDto courseVideoDto = new CourseVideoDto();
             courseVideoDto.setVideoId(videoId);
             courseVideoDto.setCourseVideoIndex(rowCount);
-
-            System.out.println("------------------------------------------");
-            System.out.println("Key: " + key);
-            System.out.println("VideoId: " + videoId);
-            System.out.println("RowCount: " + rowCount);
 
             courseVideoService.saveCourseVideo(courseVideoDto);
         });
@@ -258,8 +219,6 @@ public class AdminController {
             System.out.println(e.getMessage());
             return "error/404";
         }
-
-        log.info("교육과정 등록 성공!");
 
         return "redirect:/admin/newCourse";
 
