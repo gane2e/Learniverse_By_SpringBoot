@@ -126,17 +126,15 @@ button:focus {
 }
 
 .course_list_ul {
-    display: flex;
     list-style: none;
-    justify-content: space-between;
-    flex-wrap: wrap;
     width: 100%;
+    padding: 0 20px;
 }
 .course_list_li {
     display: inline-block;
     width: 228px;
-    margin-left: 15px;
-    margin-right: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
     margin-bottom: 20px;
 }
 
