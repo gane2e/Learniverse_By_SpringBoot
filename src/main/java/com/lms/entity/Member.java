@@ -9,6 +9,7 @@ import lombok.ToString;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "member")
@@ -48,7 +49,7 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private String address;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     /* 카카오연동키 */
@@ -61,6 +62,9 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING) //
     private Role role; //권한
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<CourseApplication> courseApplications;
 
     //MemberFormDto -> Member로 변환(Dto로 받은 객체 매핑)
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {

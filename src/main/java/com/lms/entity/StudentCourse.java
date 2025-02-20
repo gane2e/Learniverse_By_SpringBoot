@@ -45,6 +45,10 @@ public class StudentCourse extends BaseEntity {
     @JoinColumn(name = "application_id")
     private CourseApplication courseApplication;
 
+    //application이 삭제되면 stuentCourse(수강내역)도 삭제되도록 양방향관계 설정
+    @OneToOne(mappedBy = "studentCourse", cascade = CascadeType.REMOVE)
+    private StudentTest studentTest;
+
     //마지막 시청시간, 학습상태, 진도율 업데이트
     public void updateLastWatched(Long last_watched, Enrollment_status enrollment_status,  double ProgressRate){
         this.last_watched = last_watched;

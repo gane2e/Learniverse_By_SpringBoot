@@ -27,6 +27,10 @@ public class CourseApplication {
     @JoinColumn(name = "course_id")
     private Courses course;
 
+    //application이 삭제되면 stuentCourse(수강내역)도 삭제되도록 양방향관계 설정
+    @OneToOne(mappedBy = "courseApplication", cascade = CascadeType.REMOVE)
+    private StudentCourse studentCourse;
+
     /* 신청상태 */
     @Enumerated(EnumType.STRING) //
     private Application_status application_status;
