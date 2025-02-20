@@ -45,8 +45,10 @@
             <select id="subCategorySelect"
                     class="custom-select">
                 <option value="">전체</option>
-                <input type="hidden" id="subCategoryId" name="subCategoryId" />
             </select>
+
+            <input type="hidden" id="subCategoryId" name="subCategoryId" th:value="${subCategoryId}"/>
+
 
             <!--강의명 검색-->
             <div class="search_title">강의 명</div>
@@ -124,14 +126,25 @@
     <!-- 카테고리 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:inline="javascript">
+
+        const selectSubCategory = document.getElementById("selectSubCategory").value;
+
+        window.onload = function() {
+            loadSubCategories(); // 페이지 로드 시 서브카테고리 로드
+        };
+
+        //1차카테고리 onChange발생시 호출
         function loadSubCategories() {
+
             const categoryId = document.getElementById("categorySelect").value;
+
             // AJAX 요청
             $.ajax({
                 url: '/subcategories?categoryId=' + categoryId, // 요청 URL
                 type: 'GET', // 요청 방식
                 dataType: 'json', // 기대하는 데이터 타입
                 success: function (subCategories) {
+
                     const subCategorySelect = document.getElementById("subCategorySelect");
                     subCategorySelect.innerHTML = '<option value="">전체</option>'; // 초기화
 
@@ -141,11 +154,13 @@
                         option.value = subCategory.subCategoryId;
                         option.text = subCategory.subCategoryName;
 
+                        if (subCategory.subCategoryId == selectSubCategory) {     // 선택된 값이 있으면 해당 옵션을 선택 상태로 설정
+                            option.selected = true;
+                        }
                         subCategorySelect.add(option);
                     });
 
-                    //hidden input에 값 설정
-                    subCategorySelect.addEventListener('change', function () {
+                    subCategorySelect.addEventListener('change', function () { //hidden input에 값 설정
                         document.getElementById('subCategoryId').value = this.value;
                     });
 
@@ -156,6 +171,7 @@
             });
         }
 
+        //검색조건 초기화하는 함수
         function resetSearchForm() {
             document.getElementById("searchForm").reset();
 
@@ -164,7 +180,6 @@
             subCategorySelect.innerHTML = '<option value="">전체</option>';
 
             // URL에서 쿼리 파라미터를 제거하여 새로고침 (초기화된 상태로 돌아감)
-            // URL의 쿼리 파라미터만 제거
             var currentUrl = window.location.pathname;
             window.history.pushState(null, "", currentUrl); // 쿼리 파라미터를 지우고 리로드
             window.location.reload(); // 페이지 새로고침
