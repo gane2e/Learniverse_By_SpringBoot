@@ -17,9 +17,12 @@
 
 <div layout:fragment="sub_cont">
 
-    <!-- 회원가입 -->
+
     <form role="form" method="post" action="/members/new"
           th:object="${member}">
+
+        <input type="hidden" th:value="*{memberId}" id="memberId">
+
         <div class="title_area">
             <div class="title_before"></div>
             <div class="title">회원정보 수정</div>
@@ -109,17 +112,68 @@
                 </td>
             </tr>
         </table>
+
         <ul class="submit_ul">
             <li>
-                <button type="reset" class="prev_btn">취소하기</button>
+                <button type="button"
+                        onclick="deleteUser()"
+                        class="prev_btn"
+                        style="background: #ff6d6d">회원 탈퇴</button>
             </li>
             <li>
                 <button type="submit" class="submit_btn">회원정보 수정</button>
             </li>
         </ul>
-
     </form>
     <!--  -->
+
+    <th:block>
+        <script th:inline="javascript">
+            var exceptionMessage = [[${exceptionMessage}]];
+            if (exceptionMessage) {
+                alert(exceptionMessage);
+            }
+
+
+
+
+            function deleteUser(){
+
+                if(confirm("회원 탈퇴하시겠습니까? 탈퇴 후에는 복구할 수 없습니다.")) {
+
+                    let memberId = document.getElementById('memberId').value
+                    console.log(memberId + "번 회원 탈퇴 요청");
+
+                    fetch('/members/deleteUser', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            memberId: memberId
+                        })
+                    })
+                        .then(response => {
+                            if (response.status >= 200 && response.status < 300) {
+                                alert("회원 탈퇴가 완료되었습니다.")
+                                window.location.href = "/members/logout";
+                            } else {
+                                alert("회원 탈퇴중 오류가 발생하였습니다.")
+                                throw new Error('서버 오류');
+                            }
+                        })
+                        .catch(error => {
+                            alert("서버통신중 오류가 발생하였습니다.")
+                            console.error("AJAX 오류", error)
+                        });
+                } else
+                    return;
+            }
+        </script>
+    </th:block>
+
+
+
 </div>
 
 </html>

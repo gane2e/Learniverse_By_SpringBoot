@@ -9,6 +9,8 @@
 
 <div layout:fragment="sub_cont">
 
+
+
     <div class="left_cont">
         <div class="category_area">
             <img src="/img/mark_5251227.png" class="category_img">
@@ -238,6 +240,14 @@
         });
     </script>
     <script src="/js/openPreviews.js"></script>
+    <th:block>
+        <script th:inline="javascript">
+            var exceptionMessage = [[${exceptionMessage}]];
+            if (exceptionMessage) {
+                alert(exceptionMessage);
+            }
+        </script>
+    </th:block>
 
 </div>
 

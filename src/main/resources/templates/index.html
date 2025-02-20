@@ -156,9 +156,14 @@
     <th:block>
         <script th:inline="javascript">
             // 서버에서 전달된 메시지가 있을 경우 알림창을 띄웁니다.
-            var message = [[${message}]]; // Spring EL을 사용하여 message를 출력
+            var message = [[${message}]];
             if (message) {
                 alert(message); // 로그인 되었습니다. 메시지를 알림창으로 표시
+            }
+
+            var exceptionMessage = [[${exceptionMessage}]];
+            if (exceptionMessage) {
+                alert(exceptionMessage);
             }
         </script>
     </th:block>

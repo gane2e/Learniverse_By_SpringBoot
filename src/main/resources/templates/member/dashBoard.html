@@ -246,6 +246,14 @@
         </ul>
     <script src="/js/testModal.js"></script>
     <script src="/js/dashBoard.js"></script>
+        <th:block>
+            <script th:inline="javascript">
+                var exceptionMessage = [[${exceptionMessage}]];
+                if (exceptionMessage) {
+                    alert(exceptionMessage);
+                }
+            </script>
+        </th:block>
     </div>
 
 </html>

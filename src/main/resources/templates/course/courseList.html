@@ -171,8 +171,17 @@
         }
 
     </script>
+        <th:block>
+            <script th:inline="javascript">
+                var exceptionMessage = [[${exceptionMessage}]];
+                if (exceptionMessage) {
+                    alert(exceptionMessage);
+                }
+            </script>
+        </th:block>
 
-</div>
+
+    </div>
 
 
 </html>
