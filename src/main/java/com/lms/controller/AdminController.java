@@ -35,6 +35,8 @@ public class AdminController {
     @Autowired
     private CourseHashTagService courseHashTagService;
 
+
+
     // 교육과정 목록
     @GetMapping(value = "/courseList")
     public String courseList(Model model) {
@@ -43,6 +45,15 @@ public class AdminController {
         model.addAttribute("courseList", adminCourseListDtos);
 
         return "admin/course/courseList";
+    }
+
+    // 교육과정 수정페이지
+    @GetMapping(value = "/courseModify/{courseId}")
+    public String courseModify(@PathVariable Long courseId, Model model) {
+
+        model.addAttribute("CourseFormDto", new CourseFormDto());
+
+        return "admin/course/courseModify";
     }
 
     // 관리자 영상 목록
