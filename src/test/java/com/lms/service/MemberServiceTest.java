@@ -13,6 +13,7 @@ import org.springframework.test.annotation.Commit;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,9 +28,23 @@ class MemberServiceTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Test
+    @Commit
+    public void deleteMemberTest() {
+        try {
+            Long memberId = 752L;
+            memberService.deleteMember(memberId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public Member testCreateMemberDAta() {
+
+        UUID loginId = UUID.randomUUID();
         MemberFormDto memberFormDto = new MemberFormDto();
-        memberFormDto.setLoginId("admin001");
+        memberFormDto.setLoginId(loginId.toString());
         memberFormDto.setPassword("1234");
         memberFormDto.setName("관리자");
         memberFormDto.setGender("남성");
