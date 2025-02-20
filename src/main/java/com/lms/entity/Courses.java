@@ -50,6 +50,7 @@ public class Courses extends BaseEntity {
 
     private int numberOfApplications; //신청자 수
 
+    private int sumRating; //누적 별점 합계
     private double totalRating; //평균 별점
     private int ratingCount; //별점 평가한 수
 
@@ -66,9 +67,10 @@ public class Courses extends BaseEntity {
     }
 
     // 별점 평가자 수 / 평균별점 업데이트
-    public void updateRating(double totalRating, int ratingCount){
+    public void updateRating(double totalRating, int ratingCount, int newSumRating){
         this.totalRating = totalRating;
         this.ratingCount = ratingCount;
+        this.sumRating = newSumRating;
     }
 
 
