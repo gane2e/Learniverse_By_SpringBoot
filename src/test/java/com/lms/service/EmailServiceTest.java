@@ -16,7 +16,7 @@ class EmailServiceTest {
 
     @Test
     public void emailServiceTest() {
-        emailService.sendEmail("b1a409896@naver.com", "메일 테스트제목", "Mail-courseApplication");
+        emailService.sendEmail("b1a409896@naver.com", "메일 테스트제목", "Mail-id-find");
     }
 
 
