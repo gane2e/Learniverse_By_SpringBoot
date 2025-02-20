@@ -175,6 +175,7 @@ public class CourseService {
     public Page<List<CourseListDto>> getCourseList(String keyword, Long categoryId, Long subCategoryId, Pageable pageable) {
 
         Page<List<CourseListDto>> userPage = courseRepository.findAllCourseWithCategoryInfo(keyword, categoryId, subCategoryId, pageable);
+
         return userPage;
     }
 
@@ -325,17 +326,21 @@ public class CourseService {
     public void saveRating(int rating, long courseId){
         Courses course = courseRepository.findById(courseId).orElseThrow( ()-> new EntityNotFoundException() );
 
+        int sumRating = course.getSumRating(); //누적 별점 합계
         int currentRatingCount = course.getRatingCount(); //현재까지 평가자 수
-        double currentTotalRating = course.getTotalRating(); //현재까지 평균별점
 
         int newRatingCount = currentRatingCount + 1;
-        double newTotalRating = currentTotalRating + rating;
+        int newSumRating = sumRating + rating; //누적 합계에 사용자의 평가점수 합산
 
-        //새 평균 계산
-        double newAverageRating = (double) newTotalRating / newRatingCount;
+        //새 평균 계산 (별점 합산 / 평가자 수)
+        double newAverageRating = (double) newSumRating / newRatingCount;
+
+
         System.out.println("newAverageRating => " + newAverageRating);
+        System.out.println("newSumRating => " + newSumRating);
+        System.out.println("newRatingCount => " + newRatingCount);
 
-        course.updateRating(newAverageRating, newRatingCount);
+        course.updateRating(newAverageRating, newRatingCount, newSumRating);
         courseRepository.save(course);
     }
 

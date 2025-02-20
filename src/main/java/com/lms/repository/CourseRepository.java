@@ -21,7 +21,8 @@ public interface CourseRepository extends JpaRepository<Courses, Long> {
     @Query("SELECT new com.lms.dto.CourseListDto(co.courseId, co.title, co.description, co.recruitment_status, " +
             "co.recruitment_start_date, co.recruitment_end_date, co.course_status, co.course_start_date, co.course_end_date, " +
             "co.completionCriteria, co.regTime, co.updateTime, co.createdBy, co.modifiedBy, " +
-            "co.imgUrl, co.oriImgName, ct.categoryId, ct.categoryName, sct.subCategoryId, sct.subCategoryName, co.numberOfApplications, co.totalRating, co.ratingCount) " +
+            "co.imgUrl, co.oriImgName, ct.categoryId, ct.categoryName, sct.subCategoryId, sct.subCategoryName, co.numberOfApplications, " +
+            "round(co.totalRating), co.ratingCount) " +
             "FROM Courses co " +
             "JOIN co.subCategory sct " +
             "JOIN sct.categories ct " +
