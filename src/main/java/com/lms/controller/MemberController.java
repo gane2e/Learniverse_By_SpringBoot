@@ -220,7 +220,6 @@ public class MemberController {
         return (int)(Math.random() * 899999) + 100000;
     }
 
-
     @PostMapping(value = "/modifyPass")
     public void modifyPassword(@RequestBody MemberFormDto memberFormDto, Model model) {
 
@@ -230,6 +229,17 @@ public class MemberController {
         Member member = memberRepository.findByLoginId(loginId);
         member.updatePassword(passwordEncoder , memberFormDto.getPassword());
         memberRepository.save(member);
+    }
+
+    @PostMapping(value = "/deleteUser")
+    public ResponseEntity<HttpStatus> deleteUser(@RequestBody MemberFormDto memberFormDto){
+        if(memberFormDto.getMemberId() != null) {
+            memberService.deleteMember(memberFormDto.getMemberId());
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 }

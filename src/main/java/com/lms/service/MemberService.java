@@ -47,6 +47,9 @@ public class MemberService{
         MemberFormDto memberFormDto = MemberFormDto.of(member);
         return memberFormDto;
     }
+    public void deleteMember(Long memberId) {
+        memberRepository.deleteById(memberId);
+    }
 
     /* 이메일인증 체크 */
     public boolean emailCheck(String email) {
