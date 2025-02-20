@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.Map;
@@ -29,6 +30,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private MemberRepository memberRepository;
+
+    RedirectAttributes redirectAttributes;
 
     // 구글로부터 받은 userRequest 데이터에 대한 후처리되는 함수
     // 함수 종료시 @AuthenticationPrincipal 어노테이션이 만들어진다.
@@ -70,21 +73,28 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         //회원가입 강제로 진행
         if(memberEntity == null) {
-            System.out.println("소셜 로그인이 최초입니다.");
-            Member member = new Member();
-            member.setLoginId(username);
-            member.setPassword(password);
-            member.setEmail(email);
-            member.setName(fullName);
-            member.setAddress("임시주소");
-            member.setGender("남성");
-            member.setBirthdate(new Date());
-            member.setMobileNumber("010-1234-1234");
-            member.setRole(role);
-            member.setProvider(provider);
-            member.setProviderId(providerId);
-            memberRepository.save(member);
-            return new PrincipalDetails(member, oAuth2User.getAttributes());
+
+            if(memberRepository.findByEmail(email) != null) {
+                redirectAttributes.addFlashAttribute
+                        ("exceptionMessage", "해당 이메일로 이미 가입된 계정이 있습니다.\n아이디 찾기를 이용해주세요.");
+                return new PrincipalDetails();
+            } else {
+                System.out.println("소셜 로그인이 최초입니다.");
+                Member member = new Member();
+                member.setLoginId(username);
+                member.setPassword(password);
+                member.setEmail(email);
+                member.setName(fullName);
+                member.setAddress("임시주소");
+                member.setGender("남성");
+                member.setBirthdate(new Date());
+                member.setMobileNumber("010-1234-1234");
+                member.setRole(role);
+                member.setProvider(provider);
+                member.setProviderId(providerId);
+                memberRepository.save(member);
+                return new PrincipalDetails(member, oAuth2User.getAttributes());
+            }
         } else {
             System.out.println("소셜로그인을 이미 한적이 있습니다. 당신은 자동회원가입이 되어 있습니다.");
             return new PrincipalDetails(memberEntity, oAuth2User.getAttributes());
