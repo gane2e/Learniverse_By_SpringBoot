@@ -83,7 +83,13 @@ dependencies {
 
 
 }
-
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+
+bootJar {
+    archiveBaseName = "lmsSite"
+    archiveFileName = "lmsSite.jar"
+    archiveVersion = "0.0.1"
 }
