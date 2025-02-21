@@ -5,6 +5,7 @@ import com.lms.entity.Category;
 import com.lms.entity.Member;
 import com.lms.repository.MemberRepository;
 import com.lms.service.*;
+import com.lms.util.UserCheck;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -125,7 +127,12 @@ public class CourseController {
     // 영상학습 페이지
     @GetMapping(value = "/video/{applicationId}")
     public String videoLearning(@PathVariable("applicationId") Long applicationId,
-                                Model model) {
+                                Model model, RedirectAttributes redirectAttributes) {
+
+        if(!UserCheck.isAuthenticated()) {
+            redirectAttributes.addFlashAttribute("exceptionMessage", "수강 권한이 없습니다.");
+            return "redirect:/";
+        }
 
         // 신청내역 고유키 => 교육 신청내역 반환
         CourseApplicationDto application = applicationService.findByApplicationId(applicationId);
@@ -150,7 +157,6 @@ public class CourseController {
         StudentTestDto studentTestDto = studentTestService.findByStudentCourseId(studentCourseId);
         model.addAttribute("studentTest", studentTestDto);
 
-//        return "member/testVideo";
         return "member/videoLearning";
     }
 

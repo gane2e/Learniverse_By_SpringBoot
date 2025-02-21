@@ -54,7 +54,7 @@ public class MemberController {
     @GetMapping(value = "/login")
     public String memberLogin(Model model) {
 
-        if(!UserCheck.isUserLoggedIn()) {
+        if(UserCheck.isAuthenticated()) {
             return "redirect:/";
         } else {
             model.addAttribute("pageTitle", "로그인");
@@ -74,7 +74,7 @@ public class MemberController {
     @GetMapping(value = "/register")
     public String memberRegister(Model model) {
 
-        if(UserCheck.isUserLoggedIn()) {
+        if(UserCheck.isAuthenticated()) {
             return "redirect:/";
         } else {
             model.addAttribute("pageTitle", "회원가입");
@@ -111,7 +111,7 @@ public class MemberController {
     @GetMapping(value = "/modify")
     public String memberModify(Model model) {
 
-        if(UserCheck.isUserLoggedIn()) {
+        if(!UserCheck.isAuthenticated()) {
             return "redirect:/";
         } else {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -130,8 +130,8 @@ public class MemberController {
     @GetMapping(value = "/dashBoard")
     public String dashBoard(Model model) {
 
-        if(UserCheck.isUserLoggedIn()) {
-            return "redirect:/";
+        if(!UserCheck.isAuthenticated()) {
+            return "redirect:/login";
         } else {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
